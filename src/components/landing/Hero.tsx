@@ -22,7 +22,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-ofira-violet/20 bg-ofira-violet/5 px-4 py-1.5 text-sm text-ofira-violet shadow-[0_0_15px_rgba(196,161,255,0.15)] animate-pulse-glow"
+          className="mb-8 inline-flex items-center gap-2 rounded-full border border-ofira-violet/20 bg-ofira-violet/5 px-4 py-1.5 text-sm text-ofira-violet shadow-[0_0_15px_rgba(13,148,136,0.15)] animate-pulse-glow"
         >
           <Sparkles className="size-3.5" />
           {t('badge')}

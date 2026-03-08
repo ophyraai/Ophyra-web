@@ -16,9 +16,9 @@ interface ActionPlanProps {
 }
 
 const impactColors = {
-  high: '#c4a1ff',
-  medium: '#ff9e7a',
-  low: '#8b82a8',
+  high: '#0d9488',
+  medium: '#059669',
+  low: '#6b6480',
 };
 
 export default function ActionPlan({ actions, isPaid }: ActionPlanProps) {
@@ -37,7 +37,7 @@ export default function ActionPlan({ actions, isPaid }: ActionPlanProps) {
         {actions.map((action, i) => (
           <motion.div
             key={i}
-            className="relative overflow-hidden rounded-xl border border-[rgba(196,161,255,0.08)] bg-ofira-surface1 p-5"
+            className="relative overflow-hidden rounded-xl border border-[rgba(13,148,136,0.08)] bg-ofira-surface1 p-5"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.15 }}

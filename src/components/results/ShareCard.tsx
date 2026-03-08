@@ -34,13 +34,13 @@ export default function ShareCard({ score, diagnosisId }: ShareCardProps) {
 
   const getScoreColor = (s: number) => {
     if (s < 40) return '#ef4444';
-    if (s < 70) return '#ff9e7a';
-    return '#c4a1ff';
+    if (s < 70) return '#059669';
+    return '#0d9488';
   };
 
   return (
     <motion.div
-      className="rounded-xl border border-[rgba(196,161,255,0.08)] bg-ofira-surface1 p-6"
+      className="rounded-xl border border-[rgba(13,148,136,0.08)] bg-ofira-surface1 p-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 1 }}
@@ -51,12 +51,12 @@ export default function ShareCard({ score, diagnosisId }: ShareCardProps) {
       </div>
 
       {/* Instagram Story preview */}
-      <div className="mx-auto mb-6 w-40 overflow-hidden rounded-xl border border-[rgba(196,161,255,0.08)]" style={{ aspectRatio: '9/16' }}>
+      <div className="mx-auto mb-6 w-40 overflow-hidden rounded-xl border border-[rgba(13,148,136,0.08)]" style={{ aspectRatio: '9/16' }}>
         <div
           className="flex h-full flex-col items-center justify-center p-4"
-          style={{ background: 'linear-gradient(135deg, #13111c, #1a1726, #0c0a14)' }}
+          style={{ background: 'linear-gradient(135deg, #f8f7fc, #f0eef5, #ffffff)' }}
         >
-          <span className="mb-1 text-[10px] tracking-widest uppercase text-ofira-text-secondary">Ofira</span>
+          <span className="mb-1 text-[10px] tracking-widest uppercase text-ofira-text-secondary">Ophyra</span>
           <span
             className="text-4xl font-bold"
             style={{ color: getScoreColor(score) }}
@@ -64,7 +64,7 @@ export default function ShareCard({ score, diagnosisId }: ShareCardProps) {
             {score}
           </span>
           <span className="text-[10px] text-ofira-text-secondary">/100</span>
-          <div className="mt-3 h-px w-12" style={{ background: 'linear-gradient(90deg, transparent, #c4a1ff, transparent)' }} />
+          <div className="mt-3 h-px w-12" style={{ background: 'linear-gradient(90deg, transparent, #0d9488, transparent)' }} />
         </div>
       </div>
 
@@ -72,7 +72,7 @@ export default function ShareCard({ score, diagnosisId }: ShareCardProps) {
         <Button
           variant="outline"
           onClick={handleCopy}
-          className="flex-1 gap-2 border-[rgba(196,161,255,0.08)] bg-ofira-surface1 hover:bg-ofira-surface2"
+          className="flex-1 gap-2 border-[rgba(13,148,136,0.08)] bg-ofira-surface1 hover:bg-ofira-surface2"
         >
           {copied ? (
             <>
@@ -90,7 +90,7 @@ export default function ShareCard({ score, diagnosisId }: ShareCardProps) {
         <Button
           variant="outline"
           onClick={handleTwitter}
-          className="gap-2 border-[rgba(196,161,255,0.08)] bg-ofira-surface1 hover:bg-ofira-surface2"
+          className="gap-2 border-[rgba(13,148,136,0.08)] bg-ofira-surface1 hover:bg-ofira-surface2"
         >
           <Twitter className="h-4 w-4" />
           <span className="hidden sm:inline">Share</span>

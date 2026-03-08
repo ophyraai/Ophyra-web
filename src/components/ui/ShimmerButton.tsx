@@ -18,7 +18,7 @@ export default function ShimmerButton({ href, onClick, children, className = '',
       whileHover={disabled ? undefined : { scale: 1.05 }}
       whileTap={disabled ? undefined : { scale: 0.98 }}
       style={{
-        background: 'linear-gradient(135deg, #c4a1ff, #ff9e7a)',
+        background: 'linear-gradient(135deg, #0d9488, #059669)',
       }}
     >
       {/* Shimmer sweep */}

@@ -73,6 +73,13 @@ export default function SignupPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
+      <Link
+        href="/"
+        className="fixed left-4 top-4 z-50 inline-flex items-center gap-1.5 text-sm text-ofira-text-secondary hover:text-ofira-text transition-colors"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        Volver
+      </Link>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

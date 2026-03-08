@@ -45,13 +45,13 @@ export default function RadarChartComponent({ scores }: RadarChartProps) {
       <ResponsiveContainer width="100%" height={350}>
         <RechartsRadar data={data} cx="50%" cy="50%" outerRadius="75%">
           <PolarGrid
-            stroke="rgba(196,161,255,0.08)"
+            stroke="rgba(13,148,136,0.08)"
             strokeDasharray="3 3"
           />
           <PolarAngleAxis
             dataKey="area"
             tick={{
-              fill: '#8b82a8',
+              fill: '#6b6480',
               fontSize: 12,
               fontFamily: 'var(--font-sans)',
             }}
@@ -59,14 +59,14 @@ export default function RadarChartComponent({ scores }: RadarChartProps) {
           <Radar
             name="Score"
             dataKey="value"
-            stroke="#c4a1ff"
-            fill="#c4a1ff"
+            stroke="#0d9488"
+            fill="#0d9488"
             fillOpacity={0.2}
             strokeWidth={2}
             dot={{
               r: 4,
-              fill: '#c4a1ff',
-              stroke: '#0c0a14',
+              fill: '#0d9488',
+              stroke: '#ffffff',
               strokeWidth: 2,
             }}
           />

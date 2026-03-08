@@ -39,7 +39,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className="dark">
+    <html lang={locale}>
       <body
         className={`${dmSans.variable} ${plusJakarta.variable} ${spaceGrotesk.variable} antialiased bg-ofira-bg text-ofira-text min-h-screen`}
         style={{ fontFamily: "var(--font-body)" }}

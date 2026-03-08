@@ -34,7 +34,7 @@ export default function GlowCard({ children, className = '' }: GlowCardProps) {
         className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300"
         style={{
           opacity: isHovering ? 1 : 0,
-          background: `radial-gradient(circle at ${glowPosition.x}% ${glowPosition.y}%, rgba(196,161,255,0.15), transparent 60%)`,
+          background: `radial-gradient(circle at ${glowPosition.x}% ${glowPosition.y}%, rgba(13,148,136,0.08), transparent 60%)`,
         }}
       />
 

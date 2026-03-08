@@ -10,7 +10,7 @@ interface NutritionQualityProps {
 
 const levels = [
   { key: 'terrible', color: '#ef4444' },
-  { key: 'poor', color: '#f97316' },
+  { key: 'poor', color: '#059669' },
   { key: 'average', color: '#eab308' },
   { key: 'good', color: '#22c55e' },
   { key: 'excellent', color: '#10b981' },

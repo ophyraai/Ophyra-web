@@ -2,8 +2,8 @@
 
 import { useTranslations } from 'next-intl';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
-import { useEffect, useRef, useCallback, useState } from 'react';
-import { Quote } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Star, BadgeCheck } from 'lucide-react';
 
 function AnimatedCounter({ target }: { target: number }) {
   const t = useTranslations('landing.socialProof');
@@ -16,7 +16,7 @@ function AnimatedCounter({ target }: { target: number }) {
   }, [count, target]);
 
   return (
-    <div className="mb-16 text-center">
+    <div className="mb-14 text-center">
       <span className="text-5xl font-bold text-gradient sm:text-6xl">
         <motion.span>{rounded}</motion.span>+
       </span>
@@ -26,106 +26,119 @@ function AnimatedCounter({ target }: { target: number }) {
 }
 
 const testimonials = [
-  { textKey: 'testimonial1', authorKey: 'testimonial1Author' },
-  { textKey: 'testimonial2', authorKey: 'testimonial2Author' },
-  { textKey: 'testimonial3', authorKey: 'testimonial3Author' },
+  { textKey: 'testimonial1', authorKey: 'testimonial1Author', avatar: 'https://i.pravatar.cc/80?img=1', score: 82 },
+  { textKey: 'testimonial2', authorKey: 'testimonial2Author', avatar: 'https://i.pravatar.cc/80?img=3', score: 76 },
+  { textKey: 'testimonial3', authorKey: 'testimonial3Author', avatar: 'https://i.pravatar.cc/80?img=5', score: 91 },
+  { textKey: 'testimonial4', authorKey: 'testimonial4Author', avatar: 'https://i.pravatar.cc/80?img=8', score: 68 },
+  { textKey: 'testimonial5', authorKey: 'testimonial5Author', avatar: 'https://i.pravatar.cc/80?img=9', score: 85 },
+  { textKey: 'testimonial6', authorKey: 'testimonial6Author', avatar: 'https://i.pravatar.cc/80?img=11', score: 73 },
+  { textKey: 'testimonial7', authorKey: 'testimonial7Author', avatar: 'https://i.pravatar.cc/80?img=16', score: 88 },
+  { textKey: 'testimonial8', authorKey: 'testimonial8Author', avatar: 'https://i.pravatar.cc/80?img=12', score: 79 },
+  { textKey: 'testimonial9', authorKey: 'testimonial9Author', avatar: 'https://i.pravatar.cc/80?img=20', score: 84 },
+  { textKey: 'testimonial10', authorKey: 'testimonial10Author', avatar: 'https://i.pravatar.cc/80?img=14', score: 77 },
+  { textKey: 'testimonial11', authorKey: 'testimonial11Author', avatar: 'https://i.pravatar.cc/80?img=23', score: 90 },
+  { textKey: 'testimonial12', authorKey: 'testimonial12Author', avatar: 'https://i.pravatar.cc/80?img=33', score: 71 },
+  { textKey: 'testimonial13', authorKey: 'testimonial13Author', avatar: 'https://i.pravatar.cc/80?img=25', score: 83 },
+  { textKey: 'testimonial14', authorKey: 'testimonial14Author', avatar: 'https://i.pravatar.cc/80?img=51', score: 66 },
+  { textKey: 'testimonial15', authorKey: 'testimonial15Author', avatar: 'https://i.pravatar.cc/80?img=52', score: 95 },
+  { textKey: 'testimonial16', authorKey: 'testimonial16Author', avatar: 'https://i.pravatar.cc/80?img=32', score: 81 },
+  { textKey: 'testimonial17', authorKey: 'testimonial17Author', avatar: 'https://i.pravatar.cc/80?img=53', score: 87 },
+  { textKey: 'testimonial18', authorKey: 'testimonial18Author', avatar: 'https://i.pravatar.cc/80?img=44', score: 74 },
+  { textKey: 'testimonial19', authorKey: 'testimonial19Author', avatar: 'https://i.pravatar.cc/80?img=57', score: 80 },
+  { textKey: 'testimonial20', authorKey: 'testimonial20Author', avatar: 'https://i.pravatar.cc/80?img=47', score: 92 },
 ] as const;
 
-function TiltCard({ children }: { children: React.ReactNode }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+function Stars() {
+  return (
+    <div className="flex gap-0.5">
+      {[...Array(5)].map((_, i) => (
+        <Star key={i} className="size-3.5 fill-amber-400 text-amber-400" />
+      ))}
+    </div>
+  );
+}
 
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = ((e.clientY - rect.top) / rect.height - 0.5) * -5;
-    const y = ((e.clientX - rect.left) / rect.width - 0.5) * 5;
-    setTilt({ x, y });
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setTilt({ x: 0, y: 0 });
-  }, []);
+function TestimonialCard({ textKey, authorKey, avatar, score }: typeof testimonials[number]) {
+  const t = useTranslations('landing.socialProof');
 
   return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="min-w-[280px] flex-shrink-0 rounded-2xl border border-ofira-card-border bg-ofira-card p-6 transition-transform duration-200 sm:min-w-0"
-      style={{
-        transform: `perspective(600px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-      }}
-    >
-      {children}
+    <div className="card-elevated flex h-full flex-col p-6">
+      <Stars />
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-ofira-text">
+        &ldquo;{t(textKey)}&rdquo;
+      </p>
+      <div className="mt-4 flex items-center gap-3">
+        <div className="relative">
+          <img
+            src={avatar}
+            alt=""
+            className="size-10 rounded-full object-cover shadow-md ring-2 ring-white"
+          />
+          <BadgeCheck className="absolute -bottom-0.5 -right-0.5 size-4 fill-ofira-violet text-white" />
+        </div>
+        <div>
+          <div className="flex items-center gap-1.5">
+            <p className="text-sm font-semibold text-ofira-text">{t(authorKey)}</p>
+            <span className="rounded bg-ofira-violet/10 px-1.5 py-0.5 text-[9px] font-bold text-ofira-violet uppercase tracking-wider">Verificado</span>
+          </div>
+          <p className="text-[11px] text-ofira-text-secondary">Score: {score}/100</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Infinite scroll rows (marquee) ──────────────────────────────────
+function MarqueeRow({ items, direction = 'left', speed = 35 }: {
+  items: typeof testimonials[number][];
+  direction?: 'left' | 'right';
+  speed?: number;
+}) {
+  // Double items for seamless loop
+  const doubled = [...items, ...items];
+
+  return (
+    <div className="relative overflow-hidden py-2">
+      <motion.div
+        className="flex gap-5"
+        animate={{ x: direction === 'left' ? [0, -50 * items.length + '%'] : [-50 * items.length + '%', 0] }}
+        transition={{
+          x: {
+            duration: speed,
+            repeat: Infinity,
+            ease: 'linear',
+          },
+        }}
+        style={{ width: `${doubled.length * 340}px` }}
+      >
+        {doubled.map((item, i) => (
+          <div key={`${item.textKey}-${i}`} className="w-[320px] flex-shrink-0">
+            <TestimonialCard {...item} />
+          </div>
+        ))}
+      </motion.div>
+      {/* Fade edges */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-ofira-bg to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-ofira-bg to-transparent" />
     </div>
   );
 }
 
 export default function SocialProof() {
-  const t = useTranslations('landing.socialProof');
-  const marqueeRef = useRef<HTMLDivElement>(null);
-  const [paused, setPaused] = useState(false);
+  const allItems = [...testimonials] as typeof testimonials[number][];
 
   return (
-    <section className="py-24 px-4">
+    <section className="py-24 px-4 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.5 }}
       >
-        <AnimatedCounter target={2847} />
+        <AnimatedCounter target={3247} />
       </motion.div>
 
-      {/* Desktop: grid with tilt */}
-      <div className="hidden sm:grid sm:grid-cols-3 sm:gap-6">
-        {testimonials.map(({ textKey, authorKey }, i) => (
-          <motion.div
-            key={textKey}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-          >
-            <TiltCard>
-              <Quote className="mb-4 size-5 text-ofira-violet" />
-              <p className="mb-4 text-sm leading-relaxed text-ofira-text-secondary">
-                &ldquo;{t(textKey)}&rdquo;
-              </p>
-              <span className="text-sm font-semibold">{t(authorKey)}</span>
-            </TiltCard>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Mobile: marquee auto-scroll */}
-      <div
-        className="sm:hidden overflow-hidden"
-        onTouchStart={() => setPaused(true)}
-        onTouchEnd={() => setPaused(false)}
-      >
-        <div
-          ref={marqueeRef}
-          className="flex gap-6 marquee-scroll"
-          style={{
-            animationPlayState: paused ? 'paused' : 'running',
-          }}
-        >
-          {[...testimonials, ...testimonials].map(({ textKey, authorKey }, i) => (
-            <div
-              key={`${textKey}-${i}`}
-              className="min-w-[280px] flex-shrink-0 rounded-2xl border border-ofira-card-border bg-ofira-card p-6"
-            >
-              <Quote className="mb-4 size-5 text-ofira-violet" />
-              <p className="mb-4 text-sm leading-relaxed text-ofira-text-secondary">
-                &ldquo;{t(textKey)}&rdquo;
-              </p>
-              <span className="text-sm font-semibold">{t(authorKey)}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+      <MarqueeRow items={allItems} direction="left" speed={1400} />
     </section>
   );
 }

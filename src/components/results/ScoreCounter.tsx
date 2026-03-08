@@ -18,8 +18,8 @@ export default function ScoreCounter({ score }: ScoreCounterProps) {
 
   const getScoreColor = (s: number) => {
     if (s < 40) return '#ef4444';
-    if (s < 70) return '#ff9e7a';
-    return '#c4a1ff';
+    if (s < 70) return '#059669';
+    return '#0d9488';
   };
 
   const getLabel = (s: number) => {
@@ -108,7 +108,7 @@ export default function ScoreCounter({ score }: ScoreCounterProps) {
           className="text-8xl font-bold tabular-nums md:text-9xl"
           style={{
             fontFamily: 'var(--font-display)',
-            background: `linear-gradient(135deg, #c4a1ff, #ff9e7a)`,
+            background: `linear-gradient(135deg, #0d9488, #059669)`,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',

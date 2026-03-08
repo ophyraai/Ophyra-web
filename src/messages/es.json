@@ -1,9 +1,15 @@
 {
   "landing": {
+    "navbar": {
+      "diagnosis": "Diagnóstico",
+      "shop": "Shop",
+      "dashboard": "Dashboard",
+      "signup": "Regístrate"
+    },
     "hero": {
-      "badge": "Potenciado por IA",
+      "badge": "Tu bienestar, medido",
       "title": "Descubre el estado real de tus hábitos",
-      "subtitle": "Un diagnóstico personalizado por inteligencia artificial que analiza tus hábitos y te da un plan de acción concreto en menos de 5 minutos.",
+      "subtitle": "Un diagnóstico personalizado que analiza tus hábitos y te da un plan de acción concreto en menos de 5 minutos.",
       "cta": "Empieza tu diagnóstico",
       "ctaSub": "Gratis - Sin registro"
     },
@@ -23,14 +29,92 @@
       "testimonial2": "El plan de acción es súper concreto. Ya llevo 2 semanas aplicándolo.",
       "testimonial2Author": "Carlos R.",
       "testimonial3": "Pensé que era otro quiz genérico pero el análisis es muy personal.",
-      "testimonial3Author": "Ana L."
+      "testimonial3Author": "Ana L.",
+      "testimonial4": "Mi hidratación estaba al 40% y no lo sabía. Ahora bebo 2L al día sin esfuerzo.",
+      "testimonial4Author": "Pablo M.",
+      "testimonial5": "Lo mejor es el seguimiento. Ves cómo mejoras semana a semana con datos reales.",
+      "testimonial5Author": "Laura S.",
+      "testimonial6": "Se lo recomendé a toda mi familia. Mi madre mejoró su score un 25% en un mes.",
+      "testimonial6Author": "Javier T.",
+      "testimonial7": "Solo me llevó 4 minutos y el resultado fue más útil que cualquier visita al nutricionista.",
+      "testimonial7Author": "Elena R.",
+      "testimonial8": "Descubrí que mi punto débil era el descanso. Cambié un hábito y ya duermo mejor.",
+      "testimonial8Author": "David F.",
+      "testimonial9": "Me encanta el radar de bienestar. Ver mis áreas fuertes y débiles en un gráfico es genial.",
+      "testimonial9Author": "Sofía V.",
+      "testimonial10": "Lo hice por curiosidad y terminé cambiando 3 hábitos. Mi energía ha cambiado totalmente.",
+      "testimonial10Author": "Marcos H.",
+      "testimonial11": "Es como tener un coach de salud en el bolsillo. Y gratis. No me lo podía creer.",
+      "testimonial11Author": "Carmen D.",
+      "testimonial12": "Mi pareja y yo lo hicimos juntos. Ahora competimos por mejorar nuestros scores.",
+      "testimonial12Author": "Roberto A.",
+      "testimonial13": "Llevo un mes siguiendo el plan y he bajado 3 kilos sin hacer dieta. Solo mejores hábitos.",
+      "testimonial13Author": "Isabel P.",
+      "testimonial14": "El análisis de estrés fue revelador. No sabía que estaba tan por encima de la media.",
+      "testimonial14Author": "Fernando G.",
+      "testimonial15": "Soy médico y me sorprendió la calidad del análisis. Lo recomiendo a mis pacientes.",
+      "testimonial15Author": "Dr. Miguel L.",
+      "testimonial16": "Lo mejor: el plan de acción. No es genérico, se adapta a tus puntos débiles reales.",
+      "testimonial16Author": "Natalia C.",
+      "testimonial17": "He hecho el diagnóstico 3 veces y cada vez veo cómo mejoro. Es muy motivador.",
+      "testimonial17Author": "Alejandro B.",
+      "testimonial18": "Mis amigas y yo lo hicimos en grupo. Fue divertido comparar resultados.",
+      "testimonial18Author": "Lucía M.",
+      "testimonial19": "Nunca pensé que dormir 30 min más cambiaría tanto. Este diagnóstico me abrió los ojos.",
+      "testimonial19Author": "Andrés K.",
+      "testimonial20": "Simple, rápido y útil. Ojalá lo hubiera encontrado antes.",
+      "testimonial20Author": "Raquel S."
     },
     "footer": {
-      "brand": "Ofira Diagnosis",
-      "tagline": "Tu diagnóstico de hábitos potenciado por IA",
+      "brand": "Ophyra Diagnosis",
+      "tagline": "Tu diagnóstico de bienestar y hábitos",
       "privacy": "Privacidad",
       "terms": "Términos",
       "contact": "Contacto"
+    },
+    "heroV2": {
+      "badge": "Tu bienestar, medido",
+      "title": "Tu diagnóstico de hábitos en 5 minutos",
+      "subtitle": "Descubre el estado real de tus hábitos. Análisis personalizado, plan de acción y seguimiento de progreso.",
+      "cta": "Empieza tu diagnóstico",
+      "ctaSecondary": "Ver demo",
+      "ctaSub": "Gratis — Sin registro"
+    },
+    "socialStats": {
+      "followers": "Seguidores",
+      "diagnoses": "Diagnósticos",
+      "countries": "Países"
+    },
+    "socialEmbed": {
+      "title": "Lo que dicen de nosotros",
+      "watchMore": "Ver más en @ophyra_secret"
+    },
+    "diagnosisPreview": {
+      "title": "Prueba antes de empezar",
+      "cta": "Comenzar diagnóstico completo",
+      "sampleQ1": "¿Cuántas horas duermes de media por noche?",
+      "sampleQ2": "¿Con qué frecuencia sientes fatiga mental durante el día?",
+      "sampleQ3": "¿Cuántos litros de agua bebes al día?",
+      "sampleQ4": "¿Cómo calificarías tu nivel de estrés esta semana?",
+      "sampleQ5": "¿Cuántas veces por semana realizas actividad física?"
+    },
+    "habitTip": {
+      "title": "Tip del día",
+      "fallback": "Beber un vaso de agua al despertar activa tu metabolismo."
+    },
+    "communityGrowth": {
+      "title": "Únete a {count} personas mejorando sus hábitos",
+      "subtitle": "esta semana",
+      "cta": "Empieza ahora"
+    },
+    "howItWorksV2": {
+      "title": "Cómo funciona",
+      "step1Title": "Responde",
+      "step1Desc": "17 preguntas interactivas sobre tus hábitos diarios. Sin formularios aburridos.",
+      "step2Title": "Análisis profundo",
+      "step2Desc": "Analizamos tus respuestas y creamos un perfil único de tus hábitos y bienestar.",
+      "step3Title": "Actúa",
+      "step3Desc": "Recibe tu puntuación, áreas de mejora, plan de 30 días y tracking de hábitos."
     }
   },
   "diagnosis": {
@@ -227,7 +311,7 @@
     ]
   },
   "results": {
-    "title": "Tu Diagnóstico Ofira",
+    "title": "Tu Diagnóstico Ophyra",
     "overallScore": "Puntuación General",
     "outOf": "de 100",
     "areas": {
@@ -248,12 +332,49 @@
     },
     "share": {
       "title": "Comparte tu resultado",
-      "text": "Mi puntuación de hábitos Ofira: {score}/100"
+      "text": "Mi puntuación de hábitos Ophyra: {score}/100"
     },
     "saveAccount": {
       "title": "Guarda tu diagnóstico",
       "subtitle": "Crea una cuenta para acceder a tu historial y trackear tu progreso.",
       "cta": "Crear cuenta gratis"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "today": "Hoy",
+    "streak": "Racha",
+    "days": "días",
+    "completed": "completados",
+    "habits": "Hábitos",
+    "progress": "Progreso",
+    "noHabits": "Aún no tienes hábitos. Completa tu diagnóstico para generar tu plan.",
+    "rediagnosis": "Re-diagnóstico disponible",
+    "rediagnosisDesc": "Han pasado 30 días. Descubre cuánto has mejorado.",
+    "rediagnosisCta": "Hacer re-diagnóstico",
+    "startPlan": "Empieza tu Plan de 30 Días",
+    "categories": {
+      "sleep": "Sueño",
+      "exercise": "Ejercicio",
+      "nutrition": "Alimentación",
+      "stress": "Estrés",
+      "productivity": "Productividad",
+      "hydration": "Hidratación"
+    }
+  },
+  "shop": {
+    "title": "Shop",
+    "comingSoon": "Productos próximamente",
+    "comingSoonDesc": "Estamos seleccionando los mejores productos para mejorar tus hábitos.",
+    "notify": "Avisarme cuando haya productos",
+    "categories": {
+      "all": "Todos",
+      "sleep": "Sueño",
+      "exercise": "Ejercicio",
+      "nutrition": "Alimentación",
+      "stress": "Estrés",
+      "productivity": "Productividad",
+      "hydration": "Hidratación"
     }
   }
 }

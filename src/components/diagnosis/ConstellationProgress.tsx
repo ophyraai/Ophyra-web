@@ -36,14 +36,14 @@ export default function ConstellationProgress({ current, total }: ConstellationP
                     width: isCurrent ? 14 : 8,
                     height: isCurrent ? 14 : 8,
                     backgroundColor: isCompleted
-                      ? '#c4a1ff'
+                      ? '#0d9488'
                       : isCurrent
-                        ? '#ff9e7a'
-                        : 'rgba(196,161,255,0.15)',
+                        ? '#059669'
+                        : 'rgba(13,148,136,0.15)',
                     boxShadow: isCompleted
-                      ? '0 0 10px rgba(196,161,255,0.4)'
+                      ? '0 0 10px rgba(13,148,136,0.4)'
                       : isCurrent
-                        ? '0 0 15px rgba(255,158,122,0.5)'
+                        ? '0 0 15px rgba(5,150,105,0.5)'
                         : 'none',
                   }}
                   transition={{ type: 'spring', stiffness: 300, damping: 25 }}

@@ -31,9 +31,13 @@ export default function PaywallOverlay({
       const data = await res.json();
       if (data.url) {
         window.location.href = data.url;
+      } else {
+        console.error('Checkout failed:', data);
+        alert(data.error || 'Error al crear la sesión de pago.');
       }
     } catch (error) {
       console.error('Checkout error:', error);
+      alert('Error de conexión. Inténtalo de nuevo.');
     } finally {
       setLoading(false);
     }
@@ -45,7 +49,7 @@ export default function PaywallOverlay({
       style={{
         backdropFilter: 'blur(20px) saturate(150%)',
         WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-        background: 'linear-gradient(to bottom, rgba(19,17,28,0.8), rgba(12,10,20,0.9))',
+        background: 'linear-gradient(to bottom, rgba(248,247,252,0.9), rgba(240,238,245,0.95))',
         border: '1px solid transparent',
         backgroundClip: 'padding-box',
       }}
@@ -58,7 +62,7 @@ export default function PaywallOverlay({
         className="pointer-events-none absolute inset-0 rounded-2xl"
         style={{
           padding: '1px',
-          background: 'linear-gradient(135deg, #c4a1ff, #ff9e7a)',
+          background: 'linear-gradient(135deg, #0d9488, #059669)',
           mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
           maskComposite: 'xor',
           WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',

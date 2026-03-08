@@ -103,8 +103,8 @@ export default function BodyGoal({ value, onChange }: BodyGoalProps) {
         >
           <defs>
             <linearGradient id={GRADIENT_ID} x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#c4a1ff" />
-              <stop offset="100%" stopColor="#ff9e7a" />
+              <stop offset="0%" stopColor="#0d9488" />
+              <stop offset="100%" stopColor="#059669" />
             </linearGradient>
             <filter id={GLOW_ID} x="-40%" y="-40%" width="180%" height="180%">
               <feGaussianBlur stdDeviation="6" result="blur" />
@@ -230,7 +230,7 @@ export default function BodyGoal({ value, onChange }: BodyGoalProps) {
           transition={{ duration: 0.2 }}
           className={`rounded-full border px-6 py-2.5 text-sm font-medium transition-colors ${
             selected.includes('flexibility')
-              ? 'border-transparent bg-gradient-to-r from-ofira-violet to-ofira-peach text-white shadow-[0_0_20px_rgba(196,161,255,0.35)]'
+              ? 'border-transparent bg-gradient-to-r from-ofira-violet to-ofira-peach text-white shadow-[0_0_20px_rgba(13,148,136,0.35)]'
               : 'border-ofira-card-border bg-ofira-card text-ofira-text-secondary hover:border-ofira-violet/30'
           }`}
         >

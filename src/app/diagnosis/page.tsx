@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import DiagnosisFlow from '@/components/diagnosis/DiagnosisFlow';
@@ -35,7 +35,7 @@ function AnalyzingScreen({
     const step = () => {
       angle = (angle + 0.3) % 360;
       if (bgRef.current) {
-        bgRef.current.style.background = `conic-gradient(from ${angle}deg at 50% 50%, #0c0a14, rgba(196,161,255,0.08), #0c0a14, rgba(255,158,122,0.06), #0c0a14)`;
+        bgRef.current.style.background = `conic-gradient(from ${angle}deg at 50% 50%, #ffffff, rgba(13,148,136,0.06), #ffffff, rgba(5,150,105,0.04), #ffffff)`;
       }
       rafRef.current = requestAnimationFrame(step);
     };
@@ -84,7 +84,7 @@ function AnalyzingScreen({
             style={{
               width: 128,
               height: 128,
-              background: 'radial-gradient(circle, #c4a1ff 0%, transparent 70%)',
+              background: 'radial-gradient(circle, #0d9488 0%, transparent 70%)',
             }}
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
@@ -95,7 +95,7 @@ function AnalyzingScreen({
             style={{
               width: 96,
               height: 96,
-              background: 'radial-gradient(circle, #ff9e7a 0%, transparent 70%)',
+              background: 'radial-gradient(circle, #059669 0%, transparent 70%)',
             }}
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
@@ -106,7 +106,7 @@ function AnalyzingScreen({
             style={{
               width: 48,
               height: 48,
-              backgroundColor: 'rgba(196,161,255,0.3)',
+              backgroundColor: 'rgba(13,148,136,0.15)',
             }}
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
@@ -137,7 +137,7 @@ function AnalyzingScreen({
         <motion.span
           className="text-4xl font-bold tabular-nums"
           style={{
-            background: 'linear-gradient(135deg, #c4a1ff, #ff9e7a)',
+            background: 'linear-gradient(135deg, #0d9488, #059669)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -171,7 +171,7 @@ function AnalyzingScreen({
               key={i}
               className="h-1.5 w-1.5 rounded-full transition-colors duration-300"
               style={{
-                backgroundColor: i === messageIndex ? '#c4a1ff' : 'rgba(196,161,255,0.2)',
+                backgroundColor: i === messageIndex ? '#0d9488' : 'rgba(13,148,136,0.15)',
               }}
             />
           ))}
@@ -192,14 +192,18 @@ function AnalyzingScreen({
   );
 }
 
-export default function DiagnosisPage() {
+function DiagnosisPageInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const t = useTranslations('analysis');
   const [phase, setPhase] = useState<Phase>('quiz');
   const [error, setError] = useState<string | null>(null);
   const [messageIndex, setMessageIndex] = useState(0);
   const [navigateTo, setNavigateTo] = useState<string | null>(null);
   const messages = t.raw('messages') as string[];
+
+  const isRediagnosis = searchParams.get('rediagnosis') === 'true';
+  const previousDiagnosisId = searchParams.get('previous');
 
   const handleSubmit = useCallback(async (answers: DiagnosisAnswers) => {
     setPhase('analyzing');
@@ -231,15 +235,19 @@ export default function DiagnosisPage() {
         body: JSON.stringify({ diagnosisId: id, answers, scores, locale: 'es', photoUrls }),
       }).catch(console.error);
 
-      // 3. Navigate to results after animation
+      // 3. Navigate to results or comparison after animation
       clearInterval(interval);
-      setNavigateTo(`/diagnosis/${id}`);
+      if (isRediagnosis && previousDiagnosisId) {
+        setNavigateTo(`/diagnosis/${id}/compare?previous=${previousDiagnosisId}`);
+      } else {
+        setNavigateTo(`/diagnosis/${id}`);
+      }
     } catch (err) {
       clearInterval(interval);
       setError(err instanceof Error ? err.message : 'Something went wrong');
       setPhase('error');
     }
-  }, [messages.length]);
+  }, [messages.length, isRediagnosis, previousDiagnosisId]);
 
   if (phase === 'analyzing') {
     return (
@@ -266,4 +274,16 @@ export default function DiagnosisPage() {
   }
 
   return <DiagnosisFlow onSubmit={handleSubmit} />;
+}
+
+export default function DiagnosisPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-ofira-bg">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-ofira-violet border-t-transparent" />
+      </div>
+    }>
+      <DiagnosisPageInner />
+    </Suspense>
+  );
 }

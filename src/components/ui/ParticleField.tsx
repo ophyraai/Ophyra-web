@@ -29,7 +29,7 @@ export default function ParticleField({ count = 25, className = '' }: ParticleFi
         size: Math.random() * 3 + 1,
         delay: Math.random() * 10,
         duration: Math.random() * 15 + 15,
-        opacity: Math.random() * 0.3 + 0.1,
+        opacity: Math.random() * 0.15 + 0.05,
       }))
     );
   }, [count]);

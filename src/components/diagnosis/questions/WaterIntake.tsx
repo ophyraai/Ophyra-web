@@ -24,7 +24,7 @@ function WaterGlass({ level, index }: { level: number; index: number }) {
       <path
         d={`M 6 4 L 4 ${glassH + 2} Q 4 ${glassH + 6} 8 ${glassH + 6} L ${glassW} ${glassH + 6} Q ${glassW + 4} ${glassH + 6} ${glassW + 4} ${glassH + 2} L ${glassW + 2} 4 Z`}
         fill="none"
-        stroke="rgba(196,161,255,0.25)"
+        stroke="rgba(13,148,136,0.25)"
         strokeWidth={1.5}
       />
       {fillPercent > 0 && (
@@ -33,14 +33,14 @@ function WaterGlass({ level, index }: { level: number; index: number }) {
             x={0}
             width={glassW + 8}
             height={glassH + 8}
-            fill="rgba(125,211,192,0.35)"
+            fill="rgba(13,148,136,0.35)"
             initial={false}
             animate={{ y: waterY }}
             transition={{ type: 'spring', stiffness: 200, damping: 20 }}
           />
           <motion.path
             d={`M 0 0 Q ${(glassW + 8) * 0.25} -3 ${(glassW + 8) * 0.5} 0 Q ${(glassW + 8) * 0.75} 3 ${glassW + 8} 0 L ${glassW + 8} 4 L 0 4 Z`}
-            fill="rgba(125,211,192,0.5)"
+            fill="rgba(13,148,136,0.5)"
             initial={false}
             animate={{ y: waterY - 2, x: [0, 2, 0, -2, 0] }}
             transition={{

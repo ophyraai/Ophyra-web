@@ -38,6 +38,21 @@ export async function POST(req: Request) {
           .from('payments')
           .update({ status: 'completed' })
           .eq('stripe_session_id', session.id);
+
+        // Create user subscription with 30-day follow-up
+        const email = session.customer_email || session.metadata?.email;
+        if (email) {
+          const followUpDate = new Date();
+          followUpDate.setDate(followUpDate.getDate() + 30);
+
+          await supabaseAdmin.from('user_subscriptions').insert({
+            email,
+            plan: 'premium',
+            stripe_customer_id: typeof session.customer === 'string' ? session.customer : null,
+            follow_up_date: followUpDate.toISOString(),
+            is_active: true,
+          });
+        }
       }
     }
   } catch (err) {

@@ -10,7 +10,7 @@ import PaywallOverlay from '@/components/results/PaywallOverlay';
 import ShareCard from '@/components/results/ShareCard';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Calendar } from 'lucide-react';
 
 interface DiagnosisData {
   id: string;
@@ -118,7 +118,7 @@ export default function ResultsClient({
         {/* Free Summary */}
         {aiData?.summary && (
           <motion.div
-            className="glass-card mb-8 rounded-xl border border-[rgba(196,161,255,0.08)] bg-ofira-surface1 p-6"
+            className="glass-card mb-8 rounded-xl border border-[rgba(13,148,136,0.08)] bg-ofira-surface1 p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
@@ -155,7 +155,7 @@ export default function ResultsClient({
         {/* 30-day Plan (paid only) */}
         {isPaid && aiData?.thirty_day_plan && (
           <motion.div
-            className="mb-8 rounded-xl border border-[rgba(196,161,255,0.08)] bg-ofira-surface1 p-6"
+            className="mb-8 rounded-xl border border-[rgba(13,148,136,0.08)] bg-ofira-surface1 p-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
@@ -188,12 +188,32 @@ export default function ResultsClient({
           </motion.div>
         )}
 
+        {/* Start 30-day plan CTA */}
+        {isPaid && aiData?.thirty_day_plan && (
+          <motion.div className="mb-8 text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>
+            <button
+              onClick={async () => {
+                const res = await fetch('/api/habits/generate', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ diagnosisId: diagnosis.id }),
+                });
+                if (res.ok) window.location.href = '/dashboard';
+              }}
+              className="inline-flex items-center gap-2 rounded-lg bg-ofira-violet px-6 py-3 font-medium text-white hover:bg-ofira-violet/90"
+            >
+              <Calendar className="size-4" />
+              Empieza tu Plan de 30 Dias
+            </button>
+          </motion.div>
+        )}
+
         {/* Share */}
         <ShareCard score={diagnosis.overall_score || 0} diagnosisId={diagnosis.id} />
 
         {/* Save account CTA */}
         <motion.div
-          className="mt-8 rounded-xl border border-[rgba(196,161,255,0.08)] bg-ofira-surface1 p-6 text-center"
+          className="mt-8 rounded-xl border border-[rgba(13,148,136,0.08)] bg-ofira-surface1 p-6 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
@@ -202,12 +222,14 @@ export default function ResultsClient({
           <p className="mb-4 text-sm text-ofira-text-secondary">
             {t('saveAccount.subtitle')}
           </p>
-          <Button
-            variant="outline"
-            className="border-ofira-violet/30 text-ofira-violet hover:bg-ofira-violet/10"
-          >
-            {t('saveAccount.cta')}
-          </Button>
+          <Link href="/auth/signup">
+            <Button
+              variant="outline"
+              className="border-ofira-violet/30 text-ofira-violet hover:bg-ofira-violet/10"
+            >
+              {t('saveAccount.cta')}
+            </Button>
+          </Link>
         </motion.div>
 
         {/* Footer spacing */}

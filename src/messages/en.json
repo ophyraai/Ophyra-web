@@ -1,9 +1,15 @@
 {
   "landing": {
+    "navbar": {
+      "diagnosis": "Diagnosis",
+      "shop": "Shop",
+      "dashboard": "Dashboard",
+      "signup": "Sign up"
+    },
     "hero": {
-      "badge": "Powered by AI",
+      "badge": "Your wellness, measured",
       "title": "Discover the real state of your habits",
-      "subtitle": "A personalized AI-powered diagnosis that analyzes your habits and gives you a concrete action plan in less than 5 minutes.",
+      "subtitle": "A personalized diagnosis that analyzes your habits and gives you a concrete action plan in less than 5 minutes.",
       "cta": "Start your diagnosis",
       "ctaSub": "Free - No signup required"
     },
@@ -23,14 +29,92 @@
       "testimonial2": "The action plan is super concrete. I've been applying it for 2 weeks now.",
       "testimonial2Author": "Carlos R.",
       "testimonial3": "I thought it was another generic quiz but the analysis is very personal.",
-      "testimonial3Author": "Ana L."
+      "testimonial3Author": "Ana L.",
+      "testimonial4": "My hydration was at 40% and I had no idea. Now I drink 2L daily without effort.",
+      "testimonial4Author": "Pablo M.",
+      "testimonial5": "The best part is the tracking. You see yourself improving week by week with real data.",
+      "testimonial5Author": "Laura S.",
+      "testimonial6": "I recommended it to my whole family. My mom improved her score by 25% in a month.",
+      "testimonial6Author": "Javier T.",
+      "testimonial7": "It only took 4 minutes and the result was more useful than any visit to a nutritionist.",
+      "testimonial7Author": "Elena R.",
+      "testimonial8": "I discovered my weak point was rest. Changed one habit and I already sleep better.",
+      "testimonial8Author": "David F.",
+      "testimonial9": "I love the wellness radar. Seeing my strengths and weaknesses on a chart is amazing.",
+      "testimonial9Author": "Sofia V.",
+      "testimonial10": "Did it out of curiosity and ended up changing 3 habits. My energy has totally changed.",
+      "testimonial10Author": "Marcos H.",
+      "testimonial11": "It's like having a health coach in your pocket. And it's free. I couldn't believe it.",
+      "testimonial11Author": "Carmen D.",
+      "testimonial12": "My partner and I did it together. Now we compete to improve our scores.",
+      "testimonial12Author": "Roberto A.",
+      "testimonial13": "Been following the plan for a month and lost 3 kg without dieting. Just better habits.",
+      "testimonial13Author": "Isabel P.",
+      "testimonial14": "The stress analysis was eye-opening. I didn't know I was so far above average.",
+      "testimonial14Author": "Fernando G.",
+      "testimonial15": "I'm a doctor and was surprised by the quality of the analysis. I recommend it to patients.",
+      "testimonial15Author": "Dr. Miguel L.",
+      "testimonial16": "The best part: the action plan. It's not generic, it adapts to your real weak points.",
+      "testimonial16Author": "Natalia C.",
+      "testimonial17": "I've done the diagnosis 3 times and I can see my improvement each time. Very motivating.",
+      "testimonial17Author": "Alejandro B.",
+      "testimonial18": "My friends and I did it as a group. It was fun comparing results.",
+      "testimonial18Author": "Lucia M.",
+      "testimonial19": "Never thought sleeping 30 min more would change so much. This diagnosis opened my eyes.",
+      "testimonial19Author": "Andres K.",
+      "testimonial20": "Simple, fast, and useful. I wish I had found it sooner.",
+      "testimonial20Author": "Raquel S."
     },
     "footer": {
-      "brand": "Ofira Diagnosis",
-      "tagline": "Your AI-powered habit diagnosis",
+      "brand": "Ophyra Diagnosis",
+      "tagline": "Your wellness & habit diagnosis",
       "privacy": "Privacy",
       "terms": "Terms",
       "contact": "Contact"
+    },
+    "heroV2": {
+      "badge": "Your wellness, measured",
+      "title": "Your habit diagnosis in 5 minutes",
+      "subtitle": "Discover the real state of your habits. Personalized analysis, action plan, and progress tracking.",
+      "cta": "Start your diagnosis",
+      "ctaSecondary": "See demo",
+      "ctaSub": "Free — No signup required"
+    },
+    "socialStats": {
+      "followers": "Followers",
+      "diagnoses": "Diagnoses",
+      "countries": "Countries"
+    },
+    "socialEmbed": {
+      "title": "What people say about us",
+      "watchMore": "See more on @ophyra_secret"
+    },
+    "diagnosisPreview": {
+      "title": "Try before you start",
+      "cta": "Start full diagnosis",
+      "sampleQ1": "How many hours do you sleep per night on average?",
+      "sampleQ2": "How often do you experience mental fatigue during the day?",
+      "sampleQ3": "How many liters of water do you drink per day?",
+      "sampleQ4": "How would you rate your stress level this week?",
+      "sampleQ5": "How many times per week do you exercise?"
+    },
+    "habitTip": {
+      "title": "Tip of the day",
+      "fallback": "Drinking a glass of water upon waking activates your metabolism."
+    },
+    "communityGrowth": {
+      "title": "Join {count} people improving their habits",
+      "subtitle": "this week",
+      "cta": "Start now"
+    },
+    "howItWorksV2": {
+      "title": "How it works",
+      "step1Title": "Answer",
+      "step1Desc": "17 interactive questions about your daily habits. No boring forms.",
+      "step2Title": "Deep Analysis",
+      "step2Desc": "We analyze your answers and create a unique profile of your habits and wellness.",
+      "step3Title": "Take Action",
+      "step3Desc": "Get your score, areas for improvement, 30-day plan, and habit tracking."
     }
   },
   "diagnosis": {
@@ -227,7 +311,7 @@
     ]
   },
   "results": {
-    "title": "Your Ofira Diagnosis",
+    "title": "Your Ophyra Diagnosis",
     "overallScore": "Overall Score",
     "outOf": "out of 100",
     "areas": {
@@ -248,12 +332,49 @@
     },
     "share": {
       "title": "Share your result",
-      "text": "My Ofira habits score: {score}/100"
+      "text": "My Ophyra habits score: {score}/100"
     },
     "saveAccount": {
       "title": "Save your diagnosis",
       "subtitle": "Create an account to access your history and track your progress.",
       "cta": "Create free account"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "today": "Today",
+    "streak": "Streak",
+    "days": "days",
+    "completed": "completed",
+    "habits": "Habits",
+    "progress": "Progress",
+    "noHabits": "You don't have any habits yet. Complete your diagnosis to generate your plan.",
+    "rediagnosis": "Re-diagnosis available",
+    "rediagnosisDesc": "30 days have passed. Discover how much you've improved.",
+    "rediagnosisCta": "Take re-diagnosis",
+    "startPlan": "Start your 30-Day Plan",
+    "categories": {
+      "sleep": "Sleep",
+      "exercise": "Exercise",
+      "nutrition": "Nutrition",
+      "stress": "Stress",
+      "productivity": "Productivity",
+      "hydration": "Hydration"
+    }
+  },
+  "shop": {
+    "title": "Shop",
+    "comingSoon": "Products coming soon",
+    "comingSoonDesc": "We're selecting the best products to improve your habits.",
+    "notify": "Notify me when products are available",
+    "categories": {
+      "all": "All",
+      "sleep": "Sleep",
+      "exercise": "Exercise",
+      "nutrition": "Nutrition",
+      "stress": "Stress",
+      "productivity": "Productivity",
+      "hydration": "Hydration"
     }
   }
 }

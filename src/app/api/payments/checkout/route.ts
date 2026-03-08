@@ -56,7 +56,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error('Checkout error:', err);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: err instanceof Error ? err.message : 'Internal server error' },
       { status: 500 }
     );
   }

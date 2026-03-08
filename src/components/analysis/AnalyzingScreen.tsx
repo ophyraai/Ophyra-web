@@ -151,7 +151,7 @@ export default function AnalyzingScreen({
               backgroundColor:
                 i <= currentMessage
                   ? 'rgba(20,184,166,1)'
-                  : 'rgba(255,255,255,0.1)',
+                  : 'rgba(0,0,0,0.1)',
               scale: i === currentMessage ? 1.3 : 1,
             }}
             transition={{ duration: 0.3 }}

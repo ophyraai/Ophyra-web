@@ -16,7 +16,7 @@ export default function MeshGradientBg() {
 
     const tick = () => {
       angle = (angle + 0.15) % 360;
-      el.style.background = `conic-gradient(from ${angle}deg at 50% 50%, rgba(196,161,255,0.12), rgba(255,158,122,0.08), rgba(125,211,192,0.06), rgba(196,161,255,0.12))`;
+      el.style.background = `conic-gradient(from ${angle}deg at 50% 50%, rgba(13,148,136,0.06), rgba(5,150,105,0.04), rgba(13,148,136,0.03), rgba(13,148,136,0.06))`;
       animId = requestAnimationFrame(tick);
     };
     animId = requestAnimationFrame(tick);
@@ -29,7 +29,7 @@ export default function MeshGradientBg() {
       <div
         className="conic-layer absolute inset-0"
         style={{
-          background: 'conic-gradient(from 0deg at 50% 50%, rgba(196,161,255,0.12), rgba(255,158,122,0.08), rgba(125,211,192,0.06), rgba(196,161,255,0.12))',
+          background: 'conic-gradient(from 0deg at 50% 50%, rgba(13,148,136,0.06), rgba(5,150,105,0.04), rgba(13,148,136,0.03), rgba(13,148,136,0.06))',
           willChange: 'background',
         }}
       />
@@ -43,7 +43,7 @@ export default function MeshGradientBg() {
         <ellipse cx="100" cy="100" rx="80" ry="60" fill="url(#blob1)" />
         <defs>
           <radialGradient id="blob1" cx="50%" cy="50%">
-            <stop offset="0%" stopColor="rgba(196,161,255,0.3)" />
+            <stop offset="0%" stopColor="rgba(13,148,136,0.12)" />
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
         </defs>
@@ -58,14 +58,14 @@ export default function MeshGradientBg() {
         <ellipse cx="100" cy="100" rx="70" ry="90" fill="url(#blob2)" />
         <defs>
           <radialGradient id="blob2" cx="50%" cy="50%">
-            <stop offset="0%" stopColor="rgba(255,158,122,0.3)" />
+            <stop offset="0%" stopColor="rgba(5,150,105,0.12)" />
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
         </defs>
       </svg>
 
       {/* Bottom fade */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ofira-bg" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#ffffff]" />
     </div>
   );
 }

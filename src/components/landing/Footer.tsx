@@ -21,7 +21,7 @@ export default function Footer() {
   const t = useTranslations('landing.footer');
 
   return (
-    <footer className="border-t border-ofira-card-border py-12 px-4">
+    <footer className="border-t border-ofira-card-border bg-ofira-surface1 py-12 px-4">
       <div className="flex flex-col items-center gap-6 text-center">
         <div>
           <h3 className="text-lg font-bold">{t('brand')}</h3>

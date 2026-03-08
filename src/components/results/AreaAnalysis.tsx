@@ -29,7 +29,7 @@ const areaIcons: Record<string, React.ElementType> = {
 
 const areaColors: Record<string, string> = {
   sleep: '#818cf8',
-  exercise: '#f97316',
+  exercise: '#059669',
   nutrition: '#22c55e',
   stress: '#ec4899',
   productivity: '#f59e0b',
@@ -51,13 +51,13 @@ export default function AreaAnalysis({ areas, isPaid }: AreaAnalysisProps) {
 
       {areas.map((area) => {
         const Icon = areaIcons[area.area] || Zap;
-        const color = areaColors[area.area] || '#c4a1ff';
+        const color = areaColors[area.area] || '#0d9488';
         const isExpanded = expandedArea === area.area;
 
         return (
           <motion.div
             key={area.area}
-            className="overflow-hidden rounded-xl border border-[rgba(196,161,255,0.08)] bg-ofira-surface1"
+            className="overflow-hidden rounded-xl border border-[rgba(13,148,136,0.08)] bg-ofira-surface1"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
@@ -83,7 +83,7 @@ export default function AreaAnalysis({ areas, isPaid }: AreaAnalysisProps) {
                   </span>
                 </div>
 
-                <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/[0.05]">
+                <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-black/[0.05]">
                   <motion.div
                     className="h-full rounded-full"
                     style={{ backgroundColor: color }}
@@ -111,7 +111,7 @@ export default function AreaAnalysis({ areas, isPaid }: AreaAnalysisProps) {
                   transition={{ duration: 0.3 }}
                   className={isPaid ? '' : 'select-none'}
                 >
-                  <div className={`border-t border-[rgba(196,161,255,0.08)] p-4 ${!isPaid ? 'blur-sm' : ''}`}>
+                  <div className={`border-t border-[rgba(13,148,136,0.08)] p-4 ${!isPaid ? 'blur-sm' : ''}`}>
                     <p className="mb-4 text-sm leading-relaxed text-ofira-text-secondary">
                       {area.analysis}
                     </p>
