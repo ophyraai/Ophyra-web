@@ -1,0 +1,259 @@
+{
+  "landing": {
+    "hero": {
+      "badge": "Powered by AI",
+      "title": "Discover the real state of your habits",
+      "subtitle": "A personalized AI-powered diagnosis that analyzes your habits and gives you a concrete action plan in less than 5 minutes.",
+      "cta": "Start your diagnosis",
+      "ctaSub": "Free - No signup required"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "step1Title": "Answer",
+      "step1Desc": "17 interactive questions about your daily habits. No boring forms.",
+      "step2Title": "We analyze",
+      "step2Desc": "Our AI analyzes your answers and generates a personalized habit profile.",
+      "step3Title": "Discover",
+      "step3Desc": "Get your score, areas for improvement, and a 30-day action plan."
+    },
+    "socialProof": {
+      "counter": "diagnoses completed",
+      "testimonial1": "It opened my eyes about my sleep routine. Incredibly accurate.",
+      "testimonial1Author": "Maria G.",
+      "testimonial2": "The action plan is super concrete. I've been applying it for 2 weeks now.",
+      "testimonial2Author": "Carlos R.",
+      "testimonial3": "I thought it was another generic quiz but the analysis is very personal.",
+      "testimonial3Author": "Ana L."
+    },
+    "footer": {
+      "brand": "Ofira Diagnosis",
+      "tagline": "Your AI-powered habit diagnosis",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "contact": "Contact"
+    }
+  },
+  "diagnosis": {
+    "progress": "{current} of {total}",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Get my diagnosis",
+    "q1": {
+      "title": "First, what's your name?",
+      "placeholder": "Your name"
+    },
+    "q2": {
+      "title": "What time do you usually wake up?",
+      "subtitle": "Drag to select"
+    },
+    "q3": {
+      "title": "How would you describe your energy level during the day?",
+      "levels": ["Exhausted", "Low", "Normal", "Good", "Energetic"]
+    },
+    "q4": {
+      "title": "How many hours of screen time per day (outside work)?",
+      "unit": "hours"
+    },
+    "q5": {
+      "title": "What's your biggest obstacle to better habits?",
+      "options": {
+        "time": "Lack of time",
+        "motivation": "Lack of motivation",
+        "knowledge": "Don't know where to start",
+        "consistency": "Hard to stay consistent",
+        "stress": "Stress and anxiety"
+      }
+    },
+    "q6": {
+      "title": "Do you exercise regularly?",
+      "yes": "Yes",
+      "no": "No",
+      "frequency": "How many times per week?",
+      "times": "times/week"
+    },
+    "q7": {
+      "title": "How would you rate your sleep quality?",
+      "levels": ["Terrible", "Bad", "Average", "Good", "Amazing"]
+    },
+    "q8": {
+      "title": "Do you have an established morning routine?",
+      "yes": "Yes",
+      "no": "No",
+      "activities": "What does your routine include?",
+      "options": {
+        "meditation": "Meditation",
+        "exercise": "Exercise",
+        "journaling": "Journaling",
+        "reading": "Reading",
+        "coldShower": "Cold shower",
+        "planning": "Day planning"
+      }
+    },
+    "q9": {
+      "title": "Which habits would you like to improve?",
+      "subtitle": "Select all that apply",
+      "chips": {
+        "sleep": "Sleep",
+        "exercise": "Exercise",
+        "nutrition": "Nutrition",
+        "hydration": "Hydration",
+        "stress": "Stress management",
+        "productivity": "Productivity",
+        "screenTime": "Screen time",
+        "socialLife": "Social life"
+      }
+    },
+    "q10": {
+      "title": "How do you manage stress?",
+      "options": {
+        "meditation": "Meditation/Mindfulness",
+        "exercise": "Sports/Exercise",
+        "social": "Talk to someone",
+        "nothing": "Nothing specific",
+        "entertainment": "Entertainment/Social media"
+      }
+    },
+    "q11": {
+      "title": "How many glasses of water do you drink per day?",
+      "subtitle": "Tap to fill the glasses"
+    },
+    "q12": {
+      "title": "What's your main goal?",
+      "options": {
+        "energy": "Have more energy",
+        "sleep": "Sleep better",
+        "fitness": "Get in shape",
+        "balance": "Find balance"
+      }
+    },
+    "q6b": {
+      "title": "What would you like to improve about your physique?",
+      "subtitle": "Tap the body zones",
+      "zones": {
+        "posture": "Improve posture",
+        "toneUp": "Tone up torso",
+        "gainMuscle": "Gain muscle",
+        "loseWeight": "Lose fat",
+        "endurance": "More endurance",
+        "flexibility": "Overall flexibility"
+      }
+    },
+    "q7b": {
+      "title": "Upload a photo (optional)",
+      "subtitle": "Upload photos to personalize your diagnosis",
+      "privacy": "Your photos are private and secure",
+      "skip": "You can skip this step",
+      "dropHere": "Drop here",
+      "uploading": "Uploading..."
+    },
+    "qNutrition": {
+      "title": "How would you describe your diet?",
+      "subtitle": "Be honest, this helps us personalize your plan",
+      "levels": {
+        "terrible": "I eat whatever I find",
+        "poor": "Mostly processed food",
+        "average": "I try but not always",
+        "good": "Mostly homemade and balanced",
+        "excellent": "Very healthy and mindful"
+      }
+    },
+    "q13b": {
+      "title": "Do you have any of these issues?",
+      "subtitle": "Tap a zone to explore",
+      "categories": {
+        "skin": "Skin",
+        "digestion": "Digestion",
+        "energy": "Energy",
+        "other": "Other"
+      },
+      "zones": {
+        "head": "Head",
+        "torso": "Torso",
+        "stomach": "Abdomen",
+        "arms": "Arms & Hands",
+        "legs": "Legs & Feet"
+      },
+      "backToBody": "Back to body",
+      "concerns": {
+        "hairLoss": "Hair loss",
+        "thinHair": "Thin or weak hair",
+        "headaches": "Headaches",
+        "brainFog": "Brain fog",
+        "poorConcentration": "Poor concentration",
+        "darkCircles": "Dark circles",
+        "eyeStrain": "Eye strain",
+        "badBreath": "Bad breath",
+        "dryLips": "Dry lips",
+        "acne": "Acne",
+        "dryness": "Dry skin",
+        "rashes": "Rashes or redness",
+        "fatigue": "Chronic fatigue",
+        "lowStamina": "Low stamina",
+        "backPain": "Back pain",
+        "neckTension": "Neck tension",
+        "bloating": "Bloating",
+        "acidReflux": "Acid reflux",
+        "irregularity": "Digestive irregularity",
+        "cramps": "Abdominal cramps",
+        "jointPain": "Joint pain",
+        "stiffness": "Morning stiffness",
+        "muscleAches": "Muscle aches",
+        "legCramps": "Leg cramps",
+        "armPain": "Arm pain",
+        "numbness": "Numbness or tingling",
+        "coldHands": "Cold hands",
+        "brittleNails": "Brittle nails",
+        "swollenFeet": "Swollen feet",
+        "other": "Other"
+      },
+      "otherPlaceholder": "Describe your issue..."
+    },
+    "q16b": {
+      "title": "Tell us more about your situation",
+      "systemMessage": "Tell us more about your situation. Any detail that helps us personalize your diagnosis...",
+      "placeholder": "Type here or use the microphone...",
+      "recording": "Recording..."
+    }
+  },
+  "analysis": {
+    "title": "Analyzing your habits...",
+    "messages": [
+      "Evaluating your sleep pattern...",
+      "Analyzing your activity level...",
+      "Calculating your nutritional balance...",
+      "Measuring your stress management...",
+      "Evaluating your productivity...",
+      "Generating your personalized plan..."
+    ]
+  },
+  "results": {
+    "title": "Your Ofira Diagnosis",
+    "overallScore": "Overall Score",
+    "outOf": "out of 100",
+    "areas": {
+      "sleep": "Sleep",
+      "exercise": "Exercise",
+      "nutrition": "Nutrition",
+      "stress": "Stress",
+      "productivity": "Productivity",
+      "hydration": "Hydration"
+    },
+    "analysis": "Detailed Analysis",
+    "actionPlan": "Action Plan",
+    "unlock": {
+      "title": "Unlock your full diagnosis",
+      "subtitle": "Access detailed area analysis, 30-day action plan, and personalized recommendations.",
+      "cta": "Unlock for $9.99",
+      "guarantee": "Satisfaction guaranteed - or your money back"
+    },
+    "share": {
+      "title": "Share your result",
+      "text": "My Ofira habits score: {score}/100"
+    },
+    "saveAccount": {
+      "title": "Save your diagnosis",
+      "subtitle": "Create an account to access your history and track your progress.",
+      "cta": "Create free account"
+    }
+  }
+}

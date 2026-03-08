@@ -1,0 +1,259 @@
+{
+  "landing": {
+    "hero": {
+      "badge": "Potenciado por IA",
+      "title": "Descubre el estado real de tus hábitos",
+      "subtitle": "Un diagnóstico personalizado por inteligencia artificial que analiza tus hábitos y te da un plan de acción concreto en menos de 5 minutos.",
+      "cta": "Empieza tu diagnóstico",
+      "ctaSub": "Gratis - Sin registro"
+    },
+    "howItWorks": {
+      "title": "Cómo funciona",
+      "step1Title": "Responde",
+      "step1Desc": "17 preguntas interactivas sobre tus hábitos diarios. Sin formularios aburridos.",
+      "step2Title": "Analizamos",
+      "step2Desc": "Nuestra IA analiza tus respuestas y genera un perfil personalizado de tus hábitos.",
+      "step3Title": "Descubre",
+      "step3Desc": "Recibe tu puntuación, áreas de mejora y un plan de acción de 30 días."
+    },
+    "socialProof": {
+      "counter": "diagnósticos completados",
+      "testimonial1": "Me abrió los ojos sobre mi rutina de sueño. Increíble lo preciso que es.",
+      "testimonial1Author": "María G.",
+      "testimonial2": "El plan de acción es súper concreto. Ya llevo 2 semanas aplicándolo.",
+      "testimonial2Author": "Carlos R.",
+      "testimonial3": "Pensé que era otro quiz genérico pero el análisis es muy personal.",
+      "testimonial3Author": "Ana L."
+    },
+    "footer": {
+      "brand": "Ofira Diagnosis",
+      "tagline": "Tu diagnóstico de hábitos potenciado por IA",
+      "privacy": "Privacidad",
+      "terms": "Términos",
+      "contact": "Contacto"
+    }
+  },
+  "diagnosis": {
+    "progress": "{current} de {total}",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "submit": "Obtener mi diagnóstico",
+    "q1": {
+      "title": "Primero, ¿cómo te llamas?",
+      "placeholder": "Tu nombre"
+    },
+    "q2": {
+      "title": "¿A qué hora sueles despertar?",
+      "subtitle": "Arrastra para seleccionar"
+    },
+    "q3": {
+      "title": "¿Cómo describirías tu nivel de energía durante el día?",
+      "levels": ["Agotado", "Bajo", "Normal", "Bueno", "Energético"]
+    },
+    "q4": {
+      "title": "¿Cuántas horas de pantalla al día (fuera del trabajo)?",
+      "unit": "horas"
+    },
+    "q5": {
+      "title": "¿Cuál es tu mayor obstáculo para tener mejores hábitos?",
+      "options": {
+        "time": "Falta de tiempo",
+        "motivation": "Falta de motivación",
+        "knowledge": "No sé por dónde empezar",
+        "consistency": "Me cuesta ser constante",
+        "stress": "Estrés y ansiedad"
+      }
+    },
+    "q6": {
+      "title": "¿Haces ejercicio regularmente?",
+      "yes": "Sí",
+      "no": "No",
+      "frequency": "¿Cuántas veces por semana?",
+      "times": "veces/semana"
+    },
+    "q7": {
+      "title": "¿Cómo calificarías la calidad de tu sueño?",
+      "levels": ["Terrible", "Mala", "Regular", "Buena", "Increíble"]
+    },
+    "q8": {
+      "title": "¿Tienes una rutina matutina establecida?",
+      "yes": "Sí",
+      "no": "No",
+      "activities": "¿Qué incluye tu rutina?",
+      "options": {
+        "meditation": "Meditación",
+        "exercise": "Ejercicio",
+        "journaling": "Journaling",
+        "reading": "Lectura",
+        "coldShower": "Ducha fría",
+        "planning": "Planificación del día"
+      }
+    },
+    "q9": {
+      "title": "¿Qué hábitos te gustaría mejorar?",
+      "subtitle": "Selecciona todos los que apliquen",
+      "chips": {
+        "sleep": "Sueño",
+        "exercise": "Ejercicio",
+        "nutrition": "Alimentación",
+        "hydration": "Hidratación",
+        "stress": "Manejo del estrés",
+        "productivity": "Productividad",
+        "screenTime": "Tiempo de pantalla",
+        "socialLife": "Vida social"
+      }
+    },
+    "q10": {
+      "title": "¿Cómo manejas el estrés?",
+      "options": {
+        "meditation": "Meditación/Mindfulness",
+        "exercise": "Deporte/Ejercicio",
+        "social": "Hablar con alguien",
+        "nothing": "No hago nada específico",
+        "entertainment": "Entretenimiento/Redes"
+      }
+    },
+    "q11": {
+      "title": "¿Cuántos vasos de agua tomas al día?",
+      "subtitle": "Toca para llenar los vasos"
+    },
+    "q12": {
+      "title": "¿Cuál es tu objetivo principal?",
+      "options": {
+        "energy": "Tener más energía",
+        "sleep": "Dormir mejor",
+        "fitness": "Ponerme en forma",
+        "balance": "Encontrar equilibrio"
+      }
+    },
+    "q6b": {
+      "title": "¿Qué te gustaría mejorar de tu físico?",
+      "subtitle": "Toca las zonas del cuerpo",
+      "zones": {
+        "posture": "Mejorar postura",
+        "toneUp": "Tonificar torso",
+        "gainMuscle": "Ganar músculo",
+        "loseWeight": "Perder grasa",
+        "endurance": "Más resistencia",
+        "flexibility": "Flexibilidad general"
+      }
+    },
+    "q7b": {
+      "title": "Sube una foto (opcional)",
+      "subtitle": "Sube fotos para personalizar tu diagnóstico",
+      "privacy": "Tus fotos son privadas y seguras",
+      "skip": "Puedes saltar este paso",
+      "dropHere": "Suelta aqui",
+      "uploading": "Subiendo..."
+    },
+    "qNutrition": {
+      "title": "¿Cómo describirías tu alimentación?",
+      "subtitle": "Se honesto, esto nos ayuda a personalizar tu plan",
+      "levels": {
+        "terrible": "Como lo que pillo",
+        "poor": "Bastante ultraprocesado",
+        "average": "Intento cuidarme pero no siempre",
+        "good": "Mayormente casero y equilibrado",
+        "excellent": "Muy saludable y consciente"
+      }
+    },
+    "q13b": {
+      "title": "¿Tienes alguno de estos problemas?",
+      "subtitle": "Toca una zona para explorar",
+      "categories": {
+        "skin": "Piel",
+        "digestion": "Digestión",
+        "energy": "Energía",
+        "other": "Otro"
+      },
+      "zones": {
+        "head": "Cabeza",
+        "torso": "Torso",
+        "stomach": "Abdomen",
+        "arms": "Brazos y Manos",
+        "legs": "Piernas y Pies"
+      },
+      "backToBody": "Volver al cuerpo",
+      "concerns": {
+        "hairLoss": "Caída de pelo",
+        "thinHair": "Pelo fino o débil",
+        "headaches": "Dolores de cabeza",
+        "brainFog": "Niebla mental",
+        "poorConcentration": "Poca concentración",
+        "darkCircles": "Ojeras",
+        "eyeStrain": "Vista cansada",
+        "badBreath": "Mal aliento",
+        "dryLips": "Labios secos",
+        "acne": "Acné",
+        "dryness": "Piel seca",
+        "rashes": "Irritación o rojeces",
+        "fatigue": "Fatiga crónica",
+        "lowStamina": "Poca resistencia",
+        "backPain": "Dolor de espalda",
+        "neckTension": "Tensión cervical",
+        "bloating": "Hinchazón",
+        "acidReflux": "Acidez o reflujo",
+        "irregularity": "Irregularidad digestiva",
+        "cramps": "Calambres abdominales",
+        "jointPain": "Dolor articular",
+        "stiffness": "Rigidez matutina",
+        "muscleAches": "Dolores musculares",
+        "legCramps": "Calambres en piernas",
+        "armPain": "Dolor de brazos",
+        "numbness": "Entumecimiento u hormigueo",
+        "coldHands": "Manos frías",
+        "brittleNails": "Uñas frágiles",
+        "swollenFeet": "Pies hinchados",
+        "other": "Otro"
+      },
+      "otherPlaceholder": "Describe tu problema..."
+    },
+    "q16b": {
+      "title": "Cuéntanos algo más sobre tu situación",
+      "systemMessage": "Cuéntanos más sobre tu situación. Cualquier detalle que nos ayude a personalizar tu diagnóstico...",
+      "placeholder": "Escribe aquí o usa el micrófono...",
+      "recording": "Grabando..."
+    }
+  },
+  "analysis": {
+    "title": "Analizando tus hábitos...",
+    "messages": [
+      "Evaluando tu patrón de sueño...",
+      "Analizando tu nivel de actividad...",
+      "Calculando tu balance nutricional...",
+      "Midiendo tu gestión del estrés...",
+      "Evaluando tu productividad...",
+      "Generando tu plan personalizado..."
+    ]
+  },
+  "results": {
+    "title": "Tu Diagnóstico Ofira",
+    "overallScore": "Puntuación General",
+    "outOf": "de 100",
+    "areas": {
+      "sleep": "Sueño",
+      "exercise": "Ejercicio",
+      "nutrition": "Alimentación",
+      "stress": "Estrés",
+      "productivity": "Productividad",
+      "hydration": "Hidratación"
+    },
+    "analysis": "Análisis Detallado",
+    "actionPlan": "Plan de Acción",
+    "unlock": {
+      "title": "Desbloquea tu diagnóstico completo",
+      "subtitle": "Accede al análisis detallado por área, plan de acción de 30 días y recomendaciones personalizadas.",
+      "cta": "Desbloquear por $9.99",
+      "guarantee": "Garantía de satisfacción - o te devolvemos el dinero"
+    },
+    "share": {
+      "title": "Comparte tu resultado",
+      "text": "Mi puntuación de hábitos Ofira: {score}/100"
+    },
+    "saveAccount": {
+      "title": "Guarda tu diagnóstico",
+      "subtitle": "Crea una cuenta para acceder a tu historial y trackear tu progreso.",
+      "cta": "Crear cuenta gratis"
+    }
+  }
+}
