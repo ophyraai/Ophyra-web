@@ -36,7 +36,7 @@ export default function ObstacleCards({ value, onChange }: ObstacleCardsProps) {
               style={{ perspective: 600 }}
               className={`flex items-center gap-3 rounded-xl border p-4 text-left transition-colors ${
                 selected
-                  ? 'border-ofira-violet bg-ofira-violet/10 shadow-[0_0_20px_rgba(196,161,255,0.3)]'
+                  ? 'border-ofira-violet bg-ofira-violet/10 shadow-[0_0_20px_rgba(13,148,136,0.3)]'
                   : 'border-ofira-card-border bg-ofira-card hover:border-ofira-violet/30'
               }`}
             >

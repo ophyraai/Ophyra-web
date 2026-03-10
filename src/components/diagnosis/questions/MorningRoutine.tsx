@@ -48,7 +48,7 @@ export default function MorningRoutine({ value, onChange }: MorningRoutineProps)
               whileTap={{ scale: 0.95 }}
               className={`flex-1 rounded-xl border px-8 py-4 text-lg font-semibold transition-colors ${
                 selected
-                  ? 'border-ofira-violet bg-ofira-violet/10 text-ofira-violet shadow-[0_0_20px_rgba(196,161,255,0.3)]'
+                  ? 'border-ofira-violet bg-ofira-violet/10 text-ofira-violet shadow-[0_0_20px_rgba(13,148,136,0.3)]'
                   : 'border-ofira-card-border bg-ofira-card text-ofira-text-secondary hover:border-ofira-violet/30'
               }`}
             >

@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "i.pravatar.cc" },
     ],
   },
+  experimental: {
+    // This helps mitigate Jest/Turbopack memory pressure in Next.js 15+
+    memoryBasedWorkersCount: true
+  }
 };
 
 export default withNextIntl(nextConfig);

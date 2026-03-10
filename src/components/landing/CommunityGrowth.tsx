@@ -29,13 +29,15 @@ export default function CommunityGrowth() {
   const t = useTranslations('landing.communityGrowth');
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, (v) => Math.floor(v).toLocaleString());
-
   const weeklyCount = 347;
+  const count = useMotionValue(weeklyCount);
+  const rounded = useTransform(count, (v) => Math.floor(v).toLocaleString());
+  const hasAnimated = useRef(false);
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || hasAnimated.current) return;
+    hasAnimated.current = true;
+    count.set(0);
     const controls = animate(count, weeklyCount, {
       duration: 1.8,
       ease: [0.25, 0.1, 0.25, 1],
@@ -72,11 +74,19 @@ export default function CommunityGrowth() {
           className="relative flex flex-col items-center text-center"
         >
           <h2 className="mb-2 text-2xl font-bold text-ofira-text sm:text-3xl">
-            {t('title', { count: '' })}
-            <span className="text-gradient">
-              <motion.span>{rounded}</motion.span>
-            </span>
-            {' '}
+            {(() => {
+              const full = t('title', { count: '___COUNT___' });
+              const parts = full.split('___COUNT___');
+              return (
+                <>
+                  {parts[0]}
+                  <span className="text-gradient inline-block min-w-[3ch]">
+                    <motion.span>{rounded}</motion.span>
+                  </span>
+                  {parts[1]}
+                </>
+              );
+            })()}
           </h2>
           <p className="mb-8 text-lg text-ofira-text-secondary">{t('subtitle')}</p>
 

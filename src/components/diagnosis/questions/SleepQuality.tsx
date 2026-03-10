@@ -17,42 +17,42 @@ function MoonPhase({ phase, selected }: { phase: number; selected: boolean }) {
   const phases: Record<number, React.ReactNode> = {
     0: (
       <>
-        <circle cx={cx} cy={cy} r={r} fill="rgba(196,161,255,0.15)" />
+        <circle cx={cx} cy={cy} r={r} fill="rgba(13,148,136,0.15)" />
         <path
           d={`M ${cx + 2} ${cy - r} A ${r} ${r} 0 1 0 ${cx + 2} ${cy + r} A ${r * 0.15} ${r} 0 1 1 ${cx + 2} ${cy - r}`}
-          fill={selected ? '#c4a1ff' : 'rgba(196,161,255,0.3)'}
+          fill={selected ? '#0d9488' : 'rgba(13,148,136,0.3)'}
         />
       </>
     ),
     1: (
       <>
-        <circle cx={cx} cy={cy} r={r} fill="rgba(196,161,255,0.15)" />
+        <circle cx={cx} cy={cy} r={r} fill="rgba(13,148,136,0.15)" />
         <path
           d={`M ${cx} ${cy - r} A ${r} ${r} 0 1 0 ${cx} ${cy + r} A ${r * 0.4} ${r} 0 1 1 ${cx} ${cy - r}`}
-          fill={selected ? '#c4a1ff' : 'rgba(196,161,255,0.3)'}
+          fill={selected ? '#0d9488' : 'rgba(13,148,136,0.3)'}
         />
       </>
     ),
     2: (
       <>
-        <circle cx={cx} cy={cy} r={r} fill="rgba(196,161,255,0.15)" />
+        <circle cx={cx} cy={cy} r={r} fill="rgba(13,148,136,0.15)" />
         <path
           d={`M ${cx} ${cy - r} A ${r} ${r} 0 1 0 ${cx} ${cy + r} L ${cx} ${cy - r} Z`}
-          fill={selected ? '#d4b0ff' : 'rgba(196,161,255,0.35)'}
+          fill={selected ? '#059669' : 'rgba(13,148,136,0.35)'}
         />
       </>
     ),
     3: (
       <>
-        <circle cx={cx} cy={cy} r={r} fill={selected ? '#d4b0ff' : 'rgba(196,161,255,0.3)'} />
+        <circle cx={cx} cy={cy} r={r} fill={selected ? '#059669' : 'rgba(13,148,136,0.3)'} />
         <path
           d={`M ${cx} ${cy - r} A ${r} ${r} 0 1 1 ${cx} ${cy + r} A ${r * 0.4} ${r} 0 1 0 ${cx} ${cy - r}`}
-          fill="rgba(196,161,255,0.1)"
+          fill="rgba(13,148,136,0.1)"
         />
       </>
     ),
     4: (
-      <circle cx={cx} cy={cy} r={r} fill={selected ? '#c4a1ff' : 'rgba(196,161,255,0.35)'} />
+      <circle cx={cx} cy={cy} r={r} fill={selected ? '#0d9488' : 'rgba(13,148,136,0.35)'} />
     ),
   };
 
@@ -64,7 +64,7 @@ function MoonPhase({ phase, selected }: { phase: number; selected: boolean }) {
           cy={cy}
           r={r + 4}
           fill="none"
-          stroke="#c4a1ff"
+          stroke="#0d9488"
           strokeWidth={1}
           initial={{ opacity: 0 }}
           animate={{ opacity: [0.2, 0.5, 0.2] }}
@@ -100,7 +100,7 @@ export default function SleepQuality({ value, onChange }: SleepQualityProps) {
               animate={selected ? { scale: 1.3 } : { scale: 1 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               className={`flex flex-col items-center gap-2 rounded-xl p-3 transition-colors ${
-                selected ? 'shadow-[0_0_20px_rgba(196,161,255,0.3)]' : ''
+                selected ? 'shadow-[0_0_20px_rgba(13,148,136,0.3)]' : ''
               }`}
             >
               <MoonPhase phase={i} selected={selected} />

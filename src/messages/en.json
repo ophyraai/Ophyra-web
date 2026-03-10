@@ -3,7 +3,8 @@
     "navbar": {
       "diagnosis": "Diagnosis",
       "shop": "Shop",
-      "dashboard": "Dashboard",
+      "dashboard": "My Progress",
+      "account": "My Account",
       "signup": "Sign up"
     },
     "hero": {
@@ -70,10 +71,11 @@
       "tagline": "Your wellness & habit diagnosis",
       "privacy": "Privacy",
       "terms": "Terms",
+      "cookies": "Cookies Policy",
       "contact": "Contact"
     },
     "heroV2": {
-      "badge": "Your wellness, measured",
+      "badge": "Backed by +90K followers",
       "title": "Your habit diagnosis in 5 minutes",
       "subtitle": "Discover the real state of your habits. Personalized analysis, action plan, and progress tracking.",
       "cta": "Start your diagnosis",
@@ -81,22 +83,26 @@
       "ctaSub": "Free — No signup required"
     },
     "socialStats": {
-      "followers": "Followers",
+      "followers": "Followers on social",
       "diagnoses": "Diagnoses",
-      "countries": "Countries"
+      "views": "Views on content"
     },
     "socialEmbed": {
-      "title": "What people say about us",
-      "watchMore": "See more on @ophyra_secret"
+      "title": "What millions are already watching",
+      "watchMore": "See all reels on @ophyra_secret"
     },
     "diagnosisPreview": {
       "title": "Try before you start",
       "cta": "Start full diagnosis",
-      "sampleQ1": "How many hours do you sleep per night on average?",
-      "sampleQ2": "How often do you experience mental fatigue during the day?",
-      "sampleQ3": "How many liters of water do you drink per day?",
+      "sampleQ1": "How would you describe your sleep quality this week?",
+      "sampleQ2": "How many days did you work out this week?",
+      "sampleQ3": "How do you currently manage stress?",
       "sampleQ4": "How would you rate your stress level this week?",
-      "sampleQ5": "How many times per week do you exercise?"
+      "sampleQ5": "How many times per week do you exercise?",
+      "resultReady": "Your result is ready",
+      "resultSub": "Complete the diagnosis to see your detailed analysis",
+      "ctaFull": "See my full diagnosis",
+      "retry": "Try again"
     },
     "habitTip": {
       "title": "Tip of the day",
@@ -324,20 +330,47 @@
     },
     "analysis": "Detailed Analysis",
     "actionPlan": "Action Plan",
+    "emailGate": {
+      "scoreReady": "your diagnosis is ready",
+      "yourScore": "Your Score",
+      "title": "Discover your full analysis",
+      "subtitle": "Enter your email to see the category breakdown, your wellness radar, and personalized summary.",
+      "placeholder": "you@email.com",
+      "cta": "See my results",
+      "privacy": "No spam. Just your diagnosis."
+    },
     "unlock": {
-      "title": "Unlock your full diagnosis",
-      "subtitle": "Access detailed area analysis, 30-day action plan, and personalized recommendations.",
-      "cta": "Unlock for $9.99",
-      "guarantee": "Satisfaction guaranteed - or your money back"
+      "badge": "Launch offer — limited spots",
+      "title": "Your personalized plan is ready",
+      "subtitle": "We've created a 30-day plan based on your results. Unlock it now at launch price.",
+      "features": [
+        "Detailed analysis of your 6 wellness areas",
+        "Personalized 30-day action plan",
+        "Daily habit tracking",
+        "Priority actions based on your profile",
+        "Lifetime access to your results"
+      ],
+      "originalPrice": "$29.99",
+      "price": "$9.99",
+      "discount": "-67%",
+      "cta": "Unlock my plan for $9.99",
+      "trust": "Secure payment · Instant access"
     },
     "share": {
       "title": "Share your result",
-      "text": "My Ophyra habits score: {score}/100"
+      "subtitle": "Challenge your friends to beat your score",
+      "text": "I just took the Ophyra wellness diagnosis and scored {score}/100. Can you beat me?",
+      "copied": "Copied!",
+      "copyLink": "Copy link",
+      "moreOptions": "More",
+      "igCopied": "Link copied — paste it in your Instagram Story or DM"
     },
     "saveAccount": {
       "title": "Save your diagnosis",
       "subtitle": "Create an account to access your history and track your progress.",
-      "cta": "Create free account"
+      "cta": "Create free account",
+      "saved": "Diagnosis saved to your profile",
+      "savedSub": "Access it from your dashboard to track your history and progress"
     }
   },
   "dashboard": {
@@ -353,6 +386,19 @@
     "rediagnosisDesc": "30 days have passed. Discover how much you've improved.",
     "rediagnosisCta": "Take re-diagnosis",
     "startPlan": "Start your 30-Day Plan",
+    "renewed": "Plan renewed successfully! Your new 30-day cycle has started.",
+    "renewal": {
+      "title": "Your plan has expired",
+      "description": "Renew to continue your personalized plan, habit tracking, and get a free re-diagnosis.",
+      "cta": "Renew for €9.99",
+      "ctaDiscount": "Renew for €4.99",
+      "countdown": "Offer expires in {time}"
+    },
+    "subscription": {
+      "premium": "Premium",
+      "daysLeft": "{days} days left",
+      "expired": "Plan expired"
+    },
     "categories": {
       "sleep": "Sleep",
       "exercise": "Exercise",

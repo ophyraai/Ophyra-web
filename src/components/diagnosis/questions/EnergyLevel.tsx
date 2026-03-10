@@ -9,9 +9,9 @@ interface EnergyLevelProps {
 }
 
 const auraColors = [
-  { inner: '#c4a1ff', outer: 'rgba(196,161,255,0.15)', size: 28, rings: 1 },
-  { inner: '#c4a1ff', outer: 'rgba(196,161,255,0.25)', size: 34, rings: 1 },
-  { inner: '#d4a8ff', outer: 'rgba(196,161,255,0.35)', size: 40, rings: 2 },
+  { inner: '#0d9488', outer: 'rgba(13,148,136,0.15)', size: 28, rings: 1 },
+  { inner: '#0d9488', outer: 'rgba(13,148,136,0.25)', size: 34, rings: 1 },
+  { inner: '#059669', outer: 'rgba(13,148,136,0.35)', size: 40, rings: 2 },
   { inner: '#ff9e7a', outer: 'rgba(255,158,122,0.35)', size: 46, rings: 2 },
   { inner: '#ff9e7a', outer: 'rgba(255,158,122,0.5)', size: 52, rings: 3 },
 ];
@@ -41,7 +41,7 @@ export default function EnergyLevel({ value, onChange }: EnergyLevelProps) {
               animate={selected ? { scale: 1.1 } : { scale: 1 }}
               className={`flex flex-col items-center gap-2 rounded-xl border p-4 transition-colors ${
                 selected
-                  ? 'border-ofira-violet bg-ofira-violet/10 shadow-[0_0_20px_rgba(196,161,255,0.3)]'
+                  ? 'border-ofira-violet bg-ofira-violet/10 shadow-[0_0_20px_rgba(13,148,136,0.3)]'
                   : 'border-ofira-card-border bg-ofira-card hover:border-ofira-violet/30'
               }`}
             >
@@ -53,7 +53,7 @@ export default function EnergyLevel({ value, onChange }: EnergyLevelProps) {
                     cy="24"
                     r={aura.size / 2 + (r + 1) * 6}
                     fill="none"
-                    stroke={selected ? aura.inner : 'rgba(196,161,255,0.1)'}
+                    stroke={selected ? aura.inner : 'rgba(13,148,136,0.1)'}
                     strokeWidth={1}
                     initial={false}
                     animate={{
@@ -67,7 +67,7 @@ export default function EnergyLevel({ value, onChange }: EnergyLevelProps) {
                   cx="24"
                   cy="24"
                   r="10"
-                  fill={selected ? aura.inner : 'rgba(196,161,255,0.2)'}
+                  fill={selected ? aura.inner : 'rgba(13,148,136,0.2)'}
                   animate={{
                     scale: selected ? aura.size / 20 : 1,
                   }}

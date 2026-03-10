@@ -216,7 +216,7 @@ export default function PhotoUpload({ value, onChange }: PhotoUploadProps) {
                     <div
                       className="h-full w-full rounded-full p-[3px]"
                       style={{
-                        background: 'linear-gradient(135deg, #c4a1ff, #ff9e7a)',
+                        background: 'linear-gradient(135deg, #0d9488, #ff9e7a)',
                       }}
                     >
                       <img
@@ -260,7 +260,7 @@ export default function PhotoUpload({ value, onChange }: PhotoUploadProps) {
                     cy={SLOT_SIZE / 2}
                     r={46}
                     fill="none"
-                    stroke="rgba(196,161,255,0.15)"
+                    stroke="rgba(13,148,136,0.15)"
                     strokeWidth={3}
                   />
                   <circle
@@ -268,7 +268,7 @@ export default function PhotoUpload({ value, onChange }: PhotoUploadProps) {
                     cy={SLOT_SIZE / 2}
                     r={46}
                     fill="none"
-                    stroke="#c4a1ff"
+                    stroke="#0d9488"
                     strokeWidth={3}
                     strokeLinecap="round"
                     strokeDasharray={progressCircumference}

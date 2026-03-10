@@ -209,12 +209,25 @@
   animation: marquee-scroll 20s linear infinite;
 }
 
+/* Infinite marquee — left direction */
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.3333%); }
+}
+
+/* Infinite marquee — right direction */
+@keyframes marquee-right {
+  0% { transform: translateX(-33.3333%); }
+  100% { transform: translateX(0); }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .animate-shimmer,
   .animate-pulse-glow,
-  .marquee-scroll {
-    animation: none;
+  .marquee-scroll,
+  [style*="marquee-"] {
+    animation: none !important;
   }
 
   * {

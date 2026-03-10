@@ -106,21 +106,21 @@ const SYNC_SPRING = { type: 'spring' as const, stiffness: 140, damping: 20 };
 function HeadSVG() {
   return (
     <svg viewBox="0 0 200 220" className="h-full w-full" fill="none">
-      <ellipse cx="100" cy="90" rx="60" ry="75" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.3" />
+      <ellipse cx="100" cy="90" rx="60" ry="75" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.3" />
       {/* Hair — voluminous filled shape with flowing strands */}
       <path
         d="M42 72 Q38 45 50 28 Q62 12 80 6 Q100 -2 120 6 Q138 12 150 28 Q162 45 158 72
            Q155 60 148 50 Q138 38 125 48 Q112 56 100 52 Q88 56 75 48 Q62 38 52 50 Q45 60 42 72Z"
-        fill="#f2eeff"
+        fill="#4b6b64"
         fillOpacity="0.08"
-        stroke="#f2eeff"
+        stroke="#4b6b64"
         strokeWidth="1.2"
         strokeOpacity="0.3"
       />
       {/* Hair top volume */}
       <path
         d="M50 30 Q65 8 100 2 Q135 8 150 30"
-        stroke="#f2eeff"
+        stroke="#4b6b64"
         strokeWidth="1.8"
         strokeOpacity="0.35"
         strokeLinecap="round"
@@ -128,7 +128,7 @@ function HeadSVG() {
       {/* Side volume left */}
       <path
         d="M42 72 Q36 55 42 38 Q48 22 65 14"
-        stroke="#f2eeff"
+        stroke="#4b6b64"
         strokeWidth="1.5"
         strokeOpacity="0.28"
         strokeLinecap="round"
@@ -136,26 +136,26 @@ function HeadSVG() {
       {/* Side volume right */}
       <path
         d="M158 72 Q164 55 158 38 Q152 22 135 14"
-        stroke="#f2eeff"
+        stroke="#4b6b64"
         strokeWidth="1.5"
         strokeOpacity="0.28"
         strokeLinecap="round"
       />
       {/* Flowing strands */}
-      <path d="M55 28 Q70 10 100 5 Q130 10 145 28" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.2" strokeLinecap="round" />
-      <path d="M48 45 Q52 32 65 22" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.18" strokeLinecap="round" />
-      <path d="M152 45 Q148 32 135 22" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.18" strokeLinecap="round" />
+      <path d="M55 28 Q70 10 100 5 Q130 10 145 28" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.2" strokeLinecap="round" />
+      <path d="M48 45 Q52 32 65 22" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.18" strokeLinecap="round" />
+      <path d="M152 45 Q148 32 135 22" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.18" strokeLinecap="round" />
       {/* Part line */}
-      <path d="M100 2 Q98 18 100 35" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.12" />
+      <path d="M100 2 Q98 18 100 35" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.12" />
       {/* Subtle wave texture */}
-      <path d="M60 40 Q72 34 85 42 Q100 50 115 42 Q128 34 140 40" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.12" />
+      <path d="M60 40 Q72 34 85 42 Q100 50 115 42 Q128 34 140 40" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.12" />
       {/* Original hairline */}
-      <path d="M45 70 Q60 20 100 15 Q140 20 155 70" stroke="#f2eeff" strokeWidth="1.2" strokeOpacity="0.15" />
-      <ellipse cx="75" cy="85" rx="12" ry="7" stroke="#f2eeff" strokeWidth="1.2" strokeOpacity="0.25" />
-      <ellipse cx="125" cy="85" rx="12" ry="7" stroke="#f2eeff" strokeWidth="1.2" strokeOpacity="0.25" />
-      <path d="M100 95 L96 115 L104 115" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.2" />
-      <path d="M82 135 Q100 148 118 135" stroke="#f2eeff" strokeWidth="1.2" strokeOpacity="0.25" />
-      <path d="M80 162 L80 210 M120 162 L120 210" stroke="#f2eeff" strokeWidth="1.2" strokeOpacity="0.2" />
+      <path d="M45 70 Q60 20 100 15 Q140 20 155 70" stroke="#4b6b64" strokeWidth="1.2" strokeOpacity="0.15" />
+      <ellipse cx="75" cy="85" rx="12" ry="7" stroke="#4b6b64" strokeWidth="1.2" strokeOpacity="0.25" />
+      <ellipse cx="125" cy="85" rx="12" ry="7" stroke="#4b6b64" strokeWidth="1.2" strokeOpacity="0.25" />
+      <path d="M100 95 L96 115 L104 115" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.2" />
+      <path d="M82 135 Q100 148 118 135" stroke="#4b6b64" strokeWidth="1.2" strokeOpacity="0.25" />
+      <path d="M80 162 L80 210 M120 162 L120 210" stroke="#4b6b64" strokeWidth="1.2" strokeOpacity="0.2" />
     </svg>
   );
 }
@@ -163,15 +163,15 @@ function HeadSVG() {
 function TorsoSVG() {
   return (
     <svg viewBox="0 0 200 240" className="h-full w-full" fill="none">
-      <path d="M85 0 L85 20 M115 0 L115 20" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.25" />
-      <path d="M85 20 Q60 25 30 40" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.3" />
-      <path d="M115 20 Q140 25 170 40" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.3" />
-      <path d="M30 40 L35 120 L45 180 Q100 200 155 180 L165 120 L170 40" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.3" />
-      <path d="M55 60 Q100 75 145 60" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.15" />
-      <line x1="100" y1="20" x2="100" y2="190" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.1" />
-      <circle cx="170" cy="80" r="2" fill="#f2eeff" fillOpacity="0.15" />
-      <circle cx="168" cy="100" r="2" fill="#f2eeff" fillOpacity="0.15" />
-      <circle cx="166" cy="120" r="2" fill="#f2eeff" fillOpacity="0.15" />
+      <path d="M85 0 L85 20 M115 0 L115 20" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.25" />
+      <path d="M85 20 Q60 25 30 40" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.3" />
+      <path d="M115 20 Q140 25 170 40" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.3" />
+      <path d="M30 40 L35 120 L45 180 Q100 200 155 180 L165 120 L170 40" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.3" />
+      <path d="M55 60 Q100 75 145 60" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.15" />
+      <line x1="100" y1="20" x2="100" y2="190" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.1" />
+      <circle cx="170" cy="80" r="2" fill="#4b6b64" fillOpacity="0.15" />
+      <circle cx="168" cy="100" r="2" fill="#4b6b64" fillOpacity="0.15" />
+      <circle cx="166" cy="120" r="2" fill="#4b6b64" fillOpacity="0.15" />
     </svg>
   );
 }
@@ -179,12 +179,12 @@ function TorsoSVG() {
 function StomachSVG() {
   return (
     <svg viewBox="0 0 200 220" className="h-full w-full" fill="none">
-      <path d="M40 10 L40 100 Q40 140 70 160 Q100 175 130 160 Q160 140 160 100 L160 10" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.3" />
-      <ellipse cx="100" cy="55" rx="40" ry="30" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.2" />
-      <path d="M65 110 Q80 95 100 100 Q120 105 135 95" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.15" />
-      <path d="M70 130 Q85 120 100 125 Q115 130 130 120" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.15" />
-      <circle cx="100" cy="80" r="3" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.2" />
-      <line x1="100" y1="10" x2="100" y2="170" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.1" />
+      <path d="M40 10 L40 100 Q40 140 70 160 Q100 175 130 160 Q160 140 160 100 L160 10" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.3" />
+      <ellipse cx="100" cy="55" rx="40" ry="30" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.2" />
+      <path d="M65 110 Q80 95 100 100 Q120 105 135 95" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.15" />
+      <path d="M70 130 Q85 120 100 125 Q115 130 130 120" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.15" />
+      <circle cx="100" cy="80" r="3" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.2" />
+      <line x1="100" y1="10" x2="100" y2="170" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.1" />
     </svg>
   );
 }
@@ -193,47 +193,47 @@ function ArmsSVG() {
   return (
     <svg viewBox="0 0 200 240" className="h-full w-full" fill="none">
       {/* Shoulder line */}
-      <path d="M60 10 Q100 5 140 10" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.3" />
+      <path d="M60 10 Q100 5 140 10" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.3" />
 
       {/* Left arm outer */}
-      <path d="M60 10 Q45 20 38 50 L30 90 L25 130" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.3" />
+      <path d="M60 10 Q45 20 38 50 L30 90 L25 130" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.3" />
       {/* Left arm inner */}
-      <path d="M75 14 Q62 22 56 48 L48 88 L44 125" stroke="#f2eeff" strokeWidth="1.2" strokeOpacity="0.22" />
+      <path d="M75 14 Q62 22 56 48 L48 88 L44 125" stroke="#4b6b64" strokeWidth="1.2" strokeOpacity="0.22" />
       {/* Left elbow */}
-      <circle cx="40" cy="88" r="6" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.2" />
+      <circle cx="40" cy="88" r="6" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.2" />
       {/* Left wrist */}
-      <path d="M25 130 Q24 135 26 140 M44 125 Q43 132 42 137" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.18" />
+      <path d="M25 130 Q24 135 26 140 M44 125 Q43 132 42 137" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.18" />
       {/* Left hand */}
-      <ellipse cx="33" cy="150" rx="12" ry="16" stroke="#f2eeff" strokeWidth="1.2" strokeOpacity="0.25" />
+      <ellipse cx="33" cy="150" rx="12" ry="16" stroke="#4b6b64" strokeWidth="1.2" strokeOpacity="0.25" />
       {/* Left fingers */}
-      <path d="M24 158 L20 172" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.15" />
-      <path d="M28 162 L25 178" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.15" />
-      <path d="M33 163 L33 180" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.15" />
-      <path d="M38 162 L40 177" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.15" />
+      <path d="M24 158 L20 172" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.15" />
+      <path d="M28 162 L25 178" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.15" />
+      <path d="M33 163 L33 180" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.15" />
+      <path d="M38 162 L40 177" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.15" />
       {/* Left thumb */}
-      <path d="M44 144 Q50 148 48 158" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.15" />
+      <path d="M44 144 Q50 148 48 158" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.15" />
 
       {/* Right arm outer */}
-      <path d="M140 10 Q155 20 162 50 L170 90 L175 130" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.3" />
+      <path d="M140 10 Q155 20 162 50 L170 90 L175 130" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.3" />
       {/* Right arm inner */}
-      <path d="M125 14 Q138 22 144 48 L152 88 L156 125" stroke="#f2eeff" strokeWidth="1.2" strokeOpacity="0.22" />
+      <path d="M125 14 Q138 22 144 48 L152 88 L156 125" stroke="#4b6b64" strokeWidth="1.2" strokeOpacity="0.22" />
       {/* Right elbow */}
-      <circle cx="160" cy="88" r="6" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.2" />
+      <circle cx="160" cy="88" r="6" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.2" />
       {/* Right wrist */}
-      <path d="M175 130 Q176 135 174 140 M156 125 Q157 132 158 137" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.18" />
+      <path d="M175 130 Q176 135 174 140 M156 125 Q157 132 158 137" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.18" />
       {/* Right hand */}
-      <ellipse cx="167" cy="150" rx="12" ry="16" stroke="#f2eeff" strokeWidth="1.2" strokeOpacity="0.25" />
+      <ellipse cx="167" cy="150" rx="12" ry="16" stroke="#4b6b64" strokeWidth="1.2" strokeOpacity="0.25" />
       {/* Right fingers */}
-      <path d="M176 158 L180 172" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.15" />
-      <path d="M172 162 L175 178" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.15" />
-      <path d="M167 163 L167 180" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.15" />
-      <path d="M162 162 L160 177" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.15" />
+      <path d="M176 158 L180 172" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.15" />
+      <path d="M172 162 L175 178" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.15" />
+      <path d="M167 163 L167 180" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.15" />
+      <path d="M162 162 L160 177" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.15" />
       {/* Right thumb */}
-      <path d="M156 144 Q150 148 152 158" stroke="#f2eeff" strokeWidth="0.8" strokeOpacity="0.15" />
+      <path d="M156 144 Q150 148 152 158" stroke="#4b6b64" strokeWidth="0.8" strokeOpacity="0.15" />
 
       {/* Nail hints */}
-      <ellipse cx="33" cy="178" rx="2" ry="1.5" stroke="#f2eeff" strokeWidth="0.6" strokeOpacity="0.12" />
-      <ellipse cx="167" cy="178" rx="2" ry="1.5" stroke="#f2eeff" strokeWidth="0.6" strokeOpacity="0.12" />
+      <ellipse cx="33" cy="178" rx="2" ry="1.5" stroke="#4b6b64" strokeWidth="0.6" strokeOpacity="0.12" />
+      <ellipse cx="167" cy="178" rx="2" ry="1.5" stroke="#4b6b64" strokeWidth="0.6" strokeOpacity="0.12" />
     </svg>
   );
 }
@@ -242,19 +242,19 @@ function LegsSVG() {
   return (
     <svg viewBox="0 0 200 260" className="h-full w-full" fill="none">
       {/* Hip line */}
-      <path d="M50 10 Q100 25 150 10" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.3" />
+      <path d="M50 10 Q100 25 150 10" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.3" />
       {/* Left leg */}
-      <path d="M65 15 L60 80 L55 140 L52 200 L48 240" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.3" />
-      <path d="M85 15 L80 80 L78 140 L76 200 L73 240" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.3" />
-      <circle cx="70" cy="120" r="8" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.2" />
-      <circle cx="62" cy="220" r="5" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.15" />
-      <path d="M48 240 Q40 248 38 250" stroke="#f2eeff" strokeWidth="1.2" strokeOpacity="0.2" />
+      <path d="M65 15 L60 80 L55 140 L52 200 L48 240" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.3" />
+      <path d="M85 15 L80 80 L78 140 L76 200 L73 240" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.3" />
+      <circle cx="70" cy="120" r="8" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.2" />
+      <circle cx="62" cy="220" r="5" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.15" />
+      <path d="M48 240 Q40 248 38 250" stroke="#4b6b64" strokeWidth="1.2" strokeOpacity="0.2" />
       {/* Right leg */}
-      <path d="M115 15 L120 80 L122 140 L124 200 L127 240" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.3" />
-      <path d="M135 15 L140 80 L145 140 L148 200 L152 240" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.3" />
-      <circle cx="130" cy="120" r="8" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.2" />
-      <circle cx="140" cy="220" r="5" stroke="#f2eeff" strokeWidth="1" strokeOpacity="0.15" />
-      <path d="M152 240 Q160 248 162 250" stroke="#f2eeff" strokeWidth="1.2" strokeOpacity="0.2" />
+      <path d="M115 15 L120 80 L122 140 L124 200 L127 240" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.3" />
+      <path d="M135 15 L140 80 L145 140 L148 200 L152 240" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.3" />
+      <circle cx="130" cy="120" r="8" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.2" />
+      <circle cx="140" cy="220" r="5" stroke="#4b6b64" strokeWidth="1" strokeOpacity="0.15" />
+      <path d="M152 240 Q160 248 162 250" stroke="#4b6b64" strokeWidth="1.2" strokeOpacity="0.2" />
     </svg>
   );
 }
@@ -351,7 +351,7 @@ export default function HealthConcerns({ value, onChange }: HealthConcernsProps)
       {/*  Stage                                                      */}
       {/* ═══════════════════════════════════════════════════════════ */}
       <div
-        className="relative mx-auto flex min-h-[420px] items-center justify-center sm:min-h-[460px]"
+        className="relative mx-auto flex min-h-[340px] items-center justify-center sm:min-h-[380px]"
         style={{ perspective: 1400 }}
       >
 
@@ -387,31 +387,31 @@ export default function HealthConcerns({ value, onChange }: HealthConcernsProps)
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   fill="url(#zoneGlow)"
-                  stroke="#c4a1ff"
+                  stroke="#0d9488"
                   strokeWidth="0.8"
                   strokeOpacity="0.3"
                 />
               )}
               <defs>
                 <radialGradient id="zoneGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#c4a1ff" stopOpacity="0.15" />
-                  <stop offset="100%" stopColor="#c4a1ff" stopOpacity="0.02" />
+                  <stop offset="0%" stopColor="#0d9488" stopOpacity="0.15" />
+                  <stop offset="100%" stopColor="#0d9488" stopOpacity="0.02" />
                 </radialGradient>
               </defs>
 
-              <ellipse cx="90" cy="30" rx="18" ry="22" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.35" />
-              <line x1="90" y1="52" x2="90" y2="62" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.35" />
-              <path d="M90 62 Q90 68 60 74 L55 74" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.35" />
-              <path d="M90 62 Q90 68 120 74 L125 74" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.35" />
-              <path d="M55 74 Q48 100 42 130 Q40 140 44 148" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.35" />
-              <path d="M125 74 Q132 100 138 130 Q140 140 136 148" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.35" />
-              <path d="M60 74 L62 120 L65 145" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.35" />
-              <path d="M120 74 L118 120 L115 145" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.35" />
-              <path d="M65 145 Q90 155 115 145" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.35" />
-              <path d="M72 150 L68 200 L66 240 L62 265" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.35" />
-              <path d="M108 150 L112 200 L114 240 L118 265" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.35" />
-              <path d="M62 265 Q56 270 54 272" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.35" />
-              <path d="M118 265 Q124 270 126 272" stroke="#f2eeff" strokeWidth="1.5" strokeOpacity="0.35" />
+              <ellipse cx="90" cy="30" rx="18" ry="22" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.35" />
+              <line x1="90" y1="52" x2="90" y2="62" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.35" />
+              <path d="M90 62 Q90 68 60 74 L55 74" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.35" />
+              <path d="M90 62 Q90 68 120 74 L125 74" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.35" />
+              <path d="M55 74 Q48 100 42 130 Q40 140 44 148" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.35" />
+              <path d="M125 74 Q132 100 138 130 Q140 140 136 148" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.35" />
+              <path d="M60 74 L62 120 L65 145" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.35" />
+              <path d="M120 74 L118 120 L115 145" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.35" />
+              <path d="M65 145 Q90 155 115 145" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.35" />
+              <path d="M72 150 L68 200 L66 240 L62 265" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.35" />
+              <path d="M108 150 L112 200 L114 240 L118 265" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.35" />
+              <path d="M62 265 Q56 270 54 272" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.35" />
+              <path d="M118 265 Q124 270 126 272" stroke="#4b6b64" strokeWidth="1.5" strokeOpacity="0.35" />
             </svg>
 
             {/* Hotspots */}
@@ -419,7 +419,7 @@ export default function HealthConcerns({ value, onChange }: HealthConcernsProps)
               const count = getZoneSelectedCount(zone);
               const hasSelections = count > 0;
               const isActive = activeZone === zone.id;
-              const dotColor = isActive ? '#c4a1ff' : hasSelections ? '#ff9e7a' : '#c4a1ff';
+              const dotColor = isActive ? '#0d9488' : hasSelections ? '#ff9e7a' : '#0d9488';
 
               return (
                 <button
@@ -536,7 +536,7 @@ export default function HealthConcerns({ value, onChange }: HealthConcernsProps)
                 className="pointer-events-none absolute -inset-4 rounded-3xl"
                 style={{
                   transform: 'translateZ(-40px)',
-                  background: 'radial-gradient(ellipse at 40% 30%, rgba(196,161,255,0.1), rgba(255,158,122,0.04) 60%, transparent 80%)',
+                  background: 'radial-gradient(ellipse at 40% 30%, rgba(13,148,136,0.1), rgba(255,158,122,0.04) 60%, transparent 80%)',
                   filter: 'blur(24px)',
                 }}
               />
@@ -547,7 +547,7 @@ export default function HealthConcerns({ value, onChange }: HealthConcernsProps)
                 style={{
                   width: '80%',
                   height: 20,
-                  background: 'radial-gradient(ellipse, rgba(196,161,255,0.15) 0%, transparent 70%)',
+                  background: 'radial-gradient(ellipse, rgba(13,148,136,0.15) 0%, transparent 70%)',
                   filter: 'blur(10px)',
                   transform: 'translateZ(-50px) rotateX(80deg)',
                 }}
@@ -559,16 +559,16 @@ export default function HealthConcerns({ value, onChange }: HealthConcernsProps)
                 style={{
                   width: 210,
                   height: 260,
-                  background: 'linear-gradient(155deg, rgba(26,23,38,0.9), rgba(12,10,20,0.95))',
+                  background: 'rgba(255, 255, 255, 0.98)',
                   boxShadow:
-                    '0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(196,161,255,0.08), inset 0 1px 0 rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(196,161,255,0.15)',
+                    '0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(13,148,136,0.08), inset 0 1px 0 rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(13,148,136,0.15)',
                   transform: 'translateZ(30px)',
                 }}
                 animate={{
                   boxShadow: hasChips
-                    ? '0 12px 40px rgba(0,0,0,0.35), 0 0 30px rgba(196,161,255,0.06), inset 0 1px 0 rgba(255,255,255,0.05)'
-                    : '0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(196,161,255,0.08), inset 0 1px 0 rgba(255,255,255,0.05)',
+                    ? '0 12px 40px rgba(0,0,0,0.35), 0 0 30px rgba(13,148,136,0.06), inset 0 1px 0 rgba(255,255,255,0.05)'
+                    : '0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(13,148,136,0.08), inset 0 1px 0 rgba(255,255,255,0.05)',
                 }}
                 transition={SYNC_SPRING}
               >
@@ -576,7 +576,7 @@ export default function HealthConcerns({ value, onChange }: HealthConcernsProps)
                 <div
                   className="pointer-events-none absolute inset-0"
                   style={{
-                    background: 'radial-gradient(ellipse at 30% 15%, rgba(196,161,255,0.1) 0%, transparent 55%)',
+                    background: 'radial-gradient(ellipse at 30% 15%, rgba(13,148,136,0.1) 0%, transparent 55%)',
                   }}
                 />
 
@@ -584,7 +584,7 @@ export default function HealthConcerns({ value, onChange }: HealthConcernsProps)
                 <div
                   className="pointer-events-none absolute left-0 top-0 h-full w-[2px]"
                   style={{
-                    background: 'linear-gradient(to bottom, rgba(196,161,255,0.4), transparent 40%, rgba(255,158,122,0.25) 80%, transparent)',
+                    background: 'linear-gradient(to bottom, rgba(13,148,136,0.4), transparent 40%, rgba(255,158,122,0.25) 80%, transparent)',
                   }}
                 />
 
@@ -597,7 +597,7 @@ export default function HealthConcerns({ value, onChange }: HealthConcernsProps)
                     const count = getSubZoneSelectedCount(sz);
                     const hasSelections = count > 0;
                     const isActiveSub = activeSubZone === sz.id;
-                    const dotColor = isActiveSub ? '#ffffff' : hasSelections ? '#ff9e7a' : '#c4a1ff';
+                    const dotColor = isActiveSub ? '#059669' : hasSelections ? '#ff9e7a' : '#0d9488';
 
                     return (
                       <button
@@ -650,7 +650,7 @@ export default function HealthConcerns({ value, onChange }: HealthConcernsProps)
                 </div>
 
                 {/* Zone label */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0c0a14]/90 to-transparent px-3 pb-2.5 pt-8">
+                <div className="pointer-events-none absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white/90 to-transparent px-3 pb-2.5 pt-8">
                   <p className="text-center text-xs font-medium text-ofira-text-secondary">
                     {t(`zones.${currentZone.id}`)}
                   </p>
@@ -708,7 +708,7 @@ export default function HealthConcerns({ value, onChange }: HealthConcernsProps)
                       onClick={() => toggleConcern(key)}
                       className={`flex items-center gap-1.5 rounded-xl border px-2.5 py-2 text-left text-xs font-medium transition-colors sm:px-3 sm:py-2.5 sm:text-sm ${
                         selected
-                          ? 'border-ofira-violet bg-ofira-violet/10 text-ofira-violet shadow-[0_0_20px_rgba(196,161,255,0.12)]'
+                          ? 'border-ofira-violet bg-ofira-violet/10 text-ofira-violet shadow-[0_0_20px_rgba(13,148,136,0.12)]'
                           : 'border-ofira-card-border bg-ofira-surface2/90 text-ofira-text-secondary hover:border-ofira-violet/30 hover:text-ofira-text'
                       }`}
                       style={{ backdropFilter: 'blur(8px)' }}

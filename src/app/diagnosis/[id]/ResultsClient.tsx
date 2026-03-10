@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import ScoreCounter from '@/components/results/ScoreCounter';
@@ -7,10 +8,11 @@ import RadarChartComponent from '@/components/results/RadarChart';
 import AreaAnalysis from '@/components/results/AreaAnalysis';
 import ActionPlan from '@/components/results/ActionPlan';
 import PaywallOverlay from '@/components/results/PaywallOverlay';
+import EmailGate from '@/components/results/EmailGate';
 import ShareCard from '@/components/results/ShareCard';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowLeft, Calendar } from 'lucide-react';
+import { ArrowLeft, Calendar, CheckCircle2 } from 'lucide-react';
 
 interface DiagnosisData {
   id: string;
@@ -50,14 +52,20 @@ interface ResultsClientProps {
   diagnosis: DiagnosisData;
   aiData: AIData | null;
   isPaid: boolean;
+  userEmail: string | null;
 }
 
 export default function ResultsClient({
   diagnosis,
   aiData,
   isPaid,
+  userEmail: loggedInEmail,
 }: ResultsClientProps) {
   const t = useTranslations('results');
+  const isAnonymous = diagnosis.email.endsWith('@anonymous.ophyra');
+  const hasRealEmail = !isAnonymous || !!loggedInEmail;
+  const [emailUnlocked, setEmailUnlocked] = useState(hasRealEmail);
+  const [userEmail, setUserEmail] = useState(loggedInEmail || diagnosis.email);
 
   const scores = diagnosis.scores || {
     sleep: 5,
@@ -67,6 +75,21 @@ export default function ResultsClient({
     productivity: 5,
     hydration: 5,
   };
+
+  // Show email gate if user hasn't provided email yet
+  if (!emailUnlocked) {
+    return (
+      <EmailGate
+        diagnosisId={diagnosis.id}
+        score={diagnosis.overall_score || 0}
+        name={diagnosis.name || ''}
+        onUnlock={(email) => {
+          setUserEmail(email);
+          setEmailUnlocked(true);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-ofira-bg px-4 py-8">
@@ -147,7 +170,7 @@ export default function ResultsClient({
         {!isPaid && (
           <PaywallOverlay
             diagnosisId={diagnosis.id}
-            email={diagnosis.email}
+            email={userEmail}
             locale={diagnosis.locale}
           />
         )}
@@ -209,28 +232,43 @@ export default function ResultsClient({
         )}
 
         {/* Share */}
-        <ShareCard score={diagnosis.overall_score || 0} diagnosisId={diagnosis.id} />
+        <ShareCard score={diagnosis.overall_score || 0} diagnosisId={diagnosis.id} name={diagnosis.name || ''} />
 
-        {/* Save account CTA */}
-        <motion.div
-          className="mt-8 rounded-xl border border-[rgba(13,148,136,0.08)] bg-ofira-surface1 p-6 text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-        >
-          <h3 className="mb-2 font-medium">{t('saveAccount.title')}</h3>
-          <p className="mb-4 text-sm text-ofira-text-secondary">
-            {t('saveAccount.subtitle')}
-          </p>
-          <Link href="/auth/signup">
-            <Button
-              variant="outline"
-              className="border-ofira-violet/30 text-ofira-violet hover:bg-ofira-violet/10"
-            >
-              {t('saveAccount.cta')}
-            </Button>
-          </Link>
-        </motion.div>
+        {/* Save account CTA or saved confirmation */}
+        {loggedInEmail ? (
+          <motion.div
+            className="mt-8 flex items-center justify-center gap-2.5 rounded-xl border border-emerald-500/15 bg-emerald-50/50 px-5 py-4"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2 }}
+          >
+            <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-emerald-600" />
+            <div>
+              <p className="text-sm font-medium text-emerald-900">{t('saveAccount.saved')}</p>
+              <p className="text-xs text-emerald-700/60">{t('saveAccount.savedSub')}</p>
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            className="mt-8 rounded-xl border border-[rgba(13,148,136,0.08)] bg-ofira-surface1 p-6 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2 }}
+          >
+            <h3 className="mb-2 font-medium">{t('saveAccount.title')}</h3>
+            <p className="mb-4 text-sm text-ofira-text-secondary">
+              {t('saveAccount.subtitle')}
+            </p>
+            <Link href="/auth/signup">
+              <Button
+                variant="outline"
+                className="border-ofira-violet/30 text-ofira-violet hover:bg-ofira-violet/10"
+              >
+                {t('saveAccount.cta')}
+              </Button>
+            </Link>
+          </motion.div>
+        )}
 
         {/* Footer spacing */}
         <div className="h-16" />

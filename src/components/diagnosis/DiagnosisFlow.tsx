@@ -76,8 +76,11 @@ function QuestionComponent({
   }
 }
 
+import { useRouter } from 'next/navigation';
+
 export default function DiagnosisFlow({ onSubmit }: DiagnosisFlowProps) {
   const t = useTranslations('diagnosis');
+  const router = useRouter();
   const {
     currentStep,
     currentQuestion,
@@ -101,6 +104,14 @@ export default function DiagnosisFlow({ onSubmit }: DiagnosisFlowProps) {
     }
   };
 
+  const handleBack = () => {
+    if (isFirst) {
+      router.push('/');
+    } else {
+      goBack();
+    }
+  };
+
   return (
     <div className="flex min-h-screen flex-col bg-ofira-bg">
       <ConstellationProgress current={currentStep} total={totalQuestions} />
@@ -114,11 +125,10 @@ export default function DiagnosisFlow({ onSubmit }: DiagnosisFlowProps) {
           />
         </QuestionWrapper>
 
-        <div className="flex items-center justify-between px-4 pb-8 pt-4">
+        <div className="flex items-center justify-between px-4 pb-4 pt-2">
           <Button
             variant="ghost"
-            onClick={goBack}
-            disabled={isFirst}
+            onClick={handleBack}
             className="gap-2 text-ofira-text-secondary hover:text-ofira-text"
           >
             <ArrowLeft className="size-4" />

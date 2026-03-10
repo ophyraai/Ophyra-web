@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Star, BadgeCheck } from 'lucide-react';
 
 function AnimatedCounter({ target }: { target: number }) {
@@ -89,43 +89,47 @@ function TestimonialCard({ textKey, authorKey, avatar, score }: typeof testimoni
 }
 
 // ── Infinite scroll rows (marquee) ──────────────────────────────────
-function MarqueeRow({ items, direction = 'left', speed = 35 }: {
+const CARD_WIDTH = 320;
+const GAP = 20;
+
+function MarqueeRow({ items, direction = 'left', speed = 40 }: {
   items: typeof testimonials[number][];
   direction?: 'left' | 'right';
   speed?: number;
 }) {
-  // Double items for seamless loop
-  const doubled = [...items, ...items];
+  // Triple items for seamless infinite loop
+  const tripled = [...items, ...items, ...items];
+  const setWidth = items.length * (CARD_WIDTH + GAP);
 
   return (
     <div className="relative overflow-hidden py-2">
-      <motion.div
-        className="flex gap-5"
-        animate={{ x: direction === 'left' ? [0, -50 * items.length + '%'] : [-50 * items.length + '%', 0] }}
-        transition={{
-          x: {
-            duration: speed,
-            repeat: Infinity,
-            ease: 'linear',
-          },
+      <div
+        className="flex"
+        style={{
+          width: `${tripled.length * (CARD_WIDTH + GAP)}px`,
+          animation: `marquee-${direction} ${speed}s linear infinite`,
         }}
-        style={{ width: `${doubled.length * 340}px` }}
       >
-        {doubled.map((item, i) => (
-          <div key={`${item.textKey}-${i}`} className="w-[320px] flex-shrink-0">
+        {tripled.map((item, i) => (
+          <div
+            key={`${item.textKey}-${i}`}
+            className="flex-shrink-0"
+            style={{ width: CARD_WIDTH, marginRight: GAP }}
+          >
             <TestimonialCard {...item} />
           </div>
         ))}
-      </motion.div>
+      </div>
       {/* Fade edges */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-ofira-bg to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-ofira-bg to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-ofira-bg to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-ofira-bg to-transparent" />
     </div>
   );
 }
 
 export default function SocialProof() {
-  const allItems = [...testimonials] as typeof testimonials[number][];
+  const row1 = [...testimonials].slice(0, 10) as typeof testimonials[number][];
+  const row2 = [...testimonials].slice(10) as typeof testimonials[number][];
 
   return (
     <section className="py-24 px-4 overflow-hidden">
@@ -138,7 +142,10 @@ export default function SocialProof() {
         <AnimatedCounter target={3247} />
       </motion.div>
 
-      <MarqueeRow items={allItems} direction="left" speed={1400} />
+      <div className="space-y-5">
+        <MarqueeRow items={row1} direction="left" speed={45} />
+        <MarqueeRow items={row2} direction="right" speed={50} />
+      </div>
     </section>
   );
 }

@@ -3,7 +3,8 @@
     "navbar": {
       "diagnosis": "Diagnóstico",
       "shop": "Shop",
-      "dashboard": "Dashboard",
+      "dashboard": "Mi Progreso",
+      "account": "Mi Cuenta",
       "signup": "Regístrate"
     },
     "hero": {
@@ -70,10 +71,11 @@
       "tagline": "Tu diagnóstico de bienestar y hábitos",
       "privacy": "Privacidad",
       "terms": "Términos",
+      "cookies": "Política de Cookies",
       "contact": "Contacto"
     },
     "heroV2": {
-      "badge": "Tu bienestar, medido",
+      "badge": "Respaldado por +90K seguidores",
       "title": "Tu diagnóstico de hábitos en 5 minutos",
       "subtitle": "Descubre el estado real de tus hábitos. Análisis personalizado, plan de acción y seguimiento de progreso.",
       "cta": "Empieza tu diagnóstico",
@@ -81,22 +83,26 @@
       "ctaSub": "Gratis — Sin registro"
     },
     "socialStats": {
-      "followers": "Seguidores",
+      "followers": "Seguidores en redes",
       "diagnoses": "Diagnósticos",
-      "countries": "Países"
+      "views": "Views en contenido"
     },
     "socialEmbed": {
-      "title": "Lo que dicen de nosotros",
-      "watchMore": "Ver más en @ophyra_secret"
+      "title": "Lo que millones ya están viendo",
+      "watchMore": "Ver todos los reels en @ophyra_secret"
     },
     "diagnosisPreview": {
       "title": "Prueba antes de empezar",
       "cta": "Comenzar diagnóstico completo",
-      "sampleQ1": "¿Cuántas horas duermes de media por noche?",
-      "sampleQ2": "¿Con qué frecuencia sientes fatiga mental durante el día?",
-      "sampleQ3": "¿Cuántos litros de agua bebes al día?",
+      "sampleQ1": "¿Cómo describirías tu calidad de sueño esta semana?",
+      "sampleQ2": "¿Cuántos días has entrenado esta semana?",
+      "sampleQ3": "¿Cómo gestionas el estrés actualmente?",
       "sampleQ4": "¿Cómo calificarías tu nivel de estrés esta semana?",
-      "sampleQ5": "¿Cuántas veces por semana realizas actividad física?"
+      "sampleQ5": "¿Cuántas veces por semana realizas actividad física?",
+      "resultReady": "Tu resultado está listo",
+      "resultSub": "Completa el diagnóstico para ver tu análisis detallado",
+      "ctaFull": "Ver mi diagnóstico completo",
+      "retry": "Volver a intentar"
     },
     "habitTip": {
       "title": "Tip del día",
@@ -324,24 +330,51 @@
     },
     "analysis": "Análisis Detallado",
     "actionPlan": "Plan de Acción",
+    "emailGate": {
+      "scoreReady": "tu diagnóstico está listo",
+      "yourScore": "Tu Puntuación",
+      "title": "Descubre tu análisis completo",
+      "subtitle": "Introduce tu email para ver el desglose por categorías, tu radar de bienestar y el resumen personalizado.",
+      "placeholder": "tu@email.com",
+      "cta": "Ver mis resultados",
+      "privacy": "No spam. Solo tu diagnóstico."
+    },
     "unlock": {
-      "title": "Desbloquea tu diagnóstico completo",
-      "subtitle": "Accede al análisis detallado por área, plan de acción de 30 días y recomendaciones personalizadas.",
-      "cta": "Desbloquear por $9.99",
-      "guarantee": "Garantía de satisfacción - o te devolvemos el dinero"
+      "badge": "Oferta de lanzamiento — plazas limitadas",
+      "title": "Tu plan personalizado está listo",
+      "subtitle": "Hemos creado un plan de 30 días basado en tus resultados. Desbloquéalo ahora con precio de lanzamiento.",
+      "features": [
+        "Análisis detallado de tus 6 áreas de bienestar",
+        "Plan de acción de 30 días personalizado",
+        "Seguimiento diario de hábitos",
+        "Acciones prioritarias según tu perfil",
+        "Acceso de por vida a tus resultados"
+      ],
+      "originalPrice": "$29.99",
+      "price": "$9.99",
+      "discount": "-67%",
+      "cta": "Desbloquear mi plan por $9.99",
+      "trust": "Pago seguro · Acceso inmediato"
     },
     "share": {
       "title": "Comparte tu resultado",
-      "text": "Mi puntuación de hábitos Ophyra: {score}/100"
+      "subtitle": "Reta a tus amigos a superar tu puntuación",
+      "text": "He hecho el diagnóstico de bienestar de Ophyra y mi puntuación es {score}/100. ¿Te atreves a superarme?",
+      "copied": "¡Copiado!",
+      "copyLink": "Copiar enlace",
+      "moreOptions": "Más",
+      "igCopied": "Enlace copiado — pégalo en tu Story o DM de Instagram"
     },
     "saveAccount": {
       "title": "Guarda tu diagnóstico",
       "subtitle": "Crea una cuenta para acceder a tu historial y trackear tu progreso.",
-      "cta": "Crear cuenta gratis"
+      "cta": "Crear cuenta gratis",
+      "saved": "Diagnóstico guardado en tu perfil",
+      "savedSub": "Accede desde tu dashboard para ver tu historial y progreso"
     }
   },
   "dashboard": {
-    "title": "Dashboard",
+    "title": "Mi Progreso",
     "today": "Hoy",
     "streak": "Racha",
     "days": "días",
@@ -353,6 +386,19 @@
     "rediagnosisDesc": "Han pasado 30 días. Descubre cuánto has mejorado.",
     "rediagnosisCta": "Hacer re-diagnóstico",
     "startPlan": "Empieza tu Plan de 30 Días",
+    "renewed": "¡Plan renovado con éxito! Tu nuevo ciclo de 30 días ha comenzado.",
+    "renewal": {
+      "title": "Tu plan ha expirado",
+      "description": "Renueva para seguir con tu plan personalizado, tracking de hábitos y un re-diagnóstico gratuito.",
+      "cta": "Renovar por €9.99",
+      "ctaDiscount": "Renovar por €4.99",
+      "countdown": "Oferta expira en {time}"
+    },
+    "subscription": {
+      "premium": "Premium",
+      "daysLeft": "{days} días restantes",
+      "expired": "Plan expirado"
+    },
     "categories": {
       "sleep": "Sueño",
       "exercise": "Ejercicio",

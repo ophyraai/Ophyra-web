@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { Lock, Shield } from 'lucide-react';
+import { Sparkles, Shield, Check, Clock } from 'lucide-react';
 import ShimmerButton from '@/components/ui/ShimmerButton';
 
 interface PaywallOverlayProps {
@@ -43,6 +43,8 @@ export default function PaywallOverlay({
     }
   };
 
+  const features = t.raw('features') as string[];
+
   return (
     <motion.div
       className="relative my-8 overflow-hidden rounded-2xl p-8 text-center"
@@ -74,8 +76,19 @@ export default function PaywallOverlay({
       <div className="absolute -top-20 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-ofira-violet/20 blur-3xl" />
 
       <div className="relative">
+        {/* Discount badge */}
+        <motion.div
+          className="mx-auto mb-4 inline-flex items-center gap-1.5 rounded-full bg-red-500/10 px-3 py-1 text-xs font-semibold text-red-600"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
+        >
+          <Clock className="h-3 w-3" />
+          {t('badge')}
+        </motion.div>
+
         <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-ofira-violet/10">
-          <Lock className="h-6 w-6 text-ofira-violet" />
+          <Sparkles className="h-6 w-6 text-ofira-violet" />
         </div>
 
         <h3
@@ -85,9 +98,46 @@ export default function PaywallOverlay({
           {t('title')}
         </h3>
 
-        <p className="mx-auto mb-6 max-w-md text-sm text-ofira-text-secondary">
+        <p className="mx-auto mb-5 max-w-md text-sm text-ofira-text-secondary">
           {t('subtitle')}
         </p>
+
+        {/* Feature list */}
+        <div className="mx-auto mb-6 max-w-xs space-y-2.5 text-left">
+          {features.map((feature, i) => (
+            <motion.div
+              key={i}
+              className="flex items-start gap-2.5"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6 + i * 0.08 }}
+            >
+              <div className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-emerald-500/15">
+                <Check className="h-2.5 w-2.5 text-emerald-600" />
+              </div>
+              <span className="text-sm text-ofira-text-secondary">{feature}</span>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Pricing */}
+        <div className="mb-5 flex items-center justify-center gap-3">
+          <span className="text-lg text-ofira-text-secondary line-through">{t('originalPrice')}</span>
+          <span
+            className="text-3xl font-bold"
+            style={{
+              background: 'linear-gradient(135deg, #0d9488, #059669)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            {t('price')}
+          </span>
+          <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-bold text-emerald-600">
+            {t('discount')}
+          </span>
+        </div>
 
         <ShimmerButton
           onClick={handleUnlock}
@@ -107,7 +157,7 @@ export default function PaywallOverlay({
 
         <div className="mt-4 flex items-center justify-center gap-2 text-xs text-ofira-text-secondary">
           <Shield className="h-3.5 w-3.5" />
-          <span>{t('guarantee')}</span>
+          <span>{t('trust')}</span>
         </div>
       </div>
     </motion.div>

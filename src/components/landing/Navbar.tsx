@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, UserCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase/client';
 
 export default function Navbar() {
@@ -12,6 +12,10 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Scroll progress
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 30 });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -41,9 +45,12 @@ export default function Navbar() {
   const navLinks = [
     { label: t('diagnosis'), href: '/diagnosis' },
     { label: t('shop'), href: '/shop' },
-    isLoggedIn
-      ? { label: t('dashboard'), href: '/dashboard' }
-      : { label: t('signup'), href: '/auth/signup', highlight: true },
+    ...(isLoggedIn
+      ? [
+          { label: t('dashboard'), href: '/dashboard' },
+          { label: t('account'), href: '/dashboard/account', icon: UserCircle },
+        ]
+      : [{ label: t('signup'), href: '/auth/signup', highlight: true }]),
   ];
 
   return (
@@ -58,6 +65,15 @@ export default function Navbar() {
             : 'bg-transparent'
         }`}
       >
+        {/* Scroll progress bar */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 h-[2px] origin-left"
+          style={{
+            scaleX,
+            background: 'linear-gradient(90deg, #0d9488, #059669)',
+          }}
+        />
+
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           {/* Logo */}
           <Link href="/" className="text-xl font-bold">
@@ -66,13 +82,22 @@ export default function Navbar() {
 
           {/* Desktop links */}
           <div className="hidden items-center gap-8 md:flex">
-            {navLinks.map(({ label, href, highlight }) =>
+            {navLinks.map(({ label, href, highlight, icon: Icon }) =>
               highlight ? (
                 <Link
                   key={href}
                   href={href}
                   className="rounded-lg bg-ofira-violet px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-ofira-violet/90"
                 >
+                  {label}
+                </Link>
+              ) : Icon ? (
+                <Link
+                  key={href}
+                  href={href}
+                  className="flex items-center gap-1.5 text-sm font-medium text-ofira-text-secondary transition-colors hover:text-ofira-violet"
+                >
+                  <Icon className="size-4" />
                   {label}
                 </Link>
               ) : (
@@ -110,7 +135,7 @@ export default function Navbar() {
             className="fixed inset-0 z-40 bg-white md:hidden"
           >
             <div className="flex h-full flex-col items-center justify-center gap-8">
-              {navLinks.map(({ label, href, highlight }, i) => (
+              {navLinks.map(({ label, href, highlight, icon: Icon }, i) => (
                 <motion.div
                   key={href}
                   initial={{ opacity: 0, y: 20 }}
@@ -123,9 +148,10 @@ export default function Navbar() {
                     className={
                       highlight
                         ? 'rounded-xl bg-ofira-violet px-6 py-3 text-2xl font-semibold text-white transition-colors hover:bg-ofira-violet/90'
-                        : 'text-2xl font-semibold text-ofira-text transition-colors hover:text-ofira-violet'
+                        : 'flex items-center gap-2 text-2xl font-semibold text-ofira-text transition-colors hover:text-ofira-violet'
                     }
                   >
+                    {Icon && <Icon className="size-6" />}
                     {label}
                   </Link>
                 </motion.div>

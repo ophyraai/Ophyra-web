@@ -28,11 +28,11 @@ export default function NameInput({ value, onChange }: NameInputProps) {
       </h2>
       <div className="relative">
         <motion.label
-          className="pointer-events-none absolute left-4 text-ofira-text-secondary"
+          className={`pointer-events-none absolute left-3 z-10 px-1 text-ofira-text-secondary transition-colors ${labelUp ? 'bg-ofira-bg' : 'bg-transparent'}`}
           animate={{
             y: labelUp ? -28 : 0,
             scale: labelUp ? 0.85 : 1,
-            color: labelUp ? '#c4a1ff' : '#8b82a8',
+            color: labelUp ? '#0d9488' : '#4b6b64',
           }}
           transition={{ type: 'spring', stiffness: 300, damping: 25 }}
           style={{ originX: 0, top: '50%', translateY: '-50%' }}
@@ -46,7 +46,7 @@ export default function NameInput({ value, onChange }: NameInputProps) {
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className="w-full rounded-xl border border-ofira-card-border bg-ofira-card px-4 py-4 text-lg text-ofira-text outline-none transition-all focus:border-ofira-violet focus:shadow-[0_0_15px_rgba(196,161,255,0.2)]"
+          className="w-full rounded-xl border border-ofira-card-border bg-ofira-card px-4 py-4 text-lg text-ofira-text outline-none transition-all focus:border-ofira-violet focus:shadow-[0_0_15px_rgba(13,148,136,0.2)]"
         />
       </div>
       <AnimatePresence>

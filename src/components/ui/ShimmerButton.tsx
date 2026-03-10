@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef, useCallback } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import Link from 'next/link';
 
 interface ShimmerButtonProps {
@@ -12,13 +13,41 @@ interface ShimmerButtonProps {
 }
 
 export default function ShimmerButton({ href, onClick, children, className = '', disabled }: ShimmerButtonProps) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 200, damping: 15 });
+  const springY = useSpring(y, { stiffness: 200, damping: 15 });
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (disabled || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const distX = e.clientX - centerX;
+    const distY = e.clientY - centerY;
+    // Magnetic pull — moves up to 6px toward cursor
+    x.set(distX * 0.15);
+    y.set(distY * 0.15);
+  }, [disabled, x, y]);
+
+  const handleMouseLeave = useCallback(() => {
+    x.set(0);
+    y.set(0);
+  }, [x, y]);
+
   const content = (
     <motion.span
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       className={`group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full px-8 text-base font-semibold text-white ${disabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'} ${className}`}
       whileHover={disabled ? undefined : { scale: 1.05 }}
       whileTap={disabled ? undefined : { scale: 0.98 }}
       style={{
         background: 'linear-gradient(135deg, #0d9488, #059669)',
+        x: springX,
+        y: springY,
       }}
     >
       {/* Shimmer sweep */}

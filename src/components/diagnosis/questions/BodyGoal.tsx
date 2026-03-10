@@ -149,7 +149,7 @@ export default function BodyGoal({ value, onChange }: BodyGoalProps) {
                           opacity: 1,
                         }
                       : {
-                          stroke: '#ffffff',
+                          stroke: '#4b6b64',
                           filter: 'none',
                           opacity: 0.55,
                         }

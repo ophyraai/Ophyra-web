@@ -3,16 +3,18 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { LayoutDashboard, ListChecks, TrendingUp } from 'lucide-react';
+import { LayoutDashboard, ListChecks, TrendingUp, CalendarDays, UserCircle } from 'lucide-react';
 
 const tabs = [
   { label: 'Overview', href: '/dashboard', icon: LayoutDashboard },
+  { label: 'Mi Plan', href: '/dashboard/plan', icon: CalendarDays },
   { label: 'Habits', href: '/dashboard/habits', icon: ListChecks },
   { label: 'Progress', href: '/dashboard/progress', icon: TrendingUp },
 ];
 
 export default function DashboardNav() {
   const pathname = usePathname();
+  const isAccountActive = pathname.startsWith('/dashboard/account');
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-40 border-b border-ofira-card-border bg-white/80 backdrop-blur-md">
@@ -52,6 +54,18 @@ export default function DashboardNav() {
             );
           })}
         </div>
+
+        {/* Account icon */}
+        <Link
+          href="/dashboard/account"
+          className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors ${
+            isAccountActive
+              ? 'bg-ofira-violet/10 text-ofira-violet'
+              : 'text-ofira-text-secondary hover:bg-ofira-surface1 hover:text-ofira-text'
+          }`}
+        >
+          <UserCircle className="size-5" />
+        </Link>
       </div>
     </nav>
   );

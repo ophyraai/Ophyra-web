@@ -6,23 +6,34 @@ import HowItWorksV2 from '@/components/landing/HowItWorksV2';
 import HabitTip from '@/components/landing/HabitTip';
 import CommunityGrowth from '@/components/landing/CommunityGrowth';
 import SocialProof from '@/components/landing/SocialProof';
+import DiagnosisPreview from '@/components/landing/DiagnosisPreview';
 import Footer from '@/components/landing/Footer';
+import WaveDivider from '@/components/ui/WaveDivider';
 
 export default function Home() {
   return (
-    <main className="bg-ofira-bg">
+    <main className="relative bg-ofira-bg">
       <Navbar />
       <HeroV2 />
+      <WaveDivider fromColor="#ffffff" toColor="#f0faf8" />
       <div className="section-alt">
         <SocialStats />
       </div>
+      <WaveDivider fromColor="#f0faf8" toColor="#ffffff" flip />
       <SocialEmbed />
+      <WaveDivider fromColor="#ffffff" toColor="#ffffff" />
       <HowItWorksV2 />
+      <WaveDivider fromColor="#ffffff" toColor="#f0faf8" />
       <div className="section-alt">
         <HabitTip />
       </div>
-      <CommunityGrowth />
+      <WaveDivider fromColor="#f0faf8" toColor="#ffffff" flip />
       <SocialProof />
+      <WaveDivider fromColor="#ffffff" toColor="#f0faf8" />
+      <DiagnosisPreview />
+      <WaveDivider fromColor="#f0faf8" toColor="#ffffff" flip />
+      <CommunityGrowth />
+      <WaveDivider fromColor="#ffffff" toColor="#f0faf8" />
       <div className="section-alt">
         <Footer />
       </div>
