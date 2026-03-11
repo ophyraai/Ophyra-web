@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { Mail, Shield, ChevronRight } from 'lucide-react';
+import { UserPlus, Shield, LogIn } from 'lucide-react';
 import ShimmerButton from '@/components/ui/ShimmerButton';
 import ScoreCounter from './ScoreCounter';
+import Link from 'next/link';
 
 interface EmailGateProps {
   diagnosisId: string;
@@ -14,40 +14,9 @@ interface EmailGateProps {
   onUnlock: (email: string) => void;
 }
 
-export default function EmailGate({ diagnosisId, score, name, onUnlock }: EmailGateProps) {
+export default function EmailGate({ diagnosisId, score, name }: EmailGateProps) {
   const t = useTranslations('results.emailGate');
-  const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-
-  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  const handleSubmit = async (e?: React.KeyboardEvent | React.MouseEvent) => {
-    e?.preventDefault();
-    if (!isValidEmail) return;
-
-    setLoading(true);
-    setError('');
-
-    try {
-      const res = await fetch('/api/diagnosis/update-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ diagnosisId, email }),
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || 'Error al guardar el email');
-      }
-
-      onUnlock(email);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error de conexión');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const redirectPath = `/diagnosis/${diagnosisId}`;
 
   return (
     <div className="min-h-screen bg-ofira-bg px-4 py-8">
@@ -74,6 +43,18 @@ export default function EmailGate({ diagnosisId, score, name, onUnlock }: EmailG
           <ScoreCounter score={score} />
         </div>
 
+        {/* FREE badge */}
+        <motion.div
+          className="mb-4 flex justify-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-4 py-1.5 text-sm font-semibold text-emerald-700">
+            {t('freeBadge')}
+          </span>
+        </motion.div>
+
         {/* Blurred preview – immediately below score */}
         <div className="relative mb-2 overflow-hidden rounded-xl">
           <div className="space-y-2.5 blur-md select-none pointer-events-none px-4">
@@ -87,7 +68,7 @@ export default function EmailGate({ diagnosisId, score, name, onUnlock }: EmailG
           <div className="absolute inset-0 bg-gradient-to-t from-ofira-bg via-ofira-bg/80 to-transparent" />
         </div>
 
-        {/* Email capture card – overlaps blurred area */}
+        {/* Auth capture card */}
         <motion.div
           className="relative overflow-hidden rounded-2xl p-8 text-center"
           style={{
@@ -118,7 +99,7 @@ export default function EmailGate({ diagnosisId, score, name, onUnlock }: EmailG
 
           <div className="relative">
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-ofira-violet/10">
-              <Mail className="h-6 w-6 text-ofira-violet" />
+              <UserPlus className="h-6 w-6 text-ofira-violet" />
             </div>
 
             <h3
@@ -132,44 +113,21 @@ export default function EmailGate({ diagnosisId, score, name, onUnlock }: EmailG
               {t('subtitle')}
             </p>
 
-            <div className="space-y-4">
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ofira-text-secondary" />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && isValidEmail) handleSubmit(e);
-                  }}
-                  placeholder={t('placeholder')}
-                  className="w-full rounded-xl border border-[rgba(13,148,136,0.15)] bg-white py-3 pl-11 pr-4 text-sm outline-none transition-colors focus:border-ofira-violet/40 focus:ring-2 focus:ring-ofira-violet/10"
-                  autoComplete="email"
-                />
-              </div>
+            <div className="space-y-3">
+              <Link href={`/auth/signup?redirect=${encodeURIComponent(redirectPath)}`}>
+                <ShimmerButton className="w-full text-base">
+                  <UserPlus className="h-4 w-4" />
+                  {t('ctaSignup')}
+                </ShimmerButton>
+              </Link>
 
-              {error && (
-                <p className="text-xs text-red-500">{error}</p>
-              )}
-
-              <ShimmerButton
-                onClick={handleSubmit}
-                disabled={!isValidEmail || loading}
-                className="w-full text-base"
+              <Link
+                href={`/auth/login?redirect=${encodeURIComponent(redirectPath)}`}
+                className="flex items-center justify-center gap-2 rounded-xl border border-ofira-card-border bg-white py-3 text-sm font-medium text-ofira-text transition-colors hover:border-ofira-violet/30"
               >
-                {loading ? (
-                  <motion.div
-                    className="h-5 w-5 rounded-full border-2 border-white/30 border-t-white"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                  />
-                ) : (
-                  <>
-                    {t('cta')}
-                    <ChevronRight className="h-4 w-4" />
-                  </>
-                )}
-              </ShimmerButton>
+                <LogIn className="h-4 w-4" />
+                {t('ctaLogin')}
+              </Link>
             </div>
 
             <div className="mt-4 flex items-center justify-center gap-2 text-xs text-ofira-text-secondary">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Copy, Check, Share2 } from 'lucide-react';
@@ -303,10 +303,15 @@ export default function ShareCard({ score, diagnosisId, name }: ShareCardProps) 
   const [copied, setCopied] = useState(false);
   const [activePlatform, setActivePlatform] = useState<string | null>(null);
   const [igTooltip, setIgTooltip] = useState(false);
+  const [hasNativeShare, setHasNativeShare] = useState(false);
 
   const shareUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/diagnosis/${diagnosisId}`
     : '';
+
+  useEffect(() => {
+    setHasNativeShare(!!navigator.share);
+  }, []);
 
   const shareText = t('text', { score: String(score) });
 
@@ -340,8 +345,6 @@ export default function ShareCard({ score, diagnosisId, name }: ShareCardProps) 
       } catch {}
     }
   }, [shareText, shareUrl]);
-
-  const hasNativeShare = typeof navigator !== 'undefined' && !!navigator.share;
 
   return (
     <motion.div

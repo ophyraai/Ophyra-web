@@ -333,11 +333,12 @@
     "emailGate": {
       "scoreReady": "tu diagnóstico está listo",
       "yourScore": "Tu Puntuación",
-      "title": "Descubre tu análisis completo",
-      "subtitle": "Introduce tu email para ver el desglose por categorías, tu radar de bienestar y el resumen personalizado.",
-      "placeholder": "tu@email.com",
-      "cta": "Ver mis resultados",
-      "privacy": "No spam. Solo tu diagnóstico."
+      "freeBadge": "100% GRATIS",
+      "title": "Crea tu cuenta para ver tu resultado",
+      "subtitle": "Tu resultado es completamente gratuito. Regístrate en 10 segundos para desbloquearlo y guardarlo para siempre.",
+      "ctaSignup": "Crear cuenta gratis",
+      "ctaLogin": "Ya tengo cuenta",
+      "privacy": "Tu resultado es gratis. Sin trucos."
     },
     "unlock": {
       "badge": "Oferta de lanzamiento — plazas limitadas",

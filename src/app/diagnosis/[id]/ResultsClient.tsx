@@ -234,8 +234,8 @@ export default function ResultsClient({
         {/* Share */}
         <ShareCard score={diagnosis.overall_score || 0} diagnosisId={diagnosis.id} name={diagnosis.name || ''} />
 
-        {/* Save account CTA or saved confirmation */}
-        {loggedInEmail ? (
+        {/* Account saved confirmation */}
+        {loggedInEmail && (
           <motion.div
             className="mt-8 flex items-center justify-center gap-2.5 rounded-xl border border-emerald-500/15 bg-emerald-50/50 px-5 py-4"
             initial={{ opacity: 0, y: 10 }}
@@ -247,26 +247,6 @@ export default function ResultsClient({
               <p className="text-sm font-medium text-emerald-900">{t('saveAccount.saved')}</p>
               <p className="text-xs text-emerald-700/60">{t('saveAccount.savedSub')}</p>
             </div>
-          </motion.div>
-        ) : (
-          <motion.div
-            className="mt-8 rounded-xl border border-[rgba(13,148,136,0.08)] bg-ofira-surface1 p-6 text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
-          >
-            <h3 className="mb-2 font-medium">{t('saveAccount.title')}</h3>
-            <p className="mb-4 text-sm text-ofira-text-secondary">
-              {t('saveAccount.subtitle')}
-            </p>
-            <Link href="/auth/signup">
-              <Button
-                variant="outline"
-                className="border-ofira-violet/30 text-ofira-violet hover:bg-ofira-violet/10"
-              >
-                {t('saveAccount.cta')}
-              </Button>
-            </Link>
           </motion.div>
         )}
 

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { generateText } from 'ai';
-import { anthropic } from '@ai-sdk/anthropic';
+import { deepseek } from '@ai-sdk/deepseek';
 import { supabaseAdmin } from '@/lib/supabase/server';
 import { createSupabaseServer } from '@/lib/supabase/server';
 
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
   // Use Claude to extract habits from the plan
   const { text } = await generateText({
-    model: anthropic('claude-sonnet-4-20250514'),
+    model: deepseek('deepseek-chat'),
     system: `You are a health habit extraction assistant. Extract daily trackable habits from a 30-day wellness plan.
 Return ONLY a valid JSON array of habit objects. Each object must have:
 - "name": string (short, actionable habit name in Spanish)

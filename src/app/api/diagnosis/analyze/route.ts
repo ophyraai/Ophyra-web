@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { streamText } from 'ai';
 import { anthropic } from '@ai-sdk/anthropic';
+import { deepseek } from '@ai-sdk/deepseek';
 import { supabaseAdmin } from '@/lib/supabase/server';
 import { getSystemPrompt } from '@/lib/ai/system-prompt';
 
@@ -29,7 +30,7 @@ export async function POST(req: Request) {
     contentParts.push({ type: 'text', text: JSON.stringify({ answers, scores }) });
 
     const result = streamText({
-      model: anthropic(hasPhotos ? 'claude-sonnet-4-20250514' : 'claude-3-5-haiku-20241022'),
+      model: hasPhotos ? anthropic('claude-sonnet-4-20250514') : deepseek('deepseek-chat'),
       system: getSystemPrompt(locale || 'es'),
       messages: [
         {

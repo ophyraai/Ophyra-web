@@ -3,13 +3,15 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 
 type View = 'login' | 'forgot' | 'forgot-sent';
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get('redirect') || '/';
   const [view, setView] = useState<View>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,7 +33,7 @@ export default function LoginPage() {
       return;
     }
 
-    router.push('/');
+    router.push(redirect);
     router.refresh();
   };
 
@@ -55,7 +57,7 @@ export default function LoginPage() {
   const handleGoogleLogin = async () => {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirect)}` },
     });
   };
 
@@ -151,7 +153,7 @@ export default function LoginPage() {
 
             <p className="mt-6 text-center text-sm text-ofira-text-secondary">
               ¿No tienes cuenta?{' '}
-              <Link href="/auth/signup" className="text-ofira-violet hover:underline">
+              <Link href={`/auth/signup${redirect !== '/' ? `?redirect=${encodeURIComponent(redirect)}` : ''}`} className="text-ofira-violet hover:underline">
                 Regístrate
               </Link>
             </p>

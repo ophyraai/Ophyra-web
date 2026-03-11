@@ -333,11 +333,12 @@
     "emailGate": {
       "scoreReady": "your diagnosis is ready",
       "yourScore": "Your Score",
-      "title": "Discover your full analysis",
-      "subtitle": "Enter your email to see the category breakdown, your wellness radar, and personalized summary.",
-      "placeholder": "you@email.com",
-      "cta": "See my results",
-      "privacy": "No spam. Just your diagnosis."
+      "freeBadge": "100% FREE",
+      "title": "Create your account to see your result",
+      "subtitle": "Your result is completely free. Sign up in 10 seconds to unlock it and save it forever.",
+      "ctaSignup": "Create free account",
+      "ctaLogin": "I already have an account",
+      "privacy": "Your result is free. No catch."
     },
     "unlock": {
       "badge": "Launch offer — limited spots",

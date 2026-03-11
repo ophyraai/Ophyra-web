@@ -63,7 +63,7 @@ function AnalyzingScreen({
     if (!onNavigate) return;
     setPercent(100);
     setShowShockwave(true);
-    const timer = setTimeout(() => router.push(onNavigate), 600);
+    const timer = setTimeout(() => router.push(onNavigate), 1000);
     return () => clearTimeout(timer);
   }, [onNavigate, router]);
 
@@ -177,15 +177,53 @@ function AnalyzingScreen({
           ))}
         </div>
 
-        {/* Shockwave effect */}
+        {/* Shockwave effect — multi-layer dramatic burst */}
         {showShockwave && (
-          <motion.div
-            className="absolute rounded-full border-2 border-ofira-violet"
-            style={{ width: 128, height: 128, top: 0 }}
-            initial={{ scale: 1, opacity: 0.6 }}
-            animate={{ scale: 4, opacity: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-          />
+          <>
+            {/* White flash overlay */}
+            <motion.div
+              className="fixed inset-0 z-50 bg-white"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 0.9, 0] }}
+              transition={{ duration: 0.8, times: [0, 0.3, 1], ease: 'easeOut' }}
+            />
+            {/* Ring 1 – fast, solid */}
+            <motion.div
+              className="absolute rounded-full border-4 border-ofira-violet"
+              style={{ width: 128, height: 128, top: 0 }}
+              initial={{ scale: 1, opacity: 0.8 }}
+              animate={{ scale: 8, opacity: 0 }}
+              transition={{ duration: 0.9, ease: 'easeOut' }}
+            />
+            {/* Ring 2 – slower, thinner */}
+            <motion.div
+              className="absolute rounded-full border-2 border-emerald-400"
+              style={{ width: 128, height: 128, top: 0 }}
+              initial={{ scale: 1, opacity: 0.6 }}
+              animate={{ scale: 6, opacity: 0 }}
+              transition={{ duration: 1.1, ease: 'easeOut', delay: 0.1 }}
+            />
+            {/* Ring 3 – glow fill */}
+            <motion.div
+              className="absolute rounded-full"
+              style={{
+                width: 128,
+                height: 128,
+                top: 0,
+                background: 'radial-gradient(circle, rgba(13,148,136,0.4) 0%, transparent 70%)',
+              }}
+              initial={{ scale: 1, opacity: 1 }}
+              animate={{ scale: 10, opacity: 0 }}
+              transition={{ duration: 1.2, ease: 'easeOut' }}
+            />
+            {/* Content scale up */}
+            <motion.div
+              className="absolute inset-0"
+              initial={{ scale: 1 }}
+              animate={{ scale: 1.15, opacity: 0 }}
+              transition={{ duration: 0.7, ease: 'easeIn' }}
+            />
+          </>
         )}
       </motion.div>
     </div>

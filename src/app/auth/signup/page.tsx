@@ -3,9 +3,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 
 export default function SignupPage() {
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get('redirect') || '/';
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,7 +26,7 @@ export default function SignupPage() {
       password,
       options: {
         data: { name },
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirect)}`,
       },
     });
 
@@ -42,7 +45,7 @@ export default function SignupPage() {
   const handleGoogleSignup = async () => {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirect)}` },
     });
   };
 
@@ -155,7 +158,7 @@ export default function SignupPage() {
 
         <p className="mt-6 text-center text-sm text-ofira-text-secondary">
           ¿Ya tienes cuenta?{' '}
-          <Link href="/auth/login" className="text-ofira-violet hover:underline">
+          <Link href={`/auth/login${redirect !== '/' ? `?redirect=${encodeURIComponent(redirect)}` : ''}`} className="text-ofira-violet hover:underline">
             Inicia sesión
           </Link>
         </p>
