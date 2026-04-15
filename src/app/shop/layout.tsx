@@ -1,21 +1,23 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Tienda Oficial | Ophyra', // TODO: Renombrar si se desea la marca personal aquí
-  description: 'Descubre nuestros productos, plantillas y herramientas para optimizar tus hábitos y maximizar tu productividad diaria.',
-  alternates: {
-    canonical: '/shop',
-  },
+  title: 'Shop de bienestar · Ophyra',
+  description:
+    'Productos y herramientas seleccionadas para mejorar tus hábitos: sueño, nutrición, movimiento, mente, energía y entorno. Marca Ophyra + productos recomendados.',
+  alternates: { canonical: '/shop' },
   openGraph: {
-    title: 'Tienda Oficial | Ophyra',
-    description: 'Productos, plantillas y herramientas para optimizar tus hábitos.',
+    title: 'Shop de bienestar · Ophyra',
+    description:
+      'Productos curados por Ophyra para los 6 pilares del bienestar: sueño, nutrición, movimiento, mente, energía y entorno.',
     url: '/shop',
     type: 'website',
+    siteName: 'Ophyra',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tienda Oficial | Ophyra',
-    description: 'Descubre nuestras herramientas para optimizar tu día a día.',
+    title: 'Shop de bienestar · Ophyra',
+    description:
+      'Productos curados para mejorar tus hábitos de bienestar.',
   },
 };
 

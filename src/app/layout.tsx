@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 import CookieBanner from "@/components/legal/CookieBanner";
+import { CartProvider } from "@/context/CartContext";
 
 const dmSans = DM_Sans({
   variable: "--font-display",
@@ -66,17 +67,51 @@ export default async function RootLayout({
   const locale = await getLocale();
   const messages = await getMessages();
 
-  // Structured Data for Personal Brand SEO
+  // Structured Data — marca personal (Person) + tienda online (OnlineStore).
+  // @graph permite combinar varios @type enlazados por @id.
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ophyra.com';
   const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Ophyra",
-    "url": process.env.NEXT_PUBLIC_APP_URL || 'https://ophyra.com',
-    "sameAs": [
-      "https://www.instagram.com/ophyra_secret/",
-      "https://www.tiktok.com/@ophyra_secret"
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Person',
+        '@id': `${baseUrl}#creator`,
+        name: 'Ophyra',
+        url: baseUrl,
+        sameAs: [
+          'https://www.instagram.com/ophyra_secret/',
+          'https://www.tiktok.com/@ophyra_secret',
+        ],
+        jobTitle: 'Creador de Contenido y Experto en Hábitos',
+      },
+      {
+        '@type': 'OnlineStore',
+        '@id': `${baseUrl}#store`,
+        name: 'Ophyra',
+        url: baseUrl,
+        description:
+          'Marketplace de bienestar con productos seleccionados para mejorar hábitos de sueño, nutrición, movimiento, mente, energía y entorno.',
+        founder: { '@id': `${baseUrl}#creator` },
+        sameAs: [
+          'https://www.instagram.com/ophyra_secret/',
+          'https://www.tiktok.com/@ophyra_secret',
+        ],
+        contactPoint: {
+          '@type': 'ContactPoint',
+          email: 'soporte@ophyra.com',
+          contactType: 'customer support',
+          availableLanguage: ['Spanish', 'English'],
+        },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${baseUrl}#website`,
+        url: baseUrl,
+        name: 'Ophyra',
+        publisher: { '@id': `${baseUrl}#store` },
+        inLanguage: locale === 'en' ? 'en' : 'es',
+      },
     ],
-    "jobTitle": "Creador de Contenido y Experto en Hábitos"
   };
 
   return (
@@ -92,8 +127,10 @@ export default async function RootLayout({
         style={{ fontFamily: "var(--font-body)" }}
       >
         <NextIntlClientProvider messages={messages}>
-          {children}
-          <CookieBanner />
+          <CartProvider>
+            {children}
+            <CookieBanner />
+          </CartProvider>
         </NextIntlClientProvider>
       </body>
     </html>

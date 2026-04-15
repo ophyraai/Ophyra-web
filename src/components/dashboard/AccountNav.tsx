@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { User, CreditCard, FileText, ChevronRight } from 'lucide-react';
+import { User, CreditCard, FileText, Package } from 'lucide-react';
 
 const tabs = [
   { label: 'Mi Cuenta', href: '/dashboard/account', icon: User, exact: true },
   { label: 'Editar Perfil', href: '/dashboard/account/profile', icon: User },
+  { label: 'Pedidos', href: '/dashboard/account/orders', icon: Package },
   { label: 'Pagos', href: '/dashboard/account/payments', icon: CreditCard },
   { label: 'Diagnósticos', href: '/dashboard/account/diagnoses', icon: FileText },
 ];

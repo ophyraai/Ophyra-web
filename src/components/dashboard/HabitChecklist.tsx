@@ -1,10 +1,12 @@
 'use client';
 
 import { motion, AnimatePresence, Reorder } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import {
   Moon, Dumbbell, Apple, Brain, Zap, Droplets, CheckCircle2, Circle, GripVertical,
 } from 'lucide-react';
 import type { Habit, HabitEntry } from '@/hooks/useHabits';
+import HabitActions from '@/components/habits/HabitActions';
 
 const categoryConfig: Record<string, { icon: typeof Moon; color: string; bg: string }> = {
   sleep:        { icon: Moon,       color: 'text-indigo-600',  bg: 'bg-indigo-50' },
@@ -26,6 +28,8 @@ interface HabitChecklistProps {
   onToggle: (habitId: string, date: string) => void;
   compact?: boolean;
   onReorder?: (category: string, newOrder: Habit[]) => void;
+  onEdit?: (habit: Habit) => void;
+  onDelete?: (habitId: string) => void;
 }
 
 function HabitItem({
@@ -36,6 +40,8 @@ function HabitItem({
   compact,
   config,
   draggable,
+  onEdit,
+  onDelete,
 }: {
   habit: Habit;
   done: boolean;
@@ -44,6 +50,8 @@ function HabitItem({
   compact: boolean;
   config: { icon: typeof Moon; color: string; bg: string };
   draggable: boolean;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }) {
   const Icon = config.icon;
 
@@ -94,6 +102,9 @@ function HabitItem({
           </div>
         )}
       </button>
+      {onEdit && onDelete && !compact && (
+        <HabitActions onEdit={onEdit} onDelete={onDelete} />
+      )}
     </div>
   );
 }
@@ -105,7 +116,11 @@ export default function HabitChecklist({
   onToggle,
   compact = false,
   onReorder,
+  onEdit,
+  onDelete,
 }: HabitChecklistProps) {
+  const t = useTranslations('dashboard');
+
   // Group by category
   const grouped = habits.reduce<Record<string, Habit[]>>((acc, habit) => {
     const cat = habit.category || 'productivity';
@@ -163,6 +178,8 @@ export default function HabitChecklist({
                       compact={compact}
                       config={config}
                       draggable
+                      onEdit={onEdit ? () => onEdit(habit) : undefined}
+                      onDelete={onDelete ? () => onDelete(habit.id) : undefined}
                     />
                   </Reorder.Item>
                 ))}
@@ -182,6 +199,8 @@ export default function HabitChecklist({
                           compact={compact}
                           config={config}
                           draggable={false}
+                          onEdit={onEdit ? () => onEdit(habit) : undefined}
+                          onDelete={onDelete ? () => onDelete(habit.id) : undefined}
                         />
                       </motion.div>
                     );
@@ -195,7 +214,7 @@ export default function HabitChecklist({
 
       {habits.length === 0 && (
         <div className="py-8 text-center">
-          <p className="text-sm text-ofira-text-secondary">No hay hábitos aún.</p>
+          <p className="text-sm text-ofira-text-secondary">{t('noHabits')}</p>
         </div>
       )}
     </div>

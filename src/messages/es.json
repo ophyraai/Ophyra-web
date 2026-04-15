@@ -72,7 +72,11 @@
       "privacy": "Privacidad",
       "terms": "Términos",
       "cookies": "Política de Cookies",
-      "contact": "Contacto"
+      "contact": "Contacto",
+      "legal_notice": "Aviso Legal",
+      "shipping": "Envíos",
+      "returns": "Devoluciones",
+      "affiliate": "Afiliación"
     },
     "heroV2": {
       "badge": "Respaldado por +90K seguidores",
@@ -366,6 +370,10 @@
       "moreOptions": "Más",
       "igCopied": "Enlace copiado — pégalo en tu Story o DM de Instagram"
     },
+    "back": "Volver",
+    "thirtyDayPlan": "Plan de 30 Días",
+    "week": "Semana",
+    "startPlan": "Empieza tu Plan de 30 Días",
     "saveAccount": {
       "title": "Guarda tu diagnóstico",
       "subtitle": "Crea una cuenta para acceder a tu historial y trackear tu progreso.",
@@ -407,6 +415,31 @@
       "stress": "Estrés",
       "productivity": "Productividad",
       "hydration": "Hidratación"
+    },
+    "habitSelect": {
+      "title": "Elige tus hábitos",
+      "subtitle": "Hemos generado hábitos personalizados basados en tu diagnóstico. Elige los que quieras seguir (mín. 3, máx. 10).",
+      "generating": "Generando hábitos personalizados...",
+      "selected": "{count} seleccionados",
+      "minMax": "Mín. 3, máx. 10",
+      "confirm": "Confirmar {count} hábitos",
+      "editHabit": "Editar hábito",
+      "addHabit": "Añadir hábito",
+      "habitName": "Nombre",
+      "habitNamePlaceholder": "Ej: Meditar 10 minutos",
+      "description": "Descripción",
+      "descriptionPlaceholder": "Descripción breve (opcional)",
+      "category": "Categoría",
+      "frequency": "Frecuencia semanal",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "add": "Añadir",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "dailyProgress": "Progreso del día",
+      "frequencyUnit": "semana",
+      "reminder": "Recordatorio diario",
+      "reminderDesc": "Recibe un email diario con tus hábitos pendientes"
     }
   },
   "shop": {

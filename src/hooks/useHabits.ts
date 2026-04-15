@@ -101,5 +101,59 @@ export function useHabits(userId: string | null) {
     await Promise.all(updates);
   }, []);
 
-  return { habits, entries, loading, toggleEntry, reorderHabits, fetchHabits, fetchEntries };
+  // Add a new custom habit
+  const addHabit = useCallback(async (habit: {
+    name: string;
+    description?: string;
+    category: string;
+    target_frequency: number;
+  }) => {
+    if (!userId) return null;
+    const { data, error } = await supabase
+      .from('habits')
+      .insert({
+        ...habit,
+        user_id: userId,
+        is_active: true,
+        sort_order: habits.length,
+      })
+      .select()
+      .single();
+    if (data && !error) {
+      setHabits(prev => [...prev, data]);
+    }
+    return data;
+  }, [userId, habits.length]);
+
+  // Update an existing habit
+  const updateHabit = useCallback(async (habitId: string, updates: {
+    name?: string;
+    description?: string;
+    category?: string;
+    target_frequency?: number;
+  }) => {
+    const { data, error } = await supabase
+      .from('habits')
+      .update(updates)
+      .eq('id', habitId)
+      .select()
+      .single();
+    if (data && !error) {
+      setHabits(prev => prev.map(h => h.id === habitId ? { ...h, ...data } : h));
+    }
+    return data;
+  }, []);
+
+  // Soft-delete a habit
+  const deleteHabit = useCallback(async (habitId: string) => {
+    const { error } = await supabase
+      .from('habits')
+      .update({ is_active: false })
+      .eq('id', habitId);
+    if (!error) {
+      setHabits(prev => prev.filter(h => h.id !== habitId));
+    }
+  }, []);
+
+  return { habits, entries, loading, toggleEntry, reorderHabits, fetchHabits, fetchEntries, addHabit, updateHabit, deleteHabit };
 }

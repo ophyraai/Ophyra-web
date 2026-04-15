@@ -16,6 +16,10 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     'terminos-y-condiciones': 'Términos y Condiciones',
     'politica-de-privacidad': 'Política de Privacidad',
     'politica-de-cookies': 'Política de Cookies',
+    'politica-de-envios': 'Política de Envíos',
+    'politica-de-devoluciones': 'Política de Devoluciones',
+    'aviso-de-afiliacion': 'Aviso de Afiliación',
+    'aviso-legal': 'Aviso Legal',
   };
 
   return {
@@ -28,7 +32,15 @@ export default async function LegalPage(props: Props) {
   const params = await props.params;
   const { slug } = params;
   
-  const validSlugs = ['terminos-y-condiciones', 'politica-de-privacidad', 'politica-de-cookies'];
+  const validSlugs = [
+    'terminos-y-condiciones',
+    'politica-de-privacidad',
+    'politica-de-cookies',
+    'politica-de-envios',
+    'politica-de-devoluciones',
+    'aviso-de-afiliacion',
+    'aviso-legal',
+  ];
   if (!validSlugs.includes(slug)) {
     notFound();
   }

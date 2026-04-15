@@ -3,7 +3,12 @@ import { stripe } from '@/lib/stripe';
 import { supabaseAdmin } from '@/lib/supabase/server';
 import { sendEmail } from '@/lib/emails/send';
 import WelcomeEmail, { getWelcomeSubject } from '@/lib/emails/templates/welcome';
+import OrderConfirmationEmail, {
+  getOrderConfirmationSubject,
+} from '@/lib/emails/templates/order-confirmation';
+import { markEventProcessed } from '@/lib/webhooks/idempotency';
 import Stripe from 'stripe';
+import type { DraftItem, ShippingAddress } from '@/types/marketplace';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://ophyra.com';
 
@@ -24,12 +29,172 @@ export async function POST(req: Request) {
     );
   }
 
+  // Idempotencia: Stripe reintenta los webhooks varias veces (~3 días).
+  // Sin este guard las ramas downstream duplicarían side-effects
+  // (ej. free_reports se incrementaba dos veces en cada retry).
+  const fresh = await markEventProcessed(event.id, event.type);
+  if (!fresh) {
+    return NextResponse.json({ received: true, duplicate: true });
+  }
+
   try {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session;
       const isRenewal = session.metadata?.type === 'renewal';
 
-      if (isRenewal) {
+      const isCartCheckout = session.metadata?.type === 'cart';
+
+      if (isCartCheckout) {
+        // =============================================
+        // MARKETPLACE: convertir draft → order + items
+        // =============================================
+        const draftId = session.metadata?.draft_id;
+        const locale = (session.metadata?.locale as 'es' | 'en') || 'es';
+
+        if (!draftId) {
+          console.error('Cart checkout without draft_id');
+          return NextResponse.json({ error: 'Missing draft_id' }, { status: 400 });
+        }
+
+        // 1. Cargar el draft
+        const { data: draft, error: draftErr } = await supabaseAdmin
+          .from('order_drafts')
+          .select('*')
+          .eq('id', draftId)
+          .maybeSingle();
+
+        if (draftErr || !draft) {
+          console.error('Draft not found:', draftId, draftErr);
+          return NextResponse.json({ error: 'Draft not found' }, { status: 400 });
+        }
+
+        if (draft.status === 'converted') {
+          // Ya procesado (defensa extra sobre la idempotencia de webhook_events)
+          return NextResponse.json({ received: true, duplicate: true });
+        }
+
+        // 2. Extraer dirección de envío del session de Stripe
+        const stripeShipping = session.collected_information?.shipping_details;
+        const addr = stripeShipping?.address;
+        const shippingAddress: ShippingAddress = {
+          line1: addr?.line1 || '',
+          line2: addr?.line2 || null,
+          city: addr?.city || '',
+          region: addr?.state || null,
+          postal_code: addr?.postal_code || '',
+          country: addr?.country || '',
+        };
+        const shippingName = stripeShipping?.name || draft.email.split('@')[0];
+        const phone = session.customer_details?.phone ?? null;
+
+        // 3. Crear order
+        const now = new Date().toISOString();
+        const { data: order, error: orderErr } = await supabaseAdmin
+          .from('orders')
+          .insert({
+            draft_id: draft.id,
+            user_id: draft.user_id,
+            email: draft.email,
+            phone,
+            locale,
+            status: 'paid',
+            subtotal_cents: draft.subtotal_cents,
+            shipping_cents: draft.shipping_cents,
+            tax_cents: draft.tax_cents || 0,
+            total_cents: draft.total_cents,
+            currency: draft.currency,
+            stripe_session_id: session.id,
+            stripe_payment_intent_id:
+              typeof session.payment_intent === 'string'
+                ? session.payment_intent
+                : null,
+            stripe_customer_id:
+              typeof session.customer === 'string' ? session.customer : null,
+            shipping_name: shippingName,
+            shipping_address: shippingAddress,
+            paid_at: now,
+          })
+          .select('id')
+          .single();
+
+        if (orderErr || !order) {
+          console.error('Order insert failed:', orderErr);
+          return NextResponse.json({ error: 'Order insert failed' }, { status: 500 });
+        }
+
+        // 4. Crear order_items con snapshots
+        const draftItems = (draft.items || []) as DraftItem[];
+        const orderItems = draftItems.map((item) => ({
+          order_id: order.id,
+          product_id: item.product_id,
+          name_snapshot: item.name,
+          image_snapshot: item.image || null,
+          unit_price_cents: item.unit_price_cents,
+          quantity: item.quantity,
+          line_total_cents: item.unit_price_cents * item.quantity,
+          supplier_url_snapshot: item.supplier_url || null,
+          supplier_sku_snapshot: item.supplier_sku || null,
+        }));
+
+        const { error: itemsErr } = await supabaseAdmin
+          .from('order_items')
+          .insert(orderItems);
+
+        if (itemsErr) {
+          console.error('Order items insert failed:', itemsErr);
+        }
+
+        // 5. Marcar draft como convertido
+        await supabaseAdmin
+          .from('order_drafts')
+          .update({ status: 'converted' })
+          .eq('id', draft.id);
+
+        // 6. Insertar order_event
+        await supabaseAdmin.from('order_events').insert({
+          order_id: order.id,
+          type: 'created',
+          to_status: 'paid',
+          note: `Pedido creado desde draft ${draft.id}`,
+          created_by: 'system',
+        });
+
+        // 7. Enviar email de confirmación
+        try {
+          const shortId = order.id.slice(0, 8).toUpperCase();
+          const orderUrl = `${BASE_URL}/dashboard/account/orders/${order.id}`;
+
+          // Email dedup: usamos template + order_id para evitar duplicados.
+          // El sendEmail actual usa subscription_id; pasamos el order.id como
+          // subscriptionId para dedup — funciona porque es un UUID único.
+          await sendEmail({
+            template: `order-confirmation-${order.id}`,
+            to: draft.email,
+            subscriptionId: order.id,
+            subject: getOrderConfirmationSubject(locale, shortId),
+            react: OrderConfirmationEmail({
+              locale,
+              orderId: order.id,
+              items: draftItems.map((i) => ({
+                name: i.name,
+                quantity: i.quantity,
+                unit_price_cents: i.unit_price_cents,
+              })),
+              subtotalCents: draft.subtotal_cents,
+              shippingCents: draft.shipping_cents,
+              totalCents: draft.total_cents,
+              currency: draft.currency,
+              shippingName,
+              shippingCity: shippingAddress.city,
+              shippingCountry: shippingAddress.country,
+              orderUrl,
+            }),
+          });
+        } catch (emailErr) {
+          console.error('Order confirmation email failed:', emailErr);
+          // No falla el webhook por un email — el pedido ya está creado
+        }
+      } else if (isRenewal) {
         // Handle renewal payment
         const email = session.metadata?.email;
         const subscriptionId = session.metadata?.subscriptionId;

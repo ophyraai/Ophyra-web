@@ -5,6 +5,7 @@ import Day7CheckinEmail, { getDay7Subject } from '@/lib/emails/templates/day7-ch
 import Day25RediagnosisEmail, { getDay25Subject } from '@/lib/emails/templates/day25-rediagnosis';
 import RenewalOfferEmail, { getRenewalOfferSubject } from '@/lib/emails/templates/renewal-offer';
 import RenewalLastChanceEmail, { getRenewalLastChanceSubject } from '@/lib/emails/templates/renewal-last-chance';
+import DailyReminderEmail, { getDailyReminderSubject } from '@/lib/emails/templates/daily-reminder';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://ophyra.com';
 
@@ -91,6 +92,77 @@ export async function GET(req: Request) {
         react: RenewalLastChanceEmail({ locale, renewalUrl: `${BASE_URL}/api/payments/renewal-checkout?email=${encodeURIComponent(sub.email)}&locale=${locale}` }),
       });
       results.push({ email: sub.email, template: 'renewal-last-chance', result: res.skipped ? 'skipped' : res.sent ? 'sent' : 'error' });
+    }
+
+  }
+
+  // ── Daily reminders (batched queries to avoid N+1) ──
+  const today = new Date().toISOString().split('T')[0];
+  const dailyTemplateKey = `daily-reminder-${today}`;
+
+  const reminderEligible = subscriptions.filter(sub => {
+    const startedAt = new Date(sub.started_at);
+    const now = new Date();
+    const daysElapsed = Math.floor((now.getTime() - startedAt.getTime()) / (1000 * 60 * 60 * 24));
+    return daysElapsed >= 1 && daysElapsed <= 30 && sub.daily_reminder_enabled !== false && sub.user_id;
+  });
+
+  if (reminderEligible.length > 0) {
+    const userIds = reminderEligible.map(s => s.user_id);
+
+    // Batch: fetch all active habits for eligible users
+    const { data: allHabits } = await supabaseAdmin
+      .from('habits')
+      .select('id, user_id')
+      .in('user_id', userIds)
+      .eq('is_active', true);
+
+    if (allHabits && allHabits.length > 0) {
+      const habitIds = allHabits.map(h => h.id);
+
+      // Batch: fetch today's completed entries for all those habits
+      const { data: todayEntries } = await supabaseAdmin
+        .from('habit_entries')
+        .select('habit_id')
+        .in('habit_id', habitIds)
+        .eq('entry_date', today)
+        .eq('completed', true);
+
+      const completedHabitIds = new Set((todayEntries || []).map(e => e.habit_id));
+
+      // Group habits by user
+      const habitsByUser = new Map<string, string[]>();
+      for (const h of allHabits) {
+        const list = habitsByUser.get(h.user_id) || [];
+        list.push(h.id);
+        habitsByUser.set(h.user_id, list);
+      }
+
+      // Send reminders
+      for (const sub of reminderEligible) {
+        const userHabitIds = habitsByUser.get(sub.user_id);
+        if (!userHabitIds || userHabitIds.length === 0) continue;
+
+        const completedCount = userHabitIds.filter(id => completedHabitIds.has(id)).length;
+        const pendingCount = userHabitIds.length - completedCount;
+        if (pendingCount <= 0) continue;
+
+        const locale = (sub.locale as 'es' | 'en') || 'es';
+        const userName = sub.email.split('@')[0];
+        const res = await sendEmail({
+          template: dailyTemplateKey,
+          to: sub.email,
+          subscriptionId: sub.id,
+          subject: getDailyReminderSubject(locale),
+          react: DailyReminderEmail({
+            name: userName,
+            locale,
+            pendingCount,
+            dashboardUrl: `${BASE_URL}/dashboard/habits`,
+          }),
+        });
+        results.push({ email: sub.email, template: dailyTemplateKey, result: res.skipped ? 'skipped' : res.sent ? 'sent' : 'error' });
+      }
     }
   }
 

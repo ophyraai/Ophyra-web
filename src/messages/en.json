@@ -72,7 +72,11 @@
       "privacy": "Privacy",
       "terms": "Terms",
       "cookies": "Cookies Policy",
-      "contact": "Contact"
+      "contact": "Contact",
+      "legal_notice": "Legal Notice",
+      "shipping": "Shipping",
+      "returns": "Returns",
+      "affiliate": "Affiliate"
     },
     "heroV2": {
       "badge": "Backed by +90K followers",
@@ -366,6 +370,10 @@
       "moreOptions": "More",
       "igCopied": "Link copied — paste it in your Instagram Story or DM"
     },
+    "back": "Back",
+    "thirtyDayPlan": "30-Day Plan",
+    "week": "Week",
+    "startPlan": "Start your 30-Day Plan",
     "saveAccount": {
       "title": "Save your diagnosis",
       "subtitle": "Create an account to access your history and track your progress.",
@@ -407,6 +415,31 @@
       "stress": "Stress",
       "productivity": "Productivity",
       "hydration": "Hydration"
+    },
+    "habitSelect": {
+      "title": "Choose your habits",
+      "subtitle": "We've generated personalized habits based on your diagnosis. Choose the ones you want to follow (min. 3, max. 10).",
+      "generating": "Generating personalized habits...",
+      "selected": "{count} selected",
+      "minMax": "Min. 3, max. 10",
+      "confirm": "Confirm {count} habits",
+      "editHabit": "Edit habit",
+      "addHabit": "Add habit",
+      "habitName": "Name",
+      "habitNamePlaceholder": "E.g.: Meditate 10 minutes",
+      "description": "Description",
+      "descriptionPlaceholder": "Brief description (optional)",
+      "category": "Category",
+      "frequency": "Weekly frequency",
+      "save": "Save",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete",
+      "dailyProgress": "Daily progress",
+      "frequencyUnit": "week",
+      "reminder": "Daily reminder",
+      "reminderDesc": "Receive a daily email with your pending habits"
     }
   },
   "shop": {

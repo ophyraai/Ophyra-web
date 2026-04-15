@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import DiagnosisFlow from '@/components/diagnosis/DiagnosisFlow';
 import TypewriterText from '@/components/ui/TypewriterText';
@@ -234,6 +234,7 @@ function DiagnosisPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const t = useTranslations('analysis');
+  const currentLocale = useLocale();
   const [phase, setPhase] = useState<Phase>('quiz');
   const [error, setError] = useState<string | null>(null);
   const [messageIndex, setMessageIndex] = useState(0);
@@ -260,7 +261,7 @@ function DiagnosisPageInner() {
       const submitRes = await fetch('/api/diagnosis/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers, email, name, locale: 'es', photoUrls }),
+        body: JSON.stringify({ answers, email, name, locale: currentLocale, photoUrls }),
       });
 
       if (!submitRes.ok) throw new Error('Failed to submit diagnosis');
@@ -270,7 +271,7 @@ function DiagnosisPageInner() {
       fetch('/api/diagnosis/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ diagnosisId: id, answers, scores, locale: 'es', photoUrls }),
+        body: JSON.stringify({ diagnosisId: id, answers, scores, locale: currentLocale, photoUrls }),
       }).catch(console.error);
 
       // 3. Navigate to results or comparison after animation

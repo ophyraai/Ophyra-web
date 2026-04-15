@@ -29,10 +29,14 @@ export default function Footer() {
           <p className="mt-1 text-sm text-ofira-text-secondary">{t('tagline')}</p>
         </div>
 
-        <nav className="flex flex-wrap justify-center gap-6 text-sm text-ofira-text-secondary">
-          <Link href="/legal/politica-de-privacidad" className="transition-colors hover:text-ofira-text">{t('privacy')}</Link>
+        <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-ofira-text-secondary">
+          <Link href="/legal/aviso-legal" className="transition-colors hover:text-ofira-text">{t('legal_notice')}</Link>
           <Link href="/legal/terminos-y-condiciones" className="transition-colors hover:text-ofira-text">{t('terms')}</Link>
+          <Link href="/legal/politica-de-privacidad" className="transition-colors hover:text-ofira-text">{t('privacy')}</Link>
           <Link href="/legal/politica-de-cookies" className="transition-colors hover:text-ofira-text">{t('cookies')}</Link>
+          <Link href="/legal/politica-de-envios" className="transition-colors hover:text-ofira-text">{t('shipping')}</Link>
+          <Link href="/legal/politica-de-devoluciones" className="transition-colors hover:text-ofira-text">{t('returns')}</Link>
+          <Link href="/legal/aviso-de-afiliacion" className="transition-colors hover:text-ofira-text">{t('affiliate')}</Link>
           <a href="mailto:ophyra.ia@gmail.com" className="transition-colors hover:text-ofira-text">{t('contact')}</a>
         </nav>
 

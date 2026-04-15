@@ -101,7 +101,7 @@ export default function ResultsClient({
             className="mb-6 gap-2 text-ofira-text-secondary hover:text-ofira-text"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span>Back</span>
+            <span>{t('back')}</span>
           </Button>
         </Link>
 
@@ -187,7 +187,7 @@ export default function ResultsClient({
               className="mb-4 text-xl font-bold"
               style={{ fontFamily: 'var(--font-display)' }}
             >
-              30-Day Plan
+              {t('thirtyDayPlan')}
             </h3>
             <div className="space-y-4">
               {Object.entries(aiData.thirty_day_plan).map(
@@ -198,7 +198,7 @@ export default function ResultsClient({
                     </div>
                     <div>
                       <p className="text-sm font-medium capitalize">
-                        {week.replace('week', 'Week ')}
+                        {week.replace('week', `${t('week')} `)}
                       </p>
                       <p className="text-sm text-ofira-text-secondary">
                         {description}
@@ -215,18 +215,13 @@ export default function ResultsClient({
         {isPaid && aiData?.thirty_day_plan && (
           <motion.div className="mb-8 text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>
             <button
-              onClick={async () => {
-                const res = await fetch('/api/habits/generate', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ diagnosisId: diagnosis.id }),
-                });
-                if (res.ok) window.location.href = '/dashboard';
+              onClick={() => {
+                window.location.href = `/habits/select?diagnosisId=${diagnosis.id}`;
               }}
               className="inline-flex items-center gap-2 rounded-lg bg-ofira-violet px-6 py-3 font-medium text-white hover:bg-ofira-violet/90"
             >
               <Calendar className="size-4" />
-              Empieza tu Plan de 30 Dias
+              {t('startPlan') || 'Empieza tu Plan de 30 Dias'}
             </button>
           </motion.div>
         )}

@@ -6,6 +6,7 @@ import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import Link from 'next/link';
 import { Menu, X, UserCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase/client';
+import CartIcon from '@/components/shop/CartIcon';
 
 export default function Navbar() {
   const t = useTranslations('landing.navbar');
@@ -81,7 +82,8 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop links */}
-          <div className="hidden items-center gap-8 md:flex">
+          <div className="hidden items-center gap-6 md:flex">
+            <CartIcon />
             {navLinks.map(({ label, href, highlight, icon: Icon }) =>
               highlight ? (
                 <Link
@@ -112,15 +114,18 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            type="button"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="flex items-center justify-center rounded-lg p-2 text-ofira-text md:hidden"
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
+          {/* Mobile: cart + hamburger */}
+          <div className="flex items-center gap-1 md:hidden">
+            <CartIcon />
+            <button
+              type="button"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="flex items-center justify-center rounded-lg p-2 text-ofira-text"
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
+          </div>
         </div>
       </motion.nav>
 

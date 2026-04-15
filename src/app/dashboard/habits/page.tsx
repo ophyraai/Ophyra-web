@@ -7,13 +7,18 @@ import { supabase } from '@/lib/supabase/client';
 import { useHabits } from '@/hooks/useHabits';
 import { useStreaks } from '@/hooks/useStreaks';
 import HabitChecklist from '@/components/dashboard/HabitChecklist';
+import HabitEditModal from '@/components/habits/HabitEditModal';
+import AddHabitForm from '@/components/habits/AddHabitForm';
 import { HabitsSkeleton } from '@/components/dashboard/DashboardSkeleton';
-import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Plus } from 'lucide-react';
+import type { Habit } from '@/hooks/useHabits';
 
 export default function HabitsPage() {
   const t = useTranslations('dashboard');
   const [userId, setUserId] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState(() => new Date().toISOString().split('T')[0]);
+  const [editingHabit, setEditingHabit] = useState<Habit | null>(null);
+  const [showAddForm, setShowAddForm] = useState(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -21,7 +26,7 @@ export default function HabitsPage() {
     });
   }, []);
 
-  const { habits, entries, loading, toggleEntry, reorderHabits } = useHabits(userId);
+  const { habits, entries, loading, toggleEntry, reorderHabits, addHabit, updateHabit, deleteHabit } = useHabits(userId);
   const { completionRate } = useStreaks(habits, entries);
 
   // Date navigation
@@ -40,6 +45,21 @@ export default function HabitsPage() {
     ).length;
   }, [entries, selectedDate]);
 
+  const handleEditSave = async (updates: { name: string; description: string; category: string; target_frequency: number }) => {
+    if (!editingHabit) return;
+    await updateHabit(editingHabit.id, updates);
+    setEditingHabit(null);
+  };
+
+  const handleAdd = async (habit: { name: string; description: string; category: string; target_frequency: number }) => {
+    await addHabit(habit);
+    setShowAddForm(false);
+  };
+
+  const handleDelete = async (habitId: string) => {
+    await deleteHabit(habitId);
+  };
+
   if (loading) {
     return <HabitsSkeleton />;
   }
@@ -47,11 +67,19 @@ export default function HabitsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-ofira-text">{t('habits')}</h1>
-        <p className="text-ofira-text-secondary">
-          {completedCount} / {habits.length} completados
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-ofira-text">{t('habits')}</h1>
+          <p className="text-ofira-text-secondary">
+            {completedCount} / {habits.length} {t('completed')}
+          </p>
+        </div>
+        <button
+          onClick={() => setShowAddForm(true)}
+          className="flex h-10 w-10 items-center justify-center rounded-xl bg-ofira-violet text-white shadow-sm hover:bg-ofira-violet/90"
+        >
+          <Plus className="h-5 w-5" />
+        </button>
       </div>
 
       {/* Date picker */}
@@ -74,7 +102,7 @@ export default function HabitsPage() {
           </span>
           {isToday && (
             <span className="rounded-full bg-ofira-violet/10 px-2 py-0.5 text-xs font-medium text-ofira-violet">
-              Hoy
+              {t('today')}
             </span>
           )}
         </div>
@@ -91,7 +119,7 @@ export default function HabitsPage() {
       {/* Progress bar */}
       <div className="card-elevated p-4">
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-sm font-medium text-ofira-text">Progreso del dia</span>
+          <span className="text-sm font-medium text-ofira-text">{t('habitSelect.dailyProgress')}</span>
           <span className="text-sm font-bold text-ofira-violet">
             {habits.length > 0 ? Math.round((completedCount / habits.length) * 100) : 0}%
           </span>
@@ -121,12 +149,31 @@ export default function HabitsPage() {
             date={selectedDate}
             onToggle={toggleEntry}
             onReorder={reorderHabits}
+            onEdit={(habit) => setEditingHabit(habit)}
+            onDelete={handleDelete}
           />
         </motion.div>
       ) : (
         <div className="card-elevated p-8 text-center">
           <p className="text-ofira-text-secondary">{t('noHabits')}</p>
         </div>
+      )}
+
+      {/* Edit modal */}
+      {editingHabit && (
+        <HabitEditModal
+          habit={editingHabit}
+          onSave={handleEditSave}
+          onClose={() => setEditingHabit(null)}
+        />
+      )}
+
+      {/* Add form modal */}
+      {showAddForm && (
+        <AddHabitForm
+          onAdd={handleAdd}
+          onClose={() => setShowAddForm(false)}
+        />
       )}
     </div>
   );

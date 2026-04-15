@@ -37,7 +37,7 @@ export function useDiagnosisPlan(userId: string | null): DiagnosisPlanData {
         .eq('is_paid', true)
         .order('created_at', { ascending: false })
         .limit(1)
-        .single();
+        .maybeSingle();
 
       if (diagnosis) {
         setDiagnosisId(diagnosis.id);

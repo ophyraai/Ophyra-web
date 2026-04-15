@@ -106,7 +106,9 @@ async function sendWelcomeIfNew(
     }
 
     const name = user.user_metadata?.name || user.user_metadata?.full_name || '';
-    const locale: 'es' | 'en' = 'es';
+    // Detect locale from user metadata or default to 'es'
+    const userLocale = user.user_metadata?.locale || user.app_metadata?.locale;
+    const locale: 'es' | 'en' = userLocale === 'en' ? 'en' : 'es';
 
     console.log(`[welcome-email] Sending to ${email} from ${FROM_EMAIL}`);
 

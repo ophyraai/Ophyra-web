@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "img.clerk.com" },
       { protocol: "https", hostname: "i.pravatar.cc" },
+      {
+        protocol: "https",
+        hostname: "zqzysnzacwaivlxoiiab.supabase.co",
+        pathname: "/storage/v1/object/public/product-images/**",
+      },
+      {
+        protocol: "https",
+        hostname: "zqzysnzacwaivlxoiiab.supabase.co",
+        pathname: "/storage/v1/object/public/diagnosis-photos/**",
+      },
     ],
   },
   experimental: {

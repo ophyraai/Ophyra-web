@@ -30,7 +30,9 @@ export function useSubscription(userId: string | null): SubscriptionData {
       .select('*')
       .eq('user_id', userId)
       .eq('is_active', true)
-      .single()
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
       .then(({ data }) => {
         if (data) {
           setIsPremium(data.plan === 'premium');
