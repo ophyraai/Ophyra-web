@@ -31,7 +31,7 @@ export async function GET(
     .gte('entry_date', startDate.toISOString().split('T')[0])
     .order('entry_date', { ascending: false });
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { console.error('Habit entries error:', error); return NextResponse.json({ error: 'Operation failed' }, { status: 500 }); }
   return NextResponse.json(data);
 }
 
@@ -74,7 +74,7 @@ export async function POST(
       .select()
       .single();
 
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error) { console.error('Habit entries error:', error); return NextResponse.json({ error: 'Operation failed' }, { status: 500 }); }
     return NextResponse.json(data);
   }
 
@@ -90,6 +90,6 @@ export async function POST(
     .select()
     .single();
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { console.error('Habit entries error:', error); return NextResponse.json({ error: 'Operation failed' }, { status: 500 }); }
   return NextResponse.json(data, { status: 201 });
 }

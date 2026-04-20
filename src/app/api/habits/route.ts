@@ -13,7 +13,7 @@ export async function GET() {
     .eq('is_active', true)
     .order('sort_order');
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { console.error('Habits fetch error:', error); return NextResponse.json({ error: 'Failed to fetch habits' }, { status: 500 }); }
   return NextResponse.json(data);
 }
 
@@ -29,6 +29,6 @@ export async function POST(req: Request) {
     .select()
     .single();
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { console.error('Habit create error:', error); return NextResponse.json({ error: 'Failed to create habit' }, { status: 500 }); }
   return NextResponse.json(data);
 }

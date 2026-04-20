@@ -4,6 +4,7 @@ import { calculateShipping, SHIPPING_ZONES } from '@/lib/shipping';
 import { supabaseAdmin } from '@/lib/supabase/server';
 import { createSupabaseServer } from '@/lib/supabase/server';
 import { cartCheckoutSchema } from '@/lib/validation/product';
+import { validateCouponCode } from '@/lib/coupons/validate';
 import type { DraftItem } from '@/types/marketplace';
 import { z } from 'zod';
 
@@ -38,14 +39,14 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
-  const { items, locale, shipping_country } = parsed.data;
+  const { items, locale, shipping_country, coupon_code } = parsed.data;
 
   // 3. Verificar productos: existen, activos, type=own, precio no cambió
   const productIds = items.map((i) => i.product_id);
   const { data: products, error: productsError } = await supabaseAdmin
     .from('products')
     .select(
-      'id, type, name, slug, image_url, images, price_cents, currency, stripe_price_id, supplier_url, supplier_sku, is_active',
+      'id, type, name, slug, image_url, images, price_cents, compare_at_price_cents, currency, stripe_price_id, supplier_url, supplier_sku, is_active',
     )
     .in('id', productIds);
 
@@ -117,6 +118,7 @@ export async function POST(req: Request) {
       name: p.name,
       image: thumb,
       unit_price_cents: p.price_cents!,
+      compare_at_price_cents: p.compare_at_price_cents ?? null,
       quantity: item.quantity,
       supplier_url: p.supplier_url,
       supplier_sku: p.supplier_sku,
@@ -136,7 +138,25 @@ export async function POST(req: Request) {
   // 4. Calcular envío según zona del país + umbral de envío gratis
   const shipping = calculateShipping(shipping_country, subtotalCents);
   const shippingCents = shipping.shipping_cents;
-  const totalCents = subtotalCents + shippingCents;
+
+  // 4.5 Validar cupón (si viene)
+  let couponId: string | null = null;
+  let stripeCouponId: string | null = null;
+  let discountCents = 0;
+  if (coupon_code) {
+    const result = await validateCouponCode(coupon_code, subtotalCents);
+    if (!result.ok) {
+      return NextResponse.json(
+        { error: `Cupón no válido: ${result.error.message}`, code: 'COUPON_INVALID' },
+        { status: 400 },
+      );
+    }
+    couponId = result.coupon.id;
+    stripeCouponId = result.coupon.stripe_coupon_id;
+    discountCents = result.coupon.discount_cents;
+  }
+
+  const totalCents = Math.max(0, subtotalCents - discountCents) + shippingCents;
 
   const { data: draft, error: draftError } = await supabaseAdmin
     .from('order_drafts')
@@ -147,6 +167,8 @@ export async function POST(req: Request) {
       items: draftItems,
       subtotal_cents: subtotalCents,
       shipping_cents: shippingCents,
+      discount_cents: discountCents,
+      coupon_id: couponId,
       total_cents: totalCents,
       currency: 'eur',
       status: 'draft',
@@ -173,6 +195,9 @@ export async function POST(req: Request) {
       mode: 'payment',
       line_items: lineItems,
       ...(STRIPE_TAX_ENABLED && { automatic_tax: { enabled: true } }),
+      ...(stripeCouponId && {
+        discounts: [{ coupon: stripeCouponId }],
+      }),
       shipping_address_collection: {
         // Restringimos al país elegido en /cart para evitar que el cliente
         // pague una zona (ej. ES) y luego entregue en otra (ej. US).
@@ -217,6 +242,7 @@ export async function POST(req: Request) {
         locale,
         shipping_zone: String(shipping.zone),
         shipping_country,
+        ...(couponId && { coupon_id: couponId, coupon_code: coupon_code! }),
       },
     });
 
@@ -230,7 +256,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error('Stripe checkout session creation failed:', err);
     return NextResponse.json(
-      { error: 'Stripe session failed: ' + (err as Error).message },
+      { error: 'Checkout session failed' },
       { status: 502 },
     );
   }

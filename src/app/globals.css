@@ -97,12 +97,16 @@
 
 
 @layer base {
+  :root {
+    --announcement-height: 0px;
+  }
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+    padding-top: var(--announcement-height);
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);

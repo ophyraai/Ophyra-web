@@ -26,7 +26,7 @@ export default function HabitsPage() {
     });
   }, []);
 
-  const { habits, entries, loading, toggleEntry, reorderHabits, addHabit, updateHabit, deleteHabit } = useHabits(userId);
+  const { habits, entries, loading, error, toggleEntry, reorderHabits, addHabit, updateHabit, deleteHabit } = useHabits(userId);
   const { completionRate } = useStreaks(habits, entries);
 
   // Date navigation
@@ -66,6 +66,13 @@ export default function HabitsPage() {
 
   return (
     <div className="space-y-6">
+      {error && (
+        <div className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800">
+          <strong>No pudimos cargar tus hábitos.</strong>{' '}
+          <span className="text-rose-700">{error}</span>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

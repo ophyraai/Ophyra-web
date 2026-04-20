@@ -25,9 +25,11 @@ export interface Product {
   images: string[];
   price: number | null; // legacy decimal — usar price_cents para cálculos
   price_cents: number | null;
+  compare_at_price_cents: number | null;
   currency: string;
   affiliate_url: string | null;
   is_active: boolean;
+  is_featured: boolean;
   sort_order: number;
   created_at: string;
   updated_at: string;
@@ -56,6 +58,7 @@ export interface CartItem {
   name: string;
   image: string | null;
   unit_price_cents: number;
+  compare_at_price_cents?: number | null;
   currency: string;
   quantity: number;
 }
@@ -69,6 +72,7 @@ export interface DraftItem {
   name: string;
   image: string | null;
   unit_price_cents: number;
+  compare_at_price_cents?: number | null;
   quantity: number;
   supplier_url: string | null;
   supplier_sku: string | null;

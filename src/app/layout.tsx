@@ -5,6 +5,8 @@ import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 import CookieBanner from "@/components/legal/CookieBanner";
 import { CartProvider } from "@/context/CartContext";
+import AnnouncementBar from "@/components/ecommerce/AnnouncementBar";
+import CartDrawer from "@/components/ecommerce/CartDrawer";
 
 const dmSans = DM_Sans({
   variable: "--font-display",
@@ -128,7 +130,9 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <CartProvider>
+            <AnnouncementBar />
             {children}
+            <CartDrawer />
             <CookieBanner />
           </CartProvider>
         </NextIntlClientProvider>

@@ -10,7 +10,7 @@ interface Props {
 
 // Columnas explícitas — NUNCA exponer supplier_*, stripe_*
 const PUBLIC_COLUMNS =
-  'id, type, name, slug, category, short_description, long_description, description, image_url, images, price, price_cents, currency, affiliate_url, is_active';
+  'id, type, name, slug, category, short_description, long_description, description, image_url, images, price, price_cents, compare_at_price_cents, currency, affiliate_url, is_active';
 
 async function getProduct(slug: string) {
   const { data } = await supabaseAdmin

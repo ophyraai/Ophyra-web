@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { ShoppingCart } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 
@@ -9,15 +8,16 @@ interface Props {
 }
 
 export default function CartIcon({ variant = 'default' }: Props) {
-  const { count, hydrated } = useCart();
+  const { count, hydrated, openDrawer } = useCart();
 
   // Hasta hidratar mostramos count=0 para evitar mismatch SSR/CSR
   const display = hydrated ? count : 0;
 
   if (variant === 'mobile') {
     return (
-      <Link
-        href="/cart"
+      <button
+        type="button"
+        onClick={openDrawer}
         className="relative flex items-center gap-2 text-2xl font-semibold text-ofira-text transition-colors hover:text-ofira-violet"
       >
         <ShoppingCart className="size-6" />
@@ -27,13 +27,14 @@ export default function CartIcon({ variant = 'default' }: Props) {
             {display}
           </span>
         )}
-      </Link>
+      </button>
     );
   }
 
   return (
-    <Link
-      href="/cart"
+    <button
+      type="button"
+      onClick={openDrawer}
       aria-label={`Carrito${display > 0 ? ` (${display} artículos)` : ''}`}
       className="relative flex items-center justify-center rounded-lg p-2 text-ofira-text-secondary transition-colors hover:bg-ofira-surface1 hover:text-ofira-violet"
     >
@@ -43,6 +44,6 @@ export default function CartIcon({ variant = 'default' }: Props) {
           {display > 99 ? '99+' : display}
         </span>
       )}
-    </Link>
+    </button>
   );
 }

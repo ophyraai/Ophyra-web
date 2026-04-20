@@ -4,7 +4,7 @@ import { supabaseAdmin } from '@/lib/supabase/server';
 // Columnas EXPLÍCITAS — nunca usar select('*') aquí porque la tabla
 // products contiene campos privados (supplier_*, stripe_*, internal_ref).
 const PUBLIC_COLUMNS =
-  'id, name, slug, type, category, short_description, long_description, description, image_url, images, price, price_cents, currency, affiliate_url, is_active, sort_order, created_at';
+  'id, name, slug, type, category, short_description, long_description, description, image_url, images, price, price_cents, compare_at_price_cents, currency, affiliate_url, is_active, is_featured, sort_order, created_at';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);

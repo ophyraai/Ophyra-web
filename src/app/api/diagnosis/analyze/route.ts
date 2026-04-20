@@ -4,17 +4,24 @@ import { anthropic } from '@ai-sdk/anthropic';
 import { deepseek } from '@ai-sdk/deepseek';
 import { supabaseAdmin } from '@/lib/supabase/server';
 import { getSystemPrompt } from '@/lib/ai/system-prompt';
+import { diagnosisAnalyzeSchema } from '@/lib/validation/diagnosis';
+import { checkRateLimit, analyzeLimiter, getClientIp } from '@/lib/security/rate-limit';
+import { getSignedPhotoUrls } from '@/lib/supabase/storage';
 
 export async function POST(req: Request) {
-  try {
-    const { diagnosisId, answers, scores, locale, photoUrls } = await req.json();
+  const rl = await checkRateLimit(analyzeLimiter, getClientIp(req));
+  if (rl) return rl;
 
-    if (!diagnosisId || !answers || !scores) {
+  try {
+    const body = await req.json();
+    const parsed = diagnosisAnalyzeSchema.safeParse(body);
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: 'Missing required fields: diagnosisId, answers, scores' },
-        { status: 400 }
+        { error: 'Invalid input' },
+        { status: 400 },
       );
     }
+    const { diagnosisId, answers, scores, locale, photoUrls } = parsed.data;
 
     const hasPhotos = Array.isArray(photoUrls) && photoUrls.length > 0;
 
@@ -22,7 +29,9 @@ export async function POST(req: Request) {
     const contentParts: Array<{ type: 'text'; text: string } | { type: 'image'; image: URL }> = [];
 
     if (hasPhotos) {
-      for (const url of photoUrls) {
+      // Convert stored paths/URLs to short-lived signed URLs (bucket is private)
+      const signedUrls = await getSignedPhotoUrls(photoUrls);
+      for (const url of signedUrls) {
         contentParts.push({ type: 'image', image: new URL(url) });
       }
     }

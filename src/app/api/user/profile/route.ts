@@ -13,7 +13,7 @@ export async function GET() {
     .eq('auth_id', user.id)
     .single();
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { console.error('Profile error:', error); return NextResponse.json({ error: 'Operation failed' }, { status: 500 }); }
   return NextResponse.json(data);
 }
 
@@ -40,6 +40,6 @@ export async function PATCH(req: Request) {
     .select('id, email, name, locale, avatar_url, created_at')
     .single();
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { console.error('Profile error:', error); return NextResponse.json({ error: 'Operation failed' }, { status: 500 }); }
   return NextResponse.json(data);
 }

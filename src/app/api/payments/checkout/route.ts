@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { stripe, DIAGNOSIS_PRICE, DIAGNOSIS_CURRENCY } from '@/lib/stripe';
 import { supabaseAdmin } from '@/lib/supabase/server';
+import { checkRateLimit, checkoutLimiter, getClientIp } from '@/lib/security/rate-limit';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
 export async function POST(req: Request) {
+  const rl = await checkRateLimit(checkoutLimiter, getClientIp(req));
+  if (rl) return rl;
+
   try {
     const { diagnosisId, email, locale } = await req.json();
 
@@ -56,7 +60,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error('Checkout error:', err);
     return NextResponse.json(
-      { error: err instanceof Error ? err.message : 'Internal server error' },
+      { error: 'Payment processing failed' },
       { status: 500 }
     );
   }

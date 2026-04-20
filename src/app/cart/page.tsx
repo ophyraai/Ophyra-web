@@ -15,7 +15,11 @@ import {
 } from 'lucide-react';
 import Navbar from '@/components/landing/Navbar';
 import ShippingDisclaimer from '@/components/shop/ShippingDisclaimer';
+import FreeShippingProgress from '@/components/ecommerce/FreeShippingProgress';
+import PriceDisplay from '@/components/ecommerce/PriceDisplay';
+import CouponInput from '@/components/ecommerce/CouponInput';
 import { useCart } from '@/context/CartContext';
+import { computeDiscountCents } from '@/lib/coupons/compute';
 import { supabase } from '@/lib/supabase/client';
 import {
   calculateShipping,
@@ -33,7 +37,16 @@ function formatMoney(cents: number, currency: string) {
 const SHIPPING_COUNTRY_STORAGE_KEY = 'ophyra:shipping_country';
 
 export default function CartPage() {
-  const { items, hydrated, subtotal_cents, currency, updateQty, remove } = useCart();
+  const {
+    items,
+    hydrated,
+    subtotal_cents,
+    currency,
+    updateQty,
+    remove,
+    appliedCoupon,
+    removeCoupon,
+  } = useCart();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
@@ -77,7 +90,10 @@ export default function CartPage() {
   const isEmpty = items.length === 0;
   const shippingCalc = calculateShipping(shippingCountry, subtotal_cents);
   const shipping_cents = isEmpty ? 0 : shippingCalc.shipping_cents;
-  const total_cents = subtotal_cents + shipping_cents;
+  const discount_cents = appliedCoupon
+    ? computeDiscountCents(appliedCoupon, subtotal_cents)
+    : 0;
+  const total_cents = Math.max(0, subtotal_cents - discount_cents) + shipping_cents;
 
   async function handleCheckout() {
     if (!isLoggedIn) {
@@ -99,6 +115,7 @@ export default function CartPage() {
           })),
           locale: 'es',
           shipping_country: shippingCountry,
+          ...(appliedCoupon && { coupon_code: appliedCoupon.code }),
         }),
       });
 
@@ -107,6 +124,9 @@ export default function CartPage() {
       if (!res.ok) {
         if (data.code === 'PRICE_CHANGED') {
           setCheckoutError(data.error + ' Refresca la página.');
+        } else if (data.code === 'COUPON_INVALID') {
+          setCheckoutError(data.error);
+          removeCoupon();
         } else {
           setCheckoutError(data.error || 'Error al iniciar el pago');
         }
@@ -211,8 +231,14 @@ export default function CartPage() {
                       >
                         {item.name}
                       </Link>
-                      <div className="mt-1 text-sm text-ofira-text-secondary">
-                        {formatMoney(item.unit_price_cents, item.currency)} / unidad
+                      <div className="mt-1">
+                        <PriceDisplay
+                          priceCents={item.unit_price_cents}
+                          compareAtCents={item.compare_at_price_cents}
+                          currency={item.currency}
+                          size="sm"
+                          showSavings={false}
+                        />
                       </div>
 
                       {/* Qty + remove */}
@@ -310,24 +336,20 @@ export default function CartPage() {
                     </select>
                   </div>
 
-                  {/* Mensaje de free shipping */}
-                  {!isEmpty && !shippingCalc.is_free && (
-                    <div className="mt-3 rounded-lg bg-ofira-violet/5 p-3 text-xs text-ofira-text">
-                      🎁 Añade{' '}
-                      <strong>
-                        {formatMoney(
-                          shippingCalc.amount_to_free_cents,
-                          currency,
-                        )}
-                      </strong>{' '}
-                      más y tu envío es{' '}
-                      <strong>gratis</strong> a{' '}
-                      {SHIPPING_ZONES[shippingCalc.zone].label_es}.
-                    </div>
+                  {/* Progress bar envío gratis */}
+                  {!isEmpty && (
+                    <FreeShippingProgress
+                      subtotalCents={subtotal_cents}
+                      countryCode={shippingCountry}
+                      variant="full"
+                      className="mt-3"
+                    />
                   )}
-                  {!isEmpty && shippingCalc.is_free && (
-                    <div className="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-xs font-medium text-emerald-800">
-                      ✅ ¡Envío gratis a {SHIPPING_ZONES[shippingCalc.zone].label_es}!
+
+                  {/* Cupón */}
+                  {!isEmpty && (
+                    <div className="mt-4">
+                      <CouponInput subtotalCents={subtotal_cents} />
                     </div>
                   )}
 
@@ -338,6 +360,19 @@ export default function CartPage() {
                         {formatMoney(subtotal_cents, currency)}
                       </span>
                     </div>
+                    {discount_cents > 0 && appliedCoupon && (
+                      <div className="flex justify-between text-emerald-700">
+                        <span>
+                          Descuento{' '}
+                          <span className="font-mono text-xs">
+                            ({appliedCoupon.code})
+                          </span>
+                        </span>
+                        <span className="font-semibold">
+                          −{formatMoney(discount_cents, currency)}
+                        </span>
+                      </div>
+                    )}
                     <div className="flex justify-between">
                       <span className="text-ofira-text-secondary">
                         Envío ({SHIPPING_ZONES[shippingCalc.zone].label_es})

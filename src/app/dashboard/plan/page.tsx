@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase/client';
 import { useDiagnosisPlan } from '@/hooks/useDiagnosisPlan';
 import { useHabits } from '@/hooks/useHabits';
 import WeeklyPlanCard from '@/components/dashboard/WeeklyPlanCard';
-import { CalendarDays, ArrowRight, Sparkles } from 'lucide-react';
+import { CalendarDays, ArrowRight, Sparkles, Lock } from 'lucide-react';
 import Link from 'next/link';
 
 export default function PlanPage() {
@@ -18,7 +18,7 @@ export default function PlanPage() {
     });
   }, []);
 
-  const { plan, currentWeek, startDate, daysRemaining, daysElapsed, loading } = useDiagnosisPlan(userId);
+  const { plan, currentWeek, startDate, daysRemaining, daysElapsed, status, diagnosisId, loading } = useDiagnosisPlan(userId);
   const { habits } = useHabits(userId);
 
   if (loading) {
@@ -29,7 +29,13 @@ export default function PlanPage() {
     );
   }
 
+  // Empty states diferenciados según el estado del usuario:
+  //  - 'none': nunca hizo diagnóstico → CTA ir a /diagnosis
+  //  - 'unpaid': hay diagnóstico(s) sin pagar → CTA desbloquear el último
+  //  - 'paid' sin plan (ai_analysis sin thirty_day_plan) → mostrar mensaje neutro
   if (!plan) {
+    const isUnpaid = status === 'unpaid' && diagnosisId;
+
     return (
       <div className="space-y-6">
         <div>
@@ -42,19 +48,41 @@ export default function PlanPage() {
           className="card-elevated flex flex-col items-center p-12 text-center"
         >
           <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-ofira-violet/10">
-            <CalendarDays className="size-8 text-ofira-violet" />
+            {isUnpaid ? (
+              <Lock className="size-8 text-ofira-violet" />
+            ) : (
+              <CalendarDays className="size-8 text-ofira-violet" />
+            )}
           </div>
-          <h2 className="mb-2 text-xl font-bold text-ofira-text">Aún no tienes un plan</h2>
-          <p className="mb-6 max-w-md text-sm text-ofira-text-secondary">
-            Completa tu diagnóstico y desbloquea tu informe completo para recibir un plan personalizado de 30 días adaptado a tus objetivos.
-          </p>
-          <Link
-            href="/diagnosis"
-            className="inline-flex items-center gap-2 rounded-lg bg-ofira-violet px-6 py-3 text-sm font-medium text-white hover:bg-ofira-violet/90"
-          >
-            <Sparkles className="size-4" />
-            Hacer mi diagnóstico
-          </Link>
+          {isUnpaid ? (
+            <>
+              <h2 className="mb-2 text-xl font-bold text-ofira-text">Tu plan está esperando</h2>
+              <p className="mb-6 max-w-md text-sm text-ofira-text-secondary">
+                Ya tienes tu diagnóstico hecho. Desbloquea el informe completo para acceder a tu plan personalizado de 30 días.
+              </p>
+              <Link
+                href={`/diagnosis/${diagnosisId}`}
+                className="inline-flex items-center gap-2 rounded-lg bg-ofira-violet px-6 py-3 text-sm font-medium text-white hover:bg-ofira-violet/90"
+              >
+                <Lock className="size-4" />
+                Desbloquear mi plan
+              </Link>
+            </>
+          ) : (
+            <>
+              <h2 className="mb-2 text-xl font-bold text-ofira-text">Aún no tienes un plan</h2>
+              <p className="mb-6 max-w-md text-sm text-ofira-text-secondary">
+                Completa tu diagnóstico y desbloquea tu informe completo para recibir un plan personalizado de 30 días adaptado a tus objetivos.
+              </p>
+              <Link
+                href="/diagnosis"
+                className="inline-flex items-center gap-2 rounded-lg bg-ofira-violet px-6 py-3 text-sm font-medium text-white hover:bg-ofira-violet/90"
+              >
+                <Sparkles className="size-4" />
+                Hacer mi diagnóstico
+              </Link>
+            </>
+          )}
         </motion.div>
       </div>
     );

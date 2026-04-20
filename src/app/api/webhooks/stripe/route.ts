@@ -101,6 +101,9 @@ export async function POST(req: Request) {
             subtotal_cents: draft.subtotal_cents,
             shipping_cents: draft.shipping_cents,
             tax_cents: draft.tax_cents || 0,
+            discount_cents: draft.discount_cents || 0,
+            coupon_id: draft.coupon_id || null,
+            coupon_code: session.metadata?.coupon_code || null,
             total_cents: draft.total_cents,
             currency: draft.currency,
             stripe_session_id: session.id,
@@ -144,11 +147,27 @@ export async function POST(req: Request) {
           console.error('Order items insert failed:', itemsErr);
         }
 
-        // 5. Marcar draft como convertido
+        // 5. Marcar draft como convertido + incrementar redenciones del cupón
         await supabaseAdmin
           .from('order_drafts')
           .update({ status: 'converted' })
           .eq('id', draft.id);
+
+        if (draft.coupon_id) {
+          // RPC-less increment: leemos y sumamos. Idempotencia de webhook
+          // garantiza que esto solo corre una vez por pedido.
+          const { data: curr } = await supabaseAdmin
+            .from('coupons')
+            .select('times_redeemed')
+            .eq('id', draft.coupon_id)
+            .maybeSingle();
+          if (curr) {
+            await supabaseAdmin
+              .from('coupons')
+              .update({ times_redeemed: (curr.times_redeemed ?? 0) + 1 })
+              .eq('id', draft.coupon_id);
+          }
+        }
 
         // 6. Insertar order_event
         await supabaseAdmin.from('order_events').insert({

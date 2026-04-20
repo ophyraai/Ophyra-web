@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { Compass, Sparkles, Play } from 'lucide-react';
+import { Compass, Sparkles, Play, ShoppingBag } from 'lucide-react';
 import ShimmerButton from '@/components/ui/ShimmerButton';
 
 // ── Stagger animations ─────────────────────────────────────────────
@@ -334,6 +334,14 @@ export default function HeroV2() {
             <ShimmerButton href="/diagnosis">{t('cta')}</ShimmerButton>
           </div>
           <span className="text-sm text-ofira-text-secondary">{t('ctaSub')}</span>
+          <a
+            href="/shop"
+            className="group mt-1 inline-flex items-center gap-2 rounded-full border-2 border-ofira-violet/25 bg-white px-6 py-2.5 text-sm font-semibold text-ofira-violet shadow-sm transition-all hover:border-ofira-violet/40 hover:bg-ofira-violet/5 hover:shadow-md"
+          >
+            <ShoppingBag className="size-4" />
+            {t('ctaShop')}
+            <span className="transition-transform group-hover:translate-x-0.5">→</span>
+          </a>
         </motion.div>
 
         {/* Social proof strip */}

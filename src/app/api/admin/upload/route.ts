@@ -1,19 +1,10 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/auth/admin';
+import { sanitizeFilename } from '@/lib/security/sanitize';
 
 const MAX_FILES = 8;
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-
-// Sanitiza el nombre del archivo: solo ASCII alfanumérico, puntos y guiones.
-function sanitizeFilename(name: string): string {
-  return name
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9.-]/g, '_')
-    .slice(0, 100) || 'image';
-}
 
 export async function POST(req: Request) {
   // Defense-in-depth #3: la API también verifica admin (no solo el middleware)

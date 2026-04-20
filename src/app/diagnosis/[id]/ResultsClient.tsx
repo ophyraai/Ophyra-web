@@ -10,6 +10,7 @@ import ActionPlan from '@/components/results/ActionPlan';
 import PaywallOverlay from '@/components/results/PaywallOverlay';
 import EmailGate from '@/components/results/EmailGate';
 import ShareCard from '@/components/results/ShareCard';
+import AnalysisPendingState from '@/components/results/AnalysisPendingState';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, CheckCircle2 } from 'lucide-react';
@@ -53,6 +54,7 @@ interface ResultsClientProps {
   aiData: AIData | null;
   isPaid: boolean;
   userEmail: string | null;
+  aiPending?: boolean;
 }
 
 export default function ResultsClient({
@@ -60,6 +62,7 @@ export default function ResultsClient({
   aiData,
   isPaid,
   userEmail: loggedInEmail,
+  aiPending = false,
 }: ResultsClientProps) {
   const t = useTranslations('results');
   const isAnonymous = diagnosis.email.endsWith('@anonymous.ophyra');
@@ -94,14 +97,14 @@ export default function ResultsClient({
   return (
     <div className="min-h-screen bg-ofira-bg px-4 py-8">
       <div className="mx-auto max-w-2xl">
-        {/* Back button */}
-        <Link href="/">
+        {/* Back button — a dashboard si el user está logueado, else a home */}
+        <Link href={loggedInEmail ? '/dashboard' : '/'}>
           <Button
             variant="ghost"
             className="mb-6 gap-2 text-ofira-text-secondary hover:text-ofira-text"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span>{t('back')}</span>
+            <span>{t(loggedInEmail ? 'backToDashboard' : 'back')}</span>
           </Button>
         </Link>
 
@@ -137,6 +140,9 @@ export default function ResultsClient({
         >
           <RadarChartComponent scores={scores as any} />
         </motion.div>
+
+        {/* Pending state mientras el análisis AI todavía está corriendo */}
+        {aiPending && <AnalysisPendingState />}
 
         {/* Free Summary */}
         {aiData?.summary && (

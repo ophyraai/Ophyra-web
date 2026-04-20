@@ -24,17 +24,24 @@ export function useHabits(userId: string | null) {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [entries, setEntries] = useState<HabitEntry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Fetch habits
   const fetchHabits = useCallback(async () => {
     if (!userId) return;
-    const { data } = await supabase
+    const { data, error: dbError } = await supabase
       .from('habits')
       .select('*')
       .eq('user_id', userId)
       .eq('is_active', true)
       .order('sort_order');
+    if (dbError) {
+      console.error('[useHabits] fetchHabits failed:', dbError);
+      setError(dbError.message);
+      return;
+    }
     if (data) setHabits(data);
+    setError(null);
   }, [userId]);
 
   // Fetch entries for a date range (default: last 30 days)
@@ -42,11 +49,16 @@ export function useHabits(userId: string | null) {
     if (!userId) return;
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - days);
-    const { data } = await supabase
+    const { data, error: dbError } = await supabase
       .from('habit_entries')
       .select('*')
       .gte('entry_date', startDate.toISOString().split('T')[0])
       .in('habit_id', habits.map(h => h.id));
+    if (dbError) {
+      console.error('[useHabits] fetchEntries failed:', dbError);
+      setError(dbError.message);
+      return;
+    }
     if (data) setEntries(data);
   }, [userId, habits]);
 
@@ -155,5 +167,5 @@ export function useHabits(userId: string | null) {
     }
   }, []);
 
-  return { habits, entries, loading, toggleEntry, reorderHabits, fetchHabits, fetchEntries, addHabit, updateHabit, deleteHabit };
+  return { habits, entries, loading, error, toggleEntry, reorderHabits, fetchHabits, fetchEntries, addHabit, updateHabit, deleteHabit };
 }

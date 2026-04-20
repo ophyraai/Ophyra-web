@@ -76,7 +76,23 @@
       "legal_notice": "Aviso Legal",
       "shipping": "Envíos",
       "returns": "Devoluciones",
-      "affiliate": "Afiliación"
+      "affiliate": "Afiliación",
+      "trust": {
+        "shippingTitle": "Envío internacional",
+        "shippingDesc": "España 48-72h, Europa y LATAM disponibles",
+        "secureTitle": "Pago 100% seguro",
+        "secureDesc": "Cifrado SSL de extremo a extremo",
+        "paymentsTitle": "Todos los métodos",
+        "paymentsDesc": "Visa, Mastercard, Apple Pay, Google Pay",
+        "madeTitle": "Curado en la UE",
+        "madeDesc": "Seleccionado con criterio dermatológico"
+      }
+    },
+    "featured": {
+      "eyebrow": "Productos destacados",
+      "title": "Complementa tu diagnóstico con productos seleccionados",
+      "subtitle": "Herramientas, suplementos y wellness escogidos por nuestro equipo para acelerar tu progreso.",
+      "viewAll": "Ver toda la tienda"
     },
     "heroV2": {
       "badge": "Respaldado por +90K seguidores",
@@ -84,6 +100,7 @@
       "subtitle": "Descubre el estado real de tus hábitos. Análisis personalizado, plan de acción y seguimiento de progreso.",
       "cta": "Empieza tu diagnóstico",
       "ctaSecondary": "Ver demo",
+      "ctaShop": "O explora la tienda",
       "ctaSub": "Gratis — Sin registro"
     },
     "socialStats": {
@@ -371,6 +388,12 @@
       "igCopied": "Enlace copiado — pégalo en tu Story o DM de Instagram"
     },
     "back": "Volver",
+    "backToDashboard": "Ir a mi dashboard",
+    "analysisPending": {
+      "title": "Estamos analizando tus respuestas…",
+      "subtitle": "Suele tardar 20-40 segundos. Refrescaremos automáticamente cuando esté listo.",
+      "tookTooLong": "Esto está tardando más de lo normal. Recarga la página o contáctanos en soporte@ophyra.com si persiste."
+    },
     "thirtyDayPlan": "Plan de 30 Días",
     "week": "Semana",
     "startPlan": "Empieza tu Plan de 30 Días",
@@ -455,6 +478,19 @@
       "stress": "Estrés",
       "productivity": "Productividad",
       "hydration": "Hidratación"
+    }
+  },
+  "announcement": {
+    "msgShipping": "Envío gratis en pedidos desde 25€",
+    "msgReturns": "50% de descuento en toda la tienda",
+    "msgDiagnosis": "Diagnóstico personalizado gratuito",
+    "close": "Cerrar anuncio"
+  },
+  "shipping": {
+    "progress": {
+      "remaining": "Te faltan {amount} para envío gratis",
+      "unlocked": "¡Envío gratis desbloqueado!",
+      "toZone": "a {zone}"
     }
   }
 }

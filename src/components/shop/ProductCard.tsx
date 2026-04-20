@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import AffiliateBadge from './AffiliateBadge';
 import ShippingDisclaimer from './ShippingDisclaimer';
+import PriceDisplay from '@/components/ecommerce/PriceDisplay';
 
 interface ProductCardProps {
   id: string;
@@ -20,6 +21,7 @@ interface ProductCardProps {
   images?: string[];
   price: number | null;
   price_cents?: number | null;
+  compare_at_price_cents?: number | null;
   currency?: string;
   affiliateUrl: string | null;
   category: string;
@@ -54,6 +56,7 @@ export default function ProductCard({
   images,
   price,
   price_cents,
+  compare_at_price_cents,
   currency = 'eur',
   affiliateUrl,
   category,
@@ -63,6 +66,16 @@ export default function ProductCard({
 
   const thumb = (images && images.length > 0 ? images[0] : null) || imageUrl;
   const detailHref = slug ? `/shop/${slug}` : null;
+  const hasOffer =
+    price_cents != null &&
+    compare_at_price_cents != null &&
+    compare_at_price_cents > price_cents;
+  const offerPercent = hasOffer
+    ? Math.round(
+        ((compare_at_price_cents! - price_cents!) / compare_at_price_cents!) *
+          100,
+      )
+    : 0;
   const formattedPrice = formatMoney(price_cents ?? null, price, currency);
   const desc = short_description || description;
 
@@ -76,6 +89,7 @@ export default function ProductCard({
       name,
       image: thumb,
       unit_price_cents: price_cents,
+      compare_at_price_cents: compare_at_price_cents ?? null,
       currency,
       quantity: 1,
     });
@@ -112,6 +126,14 @@ export default function ProductCard({
               <AffiliateBadge variant="compact" />
             )}
           </div>
+          {/* Badge de oferta */}
+          {hasOffer && (
+            <div className="absolute right-3 top-3">
+              <span className="inline-flex items-center rounded-full bg-rose-600 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-md">
+                −{offerPercent}%
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-1 flex-col p-5">
@@ -133,7 +155,15 @@ export default function ProductCard({
           )}
 
           <div className="mt-auto flex items-center justify-between">
-            {formattedPrice ? (
+            {price_cents != null ? (
+              <PriceDisplay
+                priceCents={price_cents}
+                compareAtCents={compare_at_price_cents}
+                currency={currency}
+                size="md"
+                showSavings={false}
+              />
+            ) : formattedPrice ? (
               <span className="text-lg font-bold text-ofira-text">{formattedPrice}</span>
             ) : (
               <span />

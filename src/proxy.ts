@@ -61,6 +61,9 @@ export async function proxy(request: NextRequest) {
       user.email_confirmed_at &&
       isAdminEmail(user.email);
     if (!allowed) {
+      console.warn(
+        `[SECURITY] Admin access denied: path=${path}, ip=${request.headers.get('x-forwarded-for')}, email=${user?.email ?? 'unauthenticated'}`,
+      );
       return new NextResponse('Not found', { status: 404 });
     }
   }

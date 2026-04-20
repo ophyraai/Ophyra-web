@@ -3,12 +3,13 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { LayoutDashboard, Package, ShoppingBag, ArrowLeft } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingBag, Ticket, ArrowLeft } from 'lucide-react';
 
 const tabs = [
   { label: 'Overview', href: '/admin', icon: LayoutDashboard },
   { label: 'Productos', href: '/admin/products', icon: Package },
   { label: 'Pedidos', href: '/admin/orders', icon: ShoppingBag },
+  { label: 'Cupones', href: '/admin/coupons', icon: Ticket },
 ];
 
 export default function AdminNav() {

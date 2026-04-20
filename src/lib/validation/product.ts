@@ -27,6 +27,7 @@ const baseProductFields = {
   image_url: z.string().url().max(2048).optional().nullable(),
   images: z.array(z.string().url().max(2048)).max(8).default([]),
   is_active: z.boolean().default(false),
+  is_featured: z.boolean().default(false),
   sort_order: z.number().int().min(0).default(0),
 };
 
@@ -42,17 +43,28 @@ const affiliateCreateSchema = z.object({
   price_cents: z.number().int().positive().optional().nullable(),
 });
 
-const ownCreateSchema = z.object({
-  ...baseProductFields,
-  type: z.literal('own'),
-  price_cents: z.number().int().positive(),
-  currency: z.string().length(3).toLowerCase().default('eur'),
-  weight_grams: z.number().int().positive().optional().nullable(),
-  supplier_url: z.string().url().max(2048).optional().nullable(),
-  supplier_sku: z.string().max(100).optional().nullable(),
-  supplier_notes: z.string().max(2000).optional().nullable(),
-  internal_ref: z.string().max(100).optional().nullable(),
-});
+const ownCreateSchema = z
+  .object({
+    ...baseProductFields,
+    type: z.literal('own'),
+    price_cents: z.number().int().positive(),
+    compare_at_price_cents: z.number().int().positive().optional().nullable(),
+    currency: z.string().length(3).toLowerCase().default('eur'),
+    weight_grams: z.number().int().positive().optional().nullable(),
+    supplier_url: z.string().url().max(2048).optional().nullable(),
+    supplier_sku: z.string().max(100).optional().nullable(),
+    supplier_notes: z.string().max(2000).optional().nullable(),
+    internal_ref: z.string().max(100).optional().nullable(),
+  })
+  .refine(
+    (d) =>
+      d.compare_at_price_cents == null ||
+      d.compare_at_price_cents > d.price_cents,
+    {
+      message: 'compare_at_price_cents debe ser mayor que price_cents',
+      path: ['compare_at_price_cents'],
+    },
+  );
 
 export const productCreateSchema = z.discriminatedUnion('type', [
   affiliateCreateSchema,
@@ -74,9 +86,11 @@ export const productUpdateSchema = z.object({
   image_url: baseProductFields.image_url,
   images: baseProductFields.images.optional(),
   is_active: baseProductFields.is_active.optional(),
+  is_featured: baseProductFields.is_featured.optional(),
   sort_order: baseProductFields.sort_order.optional(),
   affiliate_url: z.string().url().max(2048).optional().nullable(),
   price_cents: z.number().int().positive().optional().nullable(),
+  compare_at_price_cents: z.number().int().positive().optional().nullable(),
   currency: z.string().length(3).toLowerCase().optional(),
   weight_grams: z.number().int().positive().optional().nullable(),
   supplier_url: z.string().url().max(2048).optional().nullable(),
@@ -113,6 +127,13 @@ export const cartCheckoutSchema = z.object({
   locale: z.enum(['es', 'en']).default('es'),
   // ISO-3166-1 alpha-2 — se usa para calcular la zona de envío.
   shipping_country: z.string().length(2).toUpperCase(),
+  // Código de cupón opcional — validado server-side antes de pasar a Stripe
+  coupon_code: z
+    .string()
+    .trim()
+    .transform((s) => s.toUpperCase())
+    .pipe(z.string().min(2).max(32))
+    .optional(),
 });
 
 export type CartCheckoutInput = z.infer<typeof cartCheckoutSchema>;

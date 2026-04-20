@@ -76,7 +76,23 @@
       "legal_notice": "Legal Notice",
       "shipping": "Shipping",
       "returns": "Returns",
-      "affiliate": "Affiliate"
+      "affiliate": "Affiliate",
+      "trust": {
+        "shippingTitle": "International shipping",
+        "shippingDesc": "Spain 48-72h, Europe & LATAM available",
+        "secureTitle": "100% secure payments",
+        "secureDesc": "End-to-end SSL encryption",
+        "paymentsTitle": "All payment methods",
+        "paymentsDesc": "Visa, Mastercard, Apple Pay, Google Pay",
+        "madeTitle": "Curated in the EU",
+        "madeDesc": "Dermatological-grade selection"
+      }
+    },
+    "featured": {
+      "eyebrow": "Featured products",
+      "title": "Complement your diagnosis with curated products",
+      "subtitle": "Tools, supplements and wellness picks chosen by our team to accelerate your progress.",
+      "viewAll": "Shop all products"
     },
     "heroV2": {
       "badge": "Backed by +90K followers",
@@ -84,6 +100,7 @@
       "subtitle": "Discover the real state of your habits. Personalized analysis, action plan, and progress tracking.",
       "cta": "Start your diagnosis",
       "ctaSecondary": "See demo",
+      "ctaShop": "Or explore the shop",
       "ctaSub": "Free — No signup required"
     },
     "socialStats": {
@@ -371,6 +388,12 @@
       "igCopied": "Link copied — paste it in your Instagram Story or DM"
     },
     "back": "Back",
+    "backToDashboard": "Go to my dashboard",
+    "analysisPending": {
+      "title": "We're analyzing your answers…",
+      "subtitle": "This usually takes 20-40 seconds. We'll refresh automatically when it's ready.",
+      "tookTooLong": "This is taking longer than usual. Reload the page or contact us at soporte@ophyra.com if it persists."
+    },
     "thirtyDayPlan": "30-Day Plan",
     "week": "Week",
     "startPlan": "Start your 30-Day Plan",
@@ -455,6 +478,19 @@
       "stress": "Stress",
       "productivity": "Productivity",
       "hydration": "Hydration"
+    }
+  },
+  "announcement": {
+    "msgShipping": "Free shipping on orders over €25",
+    "msgReturns": "50% off everything in store",
+    "msgDiagnosis": "Free personalized diagnosis",
+    "close": "Close announcement"
+  },
+  "shipping": {
+    "progress": {
+      "remaining": "{amount} away from free shipping",
+      "unlocked": "Free shipping unlocked!",
+      "toZone": "to {zone}"
     }
   }
 }

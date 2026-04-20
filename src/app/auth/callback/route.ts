@@ -61,10 +61,61 @@ export async function GET(request: NextRequest) {
 
   if (authenticated) {
     await sendWelcomeIfNew(supabase, origin);
-    return NextResponse.redirect(`${origin}${next}`);
+    // Backfill cualquier diagnóstico anónimo previo con este email.
+    // Importante: debe ir ANTES del redirect inteligente para que los
+    // diagnósticos recién reasignados cuenten al decidir el destino.
+    await backfillAnonymousDiagnoses(supabase);
+    const finalNext = await resolveRedirect(supabase, next);
+    return NextResponse.redirect(`${origin}${finalNext}`);
   }
 
   return NextResponse.redirect(`${origin}/auth/login?error=auth`);
+}
+
+async function backfillAnonymousDiagnoses(
+  supabase: ReturnType<typeof createServerClient>,
+) {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user?.email) return;
+
+    const { error } = await supabaseAdmin
+      .from('diagnoses')
+      .update({ user_id: user.id })
+      .eq('email', user.email)
+      .is('user_id', null);
+
+    if (error) {
+      console.error('[auth-callback] backfill diagnoses failed:', error);
+    }
+  } catch (err) {
+    console.error('[auth-callback] backfill unexpected error:', err);
+  }
+}
+
+async function resolveRedirect(
+  supabase: ReturnType<typeof createServerClient>,
+  requestedNext: string,
+): Promise<string> {
+  // Si el caller pidió un next explícito (distinto de '/'), respetarlo.
+  if (requestedNext !== '/') return requestedNext;
+
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return '/';
+
+    const { data: paidDiag } = await supabaseAdmin
+      .from('diagnoses')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('is_paid', true)
+      .limit(1)
+      .maybeSingle();
+
+    return paidDiag ? '/dashboard' : '/diagnosis';
+  } catch {
+    return '/';
+  }
 }
 
 async function sendWelcomeIfNew(

@@ -1,17 +1,23 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/server';
 import { calculateScores } from '@/lib/ai/scoring';
+import { diagnosisSubmitSchema } from '@/lib/validation/diagnosis';
+import { checkRateLimit, diagnosisLimiter, getClientIp } from '@/lib/security/rate-limit';
 
 export async function POST(req: Request) {
-  try {
-    const { answers, email, name, locale, photoUrls } = await req.json();
+  const rl = await checkRateLimit(diagnosisLimiter, getClientIp(req));
+  if (rl) return rl;
 
-    if (!answers || !email) {
+  try {
+    const body = await req.json();
+    const parsed = diagnosisSubmitSchema.safeParse(body);
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: 'Missing required fields: answers, email' },
-        { status: 400 }
+        { error: 'Invalid input' },
+        { status: 400 },
       );
     }
+    const { answers, email, name, locale, photoUrls } = parsed.data;
 
     const { scores, overall_score } = calculateScores(answers);
 

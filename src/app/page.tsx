@@ -3,6 +3,7 @@ import HeroV2 from '@/components/landing/HeroV2';
 import SocialStats from '@/components/landing/SocialStats';
 import SocialEmbed from '@/components/landing/SocialEmbed';
 import HowItWorksV2 from '@/components/landing/HowItWorksV2';
+import FeaturedProducts from '@/components/landing/FeaturedProducts';
 import HabitTip from '@/components/landing/HabitTip';
 import CommunityGrowth from '@/components/landing/CommunityGrowth';
 import SocialProof from '@/components/landing/SocialProof';
@@ -17,17 +18,19 @@ export default function Home() {
       <HeroV2 />
       <WaveDivider fromColor="#ffffff" toColor="#f0faf8" />
       <div className="section-alt">
-        <SocialStats />
+        <FeaturedProducts />
       </div>
       <WaveDivider fromColor="#f0faf8" toColor="#ffffff" flip />
-      <SocialEmbed />
-      <WaveDivider fromColor="#ffffff" toColor="#ffffff" />
-      <HowItWorksV2 />
+      <SocialStats />
       <WaveDivider fromColor="#ffffff" toColor="#f0faf8" />
       <div className="section-alt">
-        <HabitTip />
+        <SocialEmbed />
       </div>
       <WaveDivider fromColor="#f0faf8" toColor="#ffffff" flip />
+      <HowItWorksV2 />
+      <WaveDivider fromColor="#ffffff" toColor="#f0faf8" flip />
+      <HabitTip />
+      <WaveDivider fromColor="#ffffff" toColor="#ffffff" />
       <SocialProof />
       <WaveDivider fromColor="#ffffff" toColor="#f0faf8" />
       <DiagnosisPreview />

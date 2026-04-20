@@ -53,11 +53,13 @@ interface FormState {
   long_description: string;
   images: string[];
   is_active: boolean;
+  is_featured: boolean;
   sort_order: number;
   // affiliate-only
   affiliate_url: string;
   // own-only
   price_eur: string; // input en EUR; se convierte a cents al enviar
+  compare_at_eur: string; // input en EUR; convert a cents al enviar; vacío = sin oferta
   currency: string;
   weight_grams: string;
   supplier_url: string;
@@ -86,6 +88,7 @@ function emptyState(initial?: AdminProduct): FormState {
     long_description: initial?.long_description || initial?.description || '',
     images: initial?.images || (initial?.image_url ? [initial.image_url] : []),
     is_active: initial?.is_active ?? false,
+    is_featured: initial?.is_featured ?? false,
     sort_order: initial?.sort_order ?? 0,
     affiliate_url: initial?.affiliate_url || '',
     price_eur:
@@ -94,6 +97,10 @@ function emptyState(initial?: AdminProduct): FormState {
         : initial?.price != null
           ? initial.price.toString()
           : '',
+    compare_at_eur:
+      initial?.compare_at_price_cents != null
+        ? (initial.compare_at_price_cents / 100).toString()
+        : '',
     currency: initial?.currency || 'eur',
     weight_grams: initial?.weight_grams != null ? initial.weight_grams.toString() : '',
     supplier_url: initial?.supplier_url || '',
@@ -132,6 +139,7 @@ export default function ProductForm({ mode, initial }: Props) {
       long_description: form.long_description.trim() || null,
       images: form.images,
       is_active: form.is_active,
+      is_featured: form.is_featured,
       sort_order: Number(form.sort_order) || 0,
     };
 
@@ -152,10 +160,21 @@ export default function ProductForm({ mode, initial }: Props) {
         setError('El precio debe ser mayor que 0');
         return;
       }
+      let compareAtCents: number | null = null;
+      if (form.compare_at_eur.trim()) {
+        compareAtCents = Math.round(parseFloat(form.compare_at_eur) * 100);
+        if (!Number.isFinite(compareAtCents) || compareAtCents <= priceCents) {
+          setError(
+            'El precio de referencia debe ser mayor que el precio de venta',
+          );
+          return;
+        }
+      }
       payload = {
         ...base,
         type: 'own' as const,
         price_cents: priceCents,
+        compare_at_price_cents: compareAtCents,
         currency: form.currency.toLowerCase(),
         weight_grams: form.weight_grams ? Number(form.weight_grams) : null,
         supplier_url: form.supplier_url.trim() || null,
@@ -348,6 +367,20 @@ export default function ProductForm({ mode, initial }: Props) {
                 placeholder="29.90"
               />
             </Field>
+            <Field
+              label="Precio de referencia (tachado)"
+              hint="Opcional. Si lo rellenas con un valor mayor que el precio, se mostrará tachado con un badge -XX% y 'Ahorras X€'. Déjalo vacío para productos sin oferta."
+            >
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                value={form.compare_at_eur}
+                onChange={(e) => update('compare_at_eur', e.target.value)}
+                className={inputCls}
+                placeholder="39.90"
+              />
+            </Field>
             <Field label="Peso (gramos)" hint="Solo informativo, no se cobra en envío.">
               <input
                 type="number"
@@ -457,6 +490,21 @@ export default function ProductForm({ mode, initial }: Props) {
             <div className="font-medium text-ofira-text">Activo</div>
             <div className="text-xs text-ofira-text-secondary">
               Si está activo aparecerá en /shop. Déjalo desactivado mientras lo preparas.
+            </div>
+          </div>
+        </label>
+        <label className="flex items-start gap-3 rounded-xl border border-ofira-card-border bg-white p-4">
+          <input
+            type="checkbox"
+            checked={form.is_featured}
+            onChange={(e) => update('is_featured', e.target.checked)}
+            className="mt-1 size-4 rounded border-ofira-card-border text-ofira-violet focus:ring-ofira-violet"
+          />
+          <div>
+            <div className="font-medium text-ofira-text">Destacar en homepage</div>
+            <div className="text-xs text-ofira-text-secondary">
+              Aparecerá en la sección &quot;Productos destacados&quot; de la home.
+              Se recomienda marcar entre 3 y 4 productos.
             </div>
           </div>
         </label>

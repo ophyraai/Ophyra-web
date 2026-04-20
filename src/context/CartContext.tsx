@@ -86,6 +86,14 @@ function reducer(state: CartState, action: CartAction): CartState {
 // Context
 // ============================================
 
+export interface AppliedCoupon {
+  code: string;
+  type: 'percent' | 'amount';
+  percent_off: number | null;
+  amount_off_cents: number | null;
+  discount_cents: number;
+}
+
 interface CartContextValue {
   items: CartItem[];
   hydrated: boolean;
@@ -96,6 +104,15 @@ interface CartContextValue {
   remove: (productId: string) => void;
   updateQty: (productId: string, quantity: number) => void;
   clear: () => void;
+  // Drawer
+  isDrawerOpen: boolean;
+  openDrawer: () => void;
+  closeDrawer: () => void;
+  toggleDrawer: () => void;
+  // Coupon
+  appliedCoupon: AppliedCoupon | null;
+  applyCoupon: (coupon: AppliedCoupon) => void;
+  removeCoupon: () => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -109,6 +126,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // hydrated: prevents SSR/CSR mismatch — el badge del icono renderiza 0
   // hasta que esto sea true
   const [hydrated, setHydrated] = useState(false);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<AppliedCoupon | null>(null);
 
   // 1) Hydrate desde localStorage
   useEffect(() => {
@@ -190,11 +209,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
         return;
       }
       dispatch({ type: 'add', item });
+      setDrawerOpen(true);
     },
     remove: (productId) => dispatch({ type: 'remove', productId }),
     updateQty: (productId, quantity) =>
       dispatch({ type: 'updateQty', productId, quantity }),
-    clear: () => dispatch({ type: 'clear' }),
+    clear: () => {
+      dispatch({ type: 'clear' });
+      setAppliedCoupon(null);
+    },
+    isDrawerOpen,
+    openDrawer: () => setDrawerOpen(true),
+    closeDrawer: () => setDrawerOpen(false),
+    toggleDrawer: () => setDrawerOpen((v) => !v),
+    appliedCoupon,
+    applyCoupon: (c) => setAppliedCoupon(c),
+    removeCoupon: () => setAppliedCoupon(null),
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

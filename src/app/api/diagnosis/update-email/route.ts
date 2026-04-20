@@ -1,25 +1,22 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/server';
+import { diagnosisUpdateEmailSchema } from '@/lib/validation/diagnosis';
+import { checkRateLimit, generalLimiter, getClientIp } from '@/lib/security/rate-limit';
 
 export async function POST(req: Request) {
+  const rl = await checkRateLimit(generalLimiter, getClientIp(req));
+  if (rl) return rl;
+
   try {
-    const { diagnosisId, email } = await req.json();
-
-    if (!diagnosisId || !email) {
+    const body = await req.json();
+    const parsed = diagnosisUpdateEmailSchema.safeParse(body);
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
+        { error: 'Invalid input' },
+        { status: 400 },
       );
     }
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: 'Invalid email format' },
-        { status: 400 }
-      );
-    }
+    const { diagnosisId, email } = parsed.data;
 
     // Only update if current email is anonymous
     const { data: diagnosis } = await supabaseAdmin

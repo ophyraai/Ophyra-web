@@ -83,6 +83,7 @@ export async function POST(req: Request) {
     images: data.images,
     image_url: data.images[0] ?? null,
     is_active: data.is_active,
+    is_featured: data.is_featured,
     sort_order: data.sort_order,
     price_cents: data.price_cents ?? null,
     price: data.price_cents != null ? data.price_cents / 100 : null,
@@ -90,6 +91,7 @@ export async function POST(req: Request) {
 
   if (data.type === 'own') {
     insertPayload.currency = data.currency;
+    insertPayload.compare_at_price_cents = data.compare_at_price_cents ?? null;
     insertPayload.weight_grams = data.weight_grams ?? null;
     insertPayload.supplier_url = data.supplier_url ?? null;
     insertPayload.supplier_sku = data.supplier_sku ?? null;

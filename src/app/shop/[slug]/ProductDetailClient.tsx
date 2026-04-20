@@ -15,6 +15,7 @@ import {
 import { useCart } from '@/context/CartContext';
 import AffiliateBadge from '@/components/shop/AffiliateBadge';
 import ShippingDisclaimer from '@/components/shop/ShippingDisclaimer';
+import PriceDisplay from '@/components/ecommerce/PriceDisplay';
 
 interface Product {
   id: string;
@@ -29,6 +30,7 @@ interface Product {
   images: string[] | null;
   price: number | null;
   price_cents: number | null;
+  compare_at_price_cents: number | null;
   currency: string | null;
   affiliate_url: string | null;
 }
@@ -71,6 +73,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
       name: product.name,
       image: gallery[0] || null,
       unit_price_cents: product.price_cents,
+      compare_at_price_cents: product.compare_at_price_cents,
       currency: product.currency || 'eur',
       quantity: 1,
     });
@@ -166,16 +169,25 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             </p>
           )}
 
-          {formattedPrice && (
-            <div className="mt-5 text-3xl font-bold text-ofira-text">
-              {formattedPrice}
+          {product.price_cents != null ? (
+            <div className="mt-5">
+              <PriceDisplay
+                priceCents={product.price_cents}
+                compareAtCents={product.compare_at_price_cents}
+                currency={product.currency || 'eur'}
+                size="lg"
+              />
               {isOwn && (
-                <span className="ml-2 text-sm font-normal text-ofira-text-secondary">
+                <span className="mt-1 block text-sm font-normal text-ofira-text-secondary">
                   IVA incluido en checkout
                 </span>
               )}
             </div>
-          )}
+          ) : formattedPrice ? (
+            <div className="mt-5 text-3xl font-bold text-ofira-text">
+              {formattedPrice}
+            </div>
+          ) : null}
 
           {/* Aviso de envío MUY visible para own */}
           {isOwn && (

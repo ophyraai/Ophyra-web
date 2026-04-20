@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import Link from 'next/link';
-import { Menu, X, UserCircle } from 'lucide-react';
+import { Menu, X, UserCircle, ShoppingBag } from 'lucide-react';
 import { supabase } from '@/lib/supabase/client';
 import CartIcon from '@/components/shop/CartIcon';
 
@@ -45,7 +45,7 @@ export default function Navbar() {
 
   const navLinks = [
     { label: t('diagnosis'), href: '/diagnosis' },
-    { label: t('shop'), href: '/shop' },
+    { label: t('shop'), href: '/shop', icon: ShoppingBag, shopHighlight: true },
     ...(isLoggedIn
       ? [
           { label: t('dashboard'), href: '/dashboard' },
@@ -60,7 +60,8 @@ export default function Navbar() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        style={{ top: 'var(--announcement-height, 0px)' }}
+        className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
             ? 'bg-white/95 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.06)]'
             : 'bg-transparent'
@@ -84,13 +85,22 @@ export default function Navbar() {
           {/* Desktop links */}
           <div className="hidden items-center gap-6 md:flex">
             <CartIcon />
-            {navLinks.map(({ label, href, highlight, icon: Icon }) =>
+            {navLinks.map(({ label, href, highlight, shopHighlight, icon: Icon }) =>
               highlight ? (
                 <Link
                   key={href}
                   href={href}
                   className="rounded-lg bg-ofira-violet px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-ofira-violet/90"
                 >
+                  {label}
+                </Link>
+              ) : shopHighlight ? (
+                <Link
+                  key={href}
+                  href={href}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-ofira-violet/20 bg-ofira-violet/5 px-4 py-2 text-sm font-semibold text-ofira-violet transition-colors hover:bg-ofira-violet/10"
+                >
+                  {Icon && <Icon className="size-4" />}
                   {label}
                 </Link>
               ) : Icon ? (
@@ -140,7 +150,7 @@ export default function Navbar() {
             className="fixed inset-0 z-40 bg-white md:hidden"
           >
             <div className="flex h-full flex-col items-center justify-center gap-8">
-              {navLinks.map(({ label, href, highlight, icon: Icon }, i) => (
+              {navLinks.map(({ label, href, highlight, shopHighlight, icon: Icon }, i) => (
                 <motion.div
                   key={href}
                   initial={{ opacity: 0, y: 20 }}
@@ -153,7 +163,9 @@ export default function Navbar() {
                     className={
                       highlight
                         ? 'rounded-xl bg-ofira-violet px-6 py-3 text-2xl font-semibold text-white transition-colors hover:bg-ofira-violet/90'
-                        : 'flex items-center gap-2 text-2xl font-semibold text-ofira-text transition-colors hover:text-ofira-violet'
+                        : shopHighlight
+                          ? 'inline-flex items-center gap-2.5 rounded-xl border-2 border-ofira-violet/20 bg-ofira-violet/5 px-6 py-3 text-2xl font-semibold text-ofira-violet transition-colors hover:bg-ofira-violet/10'
+                          : 'flex items-center gap-2 text-2xl font-semibold text-ofira-text transition-colors hover:text-ofira-violet'
                     }
                   >
                     {Icon && <Icon className="size-6" />}
