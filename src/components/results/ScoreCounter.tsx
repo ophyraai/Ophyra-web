@@ -137,6 +137,16 @@ export default function ScoreCounter({ score }: ScoreCounterProps) {
         {getLabel(score)}
       </motion.span>
 
+      {/* Percentile context */}
+      <motion.p
+        className="mt-1.5 text-xs text-ofira-text-secondary"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+      >
+        {t('percentile', { pct: score >= 70 ? '15' : score >= 50 ? '40' : '60' })}
+      </motion.p>
+
       {/* Glow ring behind score */}
       <motion.div
         className="absolute -z-10 h-48 w-48 rounded-full blur-3xl"

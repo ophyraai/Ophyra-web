@@ -69,6 +69,8 @@
     "footer": {
       "brand": "Ophyra Diagnosis",
       "tagline": "Your wellness & habit diagnosis",
+      "ctaTitle": "Ready to start?",
+      "ctaButton": "Take my free diagnosis",
       "privacy": "Privacy",
       "terms": "Terms",
       "cookies": "Cookies Policy",
@@ -93,6 +95,9 @@
       "title": "Complement your diagnosis with curated products",
       "subtitle": "Tools, supplements and wellness picks chosen by our team to accelerate your progress.",
       "viewAll": "Shop all products"
+    },
+    "stickyCta": {
+      "text": "Take my free diagnosis"
     },
     "heroV2": {
       "badge": "AI Diagnosis - free",
@@ -146,7 +151,7 @@
     },
     "heroCards": {
       "diagLabel": "AI Diagnosis - free",
-      "diagSub": "5 min - 12 questions",
+      "diagSub": "5 min · 17 questions",
       "diagQuestion": "How do you usually sleep?",
       "diagOpt1": "Badly, I wake up tired",
       "diagOpt2": "It depends on the day",
@@ -410,6 +415,7 @@
     "title": "Your Ophyra Diagnosis",
     "overallScore": "Overall Score",
     "outOf": "out of 100",
+    "percentile": "Your score is above {pct}% of users",
     "areas": {
       "sleep": "Sleep",
       "exercise": "Exercise",
@@ -428,12 +434,14 @@
       "subtitle": "Your result is completely free. Sign up in 10 seconds to unlock it and save it forever.",
       "ctaSignup": "Create free account",
       "ctaLogin": "I already have an account",
-      "privacy": "Your result is free. No catch."
+      "privacy": "Your result is free. No catch.",
+      "saveTitle": "Want to save your result?",
+      "saveSubtitle": "Create a free account to always access your diagnosis and track your progress."
     },
     "unlock": {
-      "badge": "Launch offer — limited spots",
+      "badge": "Launch price — limited time only",
       "title": "Your personalized plan is ready",
-      "subtitle": "We've created a 30-day plan based on your results. Unlock it now at launch price.",
+      "subtitle": "We've analyzed your 6 wellness areas and created a 30-day plan just for you. Unlock it now at 50% off.",
       "features": [
         "Detailed analysis of your 6 wellness areas",
         "Personalized 30-day action plan",
@@ -441,11 +449,19 @@
         "Priority actions based on your profile",
         "Lifetime access to your results"
       ],
-      "originalPrice": "$29.99",
-      "price": "$9.99",
-      "discount": "-67%",
-      "cta": "Unlock my plan for $9.99",
-      "trust": "Secure payment · Instant access"
+      "originalPrice": "$59.99",
+      "price": "$29.99",
+      "discount": "-50%",
+      "cta": "Unlock my plan for $29.99",
+      "trust": "Secure payment · Instant access",
+      "expiresIn": "This offer expires in",
+      "socialProofCount": "2,847+",
+      "socialProofText": "people already unlocked their personalized plan",
+      "testimonial": "I knew I was sleeping badly but didn't understand why. The plan gave me concrete steps and in 2 weeks I already noticed the difference.",
+      "testimonialAuthor": "Laura M., 28",
+      "digitalConsent": "By completing your purchase, you agree to immediate access to the digital content and waive your right of withdrawal under applicable consumer law.",
+      "reminderTitle": "Want to unlock your full plan?",
+      "reminderSubtitle": "Detailed analysis + personalized 30-day plan + habit tracking"
     },
     "share": {
       "title": "Share your result",
@@ -578,6 +594,11 @@
     "successMessage": "Thank you for sharing your experience.",
     "connectionError": "Connection error",
     "seeReviews": "See {count} {label}"
+  },
+  "cart": {
+    "crossSell": {
+      "title": "Complete your routine"
+    }
   },
   "shipping": {
     "progress": {

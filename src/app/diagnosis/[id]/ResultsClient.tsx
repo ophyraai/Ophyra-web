@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import ScoreCounter from '@/components/results/ScoreCounter';
@@ -8,7 +7,6 @@ import RadarChartComponent from '@/components/results/RadarChart';
 import AreaAnalysis from '@/components/results/AreaAnalysis';
 import ActionPlan from '@/components/results/ActionPlan';
 import PaywallOverlay from '@/components/results/PaywallOverlay';
-import EmailGate from '@/components/results/EmailGate';
 import ShareCard from '@/components/results/ShareCard';
 import AnalysisPendingState from '@/components/results/AnalysisPendingState';
 import { Button } from '@/components/ui/button';
@@ -66,9 +64,7 @@ export default function ResultsClient({
 }: ResultsClientProps) {
   const t = useTranslations('results');
   const isAnonymous = diagnosis.email.endsWith('@anonymous.ophyra');
-  const hasRealEmail = !isAnonymous || !!loggedInEmail;
-  const [emailUnlocked, setEmailUnlocked] = useState(hasRealEmail);
-  const [userEmail, setUserEmail] = useState(loggedInEmail || diagnosis.email);
+  const userEmail = loggedInEmail || diagnosis.email;
 
   const scores = diagnosis.scores || {
     sleep: 5,
@@ -78,21 +74,6 @@ export default function ResultsClient({
     productivity: 5,
     hydration: 5,
   };
-
-  // Show email gate if user hasn't provided email yet
-  if (!emailUnlocked) {
-    return (
-      <EmailGate
-        diagnosisId={diagnosis.id}
-        score={diagnosis.overall_score || 0}
-        name={diagnosis.name || ''}
-        onUnlock={(email) => {
-          setUserEmail(email);
-          setEmailUnlocked(true);
-        }}
-      />
-    );
-  }
 
   return (
     <div className="min-h-screen bg-ofira-bg px-4 py-8">
@@ -158,27 +139,80 @@ export default function ResultsClient({
           </motion.div>
         )}
 
-        {/* Area Analysis (premium) */}
-        {aiData?.detailed_analysis && aiData.detailed_analysis.length > 0 && (
-          <div className="relative mb-8">
-            <AreaAnalysis areas={aiData.detailed_analysis} isPaid={isPaid} />
-          </div>
+        {/* Save results banner (non-blocking, for anonymous users) */}
+        {isAnonymous && !loggedInEmail && (
+          <motion.div
+            className="mb-8 flex flex-col items-center gap-3 rounded-xl border border-dashed border-ofira-card-border bg-ofira-surface1 p-5 text-center sm:flex-row sm:text-left"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+          >
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-ofira-text">{t('emailGate.saveTitle')}</p>
+              <p className="mt-0.5 text-xs text-ofira-text-secondary">{t('emailGate.saveSubtitle')}</p>
+            </div>
+            <div className="flex gap-2">
+              <Link
+                href={`/auth/signup?redirect=/diagnosis/${diagnosis.id}`}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-ofira-violet px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-ofira-violet/90"
+              >
+                {t('emailGate.ctaSignup')}
+              </Link>
+              <Link
+                href={`/auth/login?redirect=/diagnosis/${diagnosis.id}`}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-ofira-card-border bg-white px-4 py-2 text-sm font-medium text-ofira-text transition-colors hover:bg-ofira-surface1"
+              >
+                {t('emailGate.ctaLogin')}
+              </Link>
+            </div>
+          </motion.div>
         )}
 
-        {/* Action Plan (premium) */}
-        {aiData?.priority_actions && aiData.priority_actions.length > 0 && (
-          <div className="relative mb-8">
-            <ActionPlan actions={aiData.priority_actions} isPaid={isPaid} />
-          </div>
-        )}
-
-        {/* Paywall */}
+        {/* Paywall — shown BEFORE blurred content to maximize conversion */}
         {!isPaid && (
           <PaywallOverlay
             diagnosisId={diagnosis.id}
             email={userEmail}
             locale={diagnosis.locale}
           />
+        )}
+
+        {/* Area Analysis (premium — blurred if not paid) */}
+        {aiData?.detailed_analysis && aiData.detailed_analysis.length > 0 && (
+          <div className="relative mb-8">
+            <AreaAnalysis areas={aiData.detailed_analysis} isPaid={isPaid} />
+          </div>
+        )}
+
+        {/* Action Plan (premium — blurred if not paid) */}
+        {aiData?.priority_actions && aiData.priority_actions.length > 0 && (
+          <div className="relative mb-8">
+            <ActionPlan actions={aiData.priority_actions} isPaid={isPaid} />
+          </div>
+        )}
+
+        {/* Compact reminder CTA after blurred content */}
+        {!isPaid && aiData && (
+          <motion.div
+            className="mb-8 rounded-xl border border-dashed border-ofira-violet/30 bg-ofira-violet/5 p-5 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <p className="mb-1 text-sm font-semibold text-ofira-text">
+              {t('unlock.reminderTitle')}
+            </p>
+            <p className="mb-3 text-xs text-ofira-text-secondary">
+              {t('unlock.reminderSubtitle')}
+            </p>
+            <button
+              onClick={() => {
+                document.querySelector('[data-paywall]')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="inline-flex items-center gap-2 rounded-lg bg-ofira-violet px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-ofira-violet/90"
+            >
+              {t('unlock.cta')}
+            </button>
+          </motion.div>
         )}
 
         {/* 30-day Plan (paid only) */}

@@ -64,7 +64,6 @@ export default function ProductDetailClient({ product, rating, reviewCount }: Pr
         : [];
 
   const [activeImg, setActiveImg] = useState(0);
-  const [acknowledged, setAcknowledged] = useState(!isOwn);
   const [justAdded, setJustAdded] = useState(false);
 
   const formattedPrice = formatMoney(
@@ -227,29 +226,13 @@ export default function ProductDetailClient({ product, rating, reviewCount }: Pr
             </div>
           )}
 
-          {/* Checkbox obligatoria de tiempos de envío para own */}
-          {isOwn && (
-            <label className="mt-4 flex cursor-pointer items-start gap-2.5 rounded-lg border border-ofira-card-border bg-white p-3 text-sm">
-              <input
-                type="checkbox"
-                checked={acknowledged}
-                onChange={(e) => setAcknowledged(e.target.checked)}
-                className="mt-0.5 size-4 rounded border-ofira-card-border text-ofira-violet focus:ring-ofira-violet"
-              />
-              <span className="text-ofira-text">
-                Entiendo que el envío puede tardar entre <strong>15 y 45 días</strong>{' '}
-                desde el proveedor internacional.
-              </span>
-            </label>
-          )}
-
           {/* CTA */}
           <div className="mt-6">
             {isOwn ? (
               <button
                 type="button"
                 onClick={handleAddToCart}
-                disabled={!acknowledged || product.price_cents == null}
+                disabled={product.price_cents == null}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-ofira-violet px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-ofira-violet/90 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {justAdded ? (

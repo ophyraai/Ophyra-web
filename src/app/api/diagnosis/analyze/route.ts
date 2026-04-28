@@ -38,18 +38,24 @@ export async function POST(req: Request) {
 
     contentParts.push({ type: 'text', text: JSON.stringify({ answers, scores }) });
 
-    // Use generateText instead of streamText because the client does
-    // fire-and-forget — nobody consumes the stream, so onFinish never fires.
-    const { text } = await generateText({
-      model: hasPhotos ? anthropic('claude-sonnet-4-20250514') : deepseek('deepseek-chat'),
-      system: getSystemPrompt(locale || 'es'),
-      messages: [
-        {
-          role: 'user',
-          content: contentParts,
-        },
-      ],
-    });
+    // Try DeepSeek first (cheaper), fall back to Claude if it fails
+    let text: string;
+    try {
+      const result = await generateText({
+        model: hasPhotos ? anthropic('claude-sonnet-4-20250514') : deepseek('deepseek-chat'),
+        system: getSystemPrompt(locale || 'es'),
+        messages: [{ role: 'user', content: contentParts }],
+      });
+      text = result.text;
+    } catch (primaryErr) {
+      console.warn('Primary model failed, falling back to Claude:', primaryErr instanceof Error ? primaryErr.message : primaryErr);
+      const result = await generateText({
+        model: anthropic('claude-sonnet-4-20250514'),
+        system: getSystemPrompt(locale || 'es'),
+        messages: [{ role: 'user', content: contentParts }],
+      });
+      text = result.text;
+    }
 
     try {
       const aiData = JSON.parse(text);

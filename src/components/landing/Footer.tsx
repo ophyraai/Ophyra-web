@@ -24,7 +24,18 @@ export default function Footer() {
   return (
     <footer className="border-t border-ofira-card-border bg-ofira-surface1 px-4 pb-12 pt-10">
       <div className="flex flex-col items-center gap-6 text-center">
-        <div>
+        {/* Final CTA */}
+        <div className="mb-2 flex flex-col items-center gap-3">
+          <p className="text-lg font-bold text-ofira-text">{t('ctaTitle')}</p>
+          <Link
+            href="/diagnosis"
+            className="inline-flex items-center gap-2 rounded-full bg-ofira-violet px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-ofira-violet/90"
+          >
+            {t('ctaButton')}
+          </Link>
+        </div>
+
+        <div className="w-full border-t border-ofira-card-border pt-6">
           <h3 className="text-lg font-bold">{t('brand')}</h3>
           <p className="mt-1 text-sm text-ofira-text-secondary">{t('tagline')}</p>
         </div>

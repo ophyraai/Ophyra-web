@@ -13,6 +13,7 @@ import SocialProof from '@/components/landing/SocialProof';
 import DiagnosisPreview from '@/components/landing/DiagnosisPreview';
 import FAQ from '@/components/landing/FAQ';
 import Footer from '@/components/landing/Footer';
+import StickyMobileCTA from '@/components/landing/StickyMobileCTA';
 import WaveDivider from '@/components/ui/WaveDivider';
 
 const PRODUCT_COLUMNS =
@@ -87,6 +88,7 @@ export default async function Home() {
       <div className="section-alt">
         <Footer />
       </div>
+      <StickyMobileCTA />
     </main>
   );
 }

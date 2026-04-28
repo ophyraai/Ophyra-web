@@ -1,10 +1,50 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { Sparkles, Shield, Check, Clock } from 'lucide-react';
+import { Sparkles, Shield, Check, Clock, Users } from 'lucide-react';
 import ShimmerButton from '@/components/ui/ShimmerButton';
+
+const COUNTDOWN_KEY = 'ophyra:paywall_expires';
+const COUNTDOWN_HOURS = 24;
+
+function useCountdown() {
+  const [timeLeft, setTimeLeft] = useState('');
+
+  useEffect(() => {
+    let expires: number;
+    try {
+      const saved = localStorage.getItem(COUNTDOWN_KEY);
+      if (saved && Number(saved) > Date.now()) {
+        expires = Number(saved);
+      } else {
+        expires = Date.now() + COUNTDOWN_HOURS * 3600000;
+        localStorage.setItem(COUNTDOWN_KEY, String(expires));
+      }
+    } catch {
+      expires = Date.now() + COUNTDOWN_HOURS * 3600000;
+    }
+
+    const tick = () => {
+      const diff = Math.max(0, expires - Date.now());
+      if (diff <= 0) {
+        setTimeLeft('');
+        return;
+      }
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      setTimeLeft(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`);
+    };
+
+    tick();
+    const interval = setInterval(tick, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return timeLeft;
+}
 
 interface PaywallOverlayProps {
   diagnosisId: string;
@@ -19,6 +59,7 @@ export default function PaywallOverlay({
 }: PaywallOverlayProps) {
   const t = useTranslations('results.unlock');
   const [loading, setLoading] = useState(false);
+  const countdown = useCountdown();
 
   const handleUnlock = async () => {
     setLoading(true);
@@ -47,6 +88,7 @@ export default function PaywallOverlay({
 
   return (
     <motion.div
+      data-paywall
       className="relative my-8 overflow-hidden rounded-2xl p-8 text-center"
       style={{
         backdropFilter: 'blur(20px) saturate(150%)',
@@ -87,6 +129,13 @@ export default function PaywallOverlay({
           {t('badge')}
         </motion.div>
 
+        {/* Countdown timer */}
+        {countdown && (
+          <p className="mb-3 font-mono text-sm font-semibold text-red-600">
+            {t('expiresIn')} {countdown}
+          </p>
+        )}
+
         <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-ofira-violet/10">
           <Sparkles className="h-6 w-6 text-ofira-violet" />
         </div>
@@ -120,6 +169,24 @@ export default function PaywallOverlay({
           ))}
         </div>
 
+        {/* Social proof */}
+        <div className="mx-auto mb-3 flex max-w-xs items-center gap-3 rounded-lg bg-emerald-50/60 px-4 py-2.5">
+          <Users className="size-4 flex-shrink-0 text-emerald-600" />
+          <p className="text-left text-xs text-emerald-800">
+            <span className="font-bold">{t('socialProofCount')}</span> {t('socialProofText')}
+          </p>
+        </div>
+
+        {/* Mini testimonial */}
+        <div className="mx-auto mb-5 max-w-xs rounded-lg border border-ofira-card-border bg-white/60 px-4 py-3">
+          <p className="text-xs italic text-ofira-text-secondary">
+            &ldquo;{t('testimonial')}&rdquo;
+          </p>
+          <p className="mt-1 text-[11px] font-semibold text-ofira-text">
+            — {t('testimonialAuthor')}
+          </p>
+        </div>
+
         {/* Pricing */}
         <div className="mb-5 flex items-center justify-center gap-3">
           <span className="text-lg text-ofira-text-secondary line-through">{t('originalPrice')}</span>
@@ -138,6 +205,11 @@ export default function PaywallOverlay({
             {t('discount')}
           </span>
         </div>
+
+        {/* Digital content consent (EU withdrawal right waiver) */}
+        <p className="mx-auto mb-4 max-w-xs text-[10px] leading-relaxed text-ofira-text-secondary/70">
+          {t('digitalConsent')}
+        </p>
 
         <ShimmerButton
           onClick={handleUnlock}

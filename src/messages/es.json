@@ -69,6 +69,8 @@
     "footer": {
       "brand": "Ophyra Diagnosis",
       "tagline": "Tu diagnóstico de bienestar y hábitos",
+      "ctaTitle": "¿Listo para empezar?",
+      "ctaButton": "Hacer mi diagnóstico gratis",
       "privacy": "Privacidad",
       "terms": "Términos",
       "cookies": "Política de Cookies",
@@ -93,6 +95,9 @@
       "title": "Complementa tu diagnóstico con productos seleccionados",
       "subtitle": "Herramientas, suplementos y wellness escogidos por nuestro equipo para acelerar tu progreso.",
       "viewAll": "Ver toda la tienda"
+    },
+    "stickyCta": {
+      "text": "Hacer mi diagnóstico gratis"
     },
     "heroV2": {
       "badge": "Diagnostico IA - gratis",
@@ -146,7 +151,7 @@
     },
     "heroCards": {
       "diagLabel": "Diagnostico IA - gratis",
-      "diagSub": "5 min - 12 preguntas",
+      "diagSub": "5 min · 17 preguntas",
       "diagQuestion": "Como duermes habitualmente?",
       "diagOpt1": "Mal, me despierto cansado",
       "diagOpt2": "Regular, depende del dia",
@@ -410,6 +415,7 @@
     "title": "Tu Diagnóstico Ophyra",
     "overallScore": "Puntuación General",
     "outOf": "de 100",
+    "percentile": "Tu puntuación está por encima del {pct}% de usuarios",
     "areas": {
       "sleep": "Sueño",
       "exercise": "Ejercicio",
@@ -428,12 +434,14 @@
       "subtitle": "Tu resultado es completamente gratuito. Regístrate en 10 segundos para desbloquearlo y guardarlo para siempre.",
       "ctaSignup": "Crear cuenta gratis",
       "ctaLogin": "Ya tengo cuenta",
-      "privacy": "Tu resultado es gratis. Sin trucos."
+      "privacy": "Tu resultado es gratis. Sin trucos.",
+      "saveTitle": "¿Quieres guardar tu resultado?",
+      "saveSubtitle": "Crea una cuenta gratis para acceder siempre a tu diagnóstico y seguir tu progreso."
     },
     "unlock": {
-      "badge": "Oferta de lanzamiento — plazas limitadas",
+      "badge": "Precio de lanzamiento — por tiempo limitado",
       "title": "Tu plan personalizado está listo",
-      "subtitle": "Hemos creado un plan de 30 días basado en tus resultados. Desbloquéalo ahora con precio de lanzamiento.",
+      "subtitle": "Hemos analizado tus 6 áreas de bienestar y creado un plan de 30 días solo para ti. Desbloquéalo ahora al 50%.",
       "features": [
         "Análisis detallado de tus 6 áreas de bienestar",
         "Plan de acción de 30 días personalizado",
@@ -441,11 +449,19 @@
         "Acciones prioritarias según tu perfil",
         "Acceso de por vida a tus resultados"
       ],
-      "originalPrice": "$29.99",
-      "price": "$9.99",
-      "discount": "-67%",
-      "cta": "Desbloquear mi plan por $9.99",
-      "trust": "Pago seguro · Acceso inmediato"
+      "originalPrice": "59,99 €",
+      "price": "29,99 €",
+      "discount": "-50%",
+      "cta": "Desbloquear mi plan por 29,99 €",
+      "trust": "Pago seguro · Acceso inmediato",
+      "expiresIn": "Esta oferta expira en",
+      "socialProofCount": "2.847+",
+      "socialProofText": "personas ya desbloquearon su plan personalizado",
+      "testimonial": "Sabía que dormía mal pero no entendía por qué. El plan me dio pasos concretos y en 2 semanas ya notaba la diferencia.",
+      "testimonialAuthor": "Laura M., 28 años",
+      "digitalConsent": "Al completar la compra, aceptas el acceso inmediato al contenido digital y renuncias al derecho de desistimiento conforme al art. 103.m) del RDL 1/2007.",
+      "reminderTitle": "¿Quieres desbloquear tu plan completo?",
+      "reminderSubtitle": "Análisis detallado + plan de 30 días personalizado + seguimiento de hábitos"
     },
     "share": {
       "title": "Comparte tu resultado",
@@ -578,6 +594,11 @@
     "successMessage": "Gracias por compartir tu experiencia.",
     "connectionError": "Error de conexión",
     "seeReviews": "Ver {count} {label}"
+  },
+  "cart": {
+    "crossSell": {
+      "title": "Completa tu rutina"
+    }
   },
   "shipping": {
     "progress": {

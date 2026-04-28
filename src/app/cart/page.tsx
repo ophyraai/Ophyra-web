@@ -18,6 +18,7 @@ import ShippingDisclaimer from '@/components/shop/ShippingDisclaimer';
 import FreeShippingProgress from '@/components/ecommerce/FreeShippingProgress';
 import PriceDisplay from '@/components/ecommerce/PriceDisplay';
 import CouponInput from '@/components/ecommerce/CouponInput';
+import CrossSell from '@/components/ecommerce/CrossSell';
 import { useCart } from '@/context/CartContext';
 import { computeDiscountCents } from '@/lib/coupons/compute';
 import { supabase } from '@/lib/supabase/client';
@@ -287,6 +288,11 @@ export default function CartPage() {
                   </motion.div>
                 ))}
               </div>
+
+                {/* Cross-sell */}
+                <CrossSell
+                  excludeIds={items.map((i) => i.product_id)}
+                />
 
               {/* Resumen */}
               <div className="lg:col-span-1">
