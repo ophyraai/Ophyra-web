@@ -22,7 +22,7 @@ export default function WaveDivider({ flip = false, fromColor = '#ffffff', toCol
     <div
       ref={ref}
       className="relative -my-px overflow-hidden"
-      style={{ transform: flip ? 'scaleY(-1)' : undefined }}
+      style={{ position: 'relative', transform: flip ? 'scaleY(-1)' : undefined }}
     >
       <motion.svg
         viewBox="0 0 1440 80"
