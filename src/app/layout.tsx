@@ -7,6 +7,7 @@ import CookieBanner from "@/components/legal/CookieBanner";
 import { CartProvider } from "@/context/CartContext";
 import AnnouncementBar from "@/components/ecommerce/AnnouncementBar";
 import CartDrawer from "@/components/ecommerce/CartDrawer";
+import WelcomePopup from "@/components/ecommerce/WelcomePopup";
 
 const dmSans = DM_Sans({
   variable: "--font-display",
@@ -133,6 +134,7 @@ export default async function RootLayout({
             <AnnouncementBar />
             {children}
             <CartDrawer />
+            <WelcomePopup />
             <CookieBanner />
           </CartProvider>
         </NextIntlClientProvider>

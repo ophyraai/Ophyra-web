@@ -595,6 +595,17 @@
     "connectionError": "Error de conexión",
     "seeReviews": "Ver {count} {label}"
   },
+  "welcomePopup": {
+    "title": "10% en tu primera compra",
+    "subtitle": "Déjanos tu email y recibe un código de descuento exclusivo para tu primer pedido.",
+    "placeholder": "tu@email.com",
+    "cta": "Quiero mi 10%",
+    "invalidEmail": "Introduce un email válido",
+    "connectionError": "Error de conexión",
+    "privacy": "Sin spam. Solo ofertas y novedades. Puedes darte de baja en cualquier momento.",
+    "successTitle": "¡Código activado!",
+    "successMessage": "Usa este código en tu próxima compra para obtener un 10% de descuento:"
+  },
   "cart": {
     "crossSell": {
       "title": "Completa tu rutina"
