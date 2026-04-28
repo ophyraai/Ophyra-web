@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { supabase } from '@/lib/supabase/client';
 import AccountNav from '@/components/dashboard/AccountNav';
-import { Save, Loader2, CheckCircle2, Lock, AlertCircle } from 'lucide-react';
+import { Save, Loader2, CheckCircle2, Lock, AlertCircle, Bell, BellOff } from 'lucide-react';
 
 interface UserProfile {
   name: string | null;
@@ -28,6 +28,10 @@ export default function ProfilePage() {
   const [passwordSaved, setPasswordSaved] = useState(false);
   const [passwordError, setPasswordError] = useState('');
 
+  // Newsletter
+  const [newsletterSubscribed, setNewsletterSubscribed] = useState<boolean | null>(null);
+  const [newsletterLoading, setNewsletterLoading] = useState(false);
+
   useEffect(() => {
     fetch('/api/user/profile')
       .then(r => r.json())
@@ -36,6 +40,11 @@ export default function ProfilePage() {
           setProfile(data);
           setName(data.name || '');
           setLocale(data.locale || 'es');
+          // Check newsletter status
+          fetch('/api/newsletter/status')
+            .then(r => r.json())
+            .then(d => setNewsletterSubscribed(d.subscribed))
+            .catch(() => setNewsletterSubscribed(false));
         }
       })
       .finally(() => setLoading(false));
@@ -267,6 +276,65 @@ export default function ProfilePage() {
               </motion.span>
             )}
           </div>
+        </div>
+      </motion.div>
+
+      {/* Newsletter / Communications */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="card-elevated p-6"
+      >
+        <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-ofira-text">
+          <Bell className="size-5 text-ofira-violet" />
+          Comunicaciones
+        </h2>
+
+        <div className="flex items-center justify-between rounded-lg border border-ofira-card-border bg-ofira-surface1 p-4">
+          <div>
+            <p className="text-sm font-medium text-ofira-text">Ofertas y novedades por email</p>
+            <p className="mt-0.5 text-xs text-ofira-text-secondary">
+              {newsletterSubscribed
+                ? 'Recibes emails con ofertas exclusivas y novedades.'
+                : 'No estás suscrito a comunicaciones comerciales.'}
+            </p>
+          </div>
+          <button
+            type="button"
+            disabled={newsletterLoading || newsletterSubscribed === null}
+            onClick={async () => {
+              if (!profile?.email) return;
+              setNewsletterLoading(true);
+              try {
+                if (newsletterSubscribed) {
+                  await fetch('/api/newsletter/unsubscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: profile.email }),
+                  });
+                  setNewsletterSubscribed(false);
+                } else {
+                  await fetch('/api/newsletter/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: profile.email }),
+                  });
+                  setNewsletterSubscribed(true);
+                }
+              } catch {}
+              setNewsletterLoading(false);
+            }}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors disabled:opacity-50 ${
+              newsletterSubscribed ? 'bg-ofira-violet' : 'bg-ofira-surface2'
+            }`}
+          >
+            <span
+              className={`inline-block size-4 transform rounded-full bg-white shadow-sm transition-transform ${
+                newsletterSubscribed ? 'translate-x-6' : 'translate-x-1'
+              }`}
+            />
+          </button>
         </div>
       </motion.div>
     </div>

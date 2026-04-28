@@ -49,7 +49,6 @@ export default function Footer() {
           <Link href="/legal/politica-de-devoluciones" className="transition-colors hover:text-ofira-text">{t('returns')}</Link>
           <Link href="/legal/aviso-de-afiliacion" className="transition-colors hover:text-ofira-text">{t('affiliate')}</Link>
           <a href="mailto:ophyra.ia@gmail.com" className="transition-colors hover:text-ofira-text">{t('contact')}</a>
-          <Link href="/unsubscribe" className="transition-colors hover:text-ofira-text">{t('unsubscribe')}</Link>
         </nav>
 
         <div className="flex gap-4 text-ofira-text-secondary">
