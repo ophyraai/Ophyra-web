@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { Compass, Sparkles, Play, ShoppingBag } from 'lucide-react';
+import { Compass, Sparkles, Play } from 'lucide-react';
 import ShimmerButton from '@/components/ui/ShimmerButton';
 
 // ── Stagger animations ─────────────────────────────────────────────
@@ -289,72 +289,63 @@ export default function HeroV2() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative flex max-w-3xl flex-col items-center text-center"
+        className="relative flex max-w-[960px] flex-col items-center text-center"
       >
-        {/* Badge */}
+        {/* Pill badge */}
         <motion.div
           variants={itemVariants}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-ofira-violet/15 bg-ofira-violet/5 px-4 py-1.5 text-sm font-medium text-ofira-violet backdrop-blur-sm"
+          className="mb-8 inline-flex items-center gap-2 rounded-full border border-ofira-card-border bg-white/70 px-4 py-1.5 text-xs font-medium tracking-wide text-ofira-text-secondary backdrop-blur-sm"
         >
-          <Sparkles className="size-3.5" />
+          <Sparkles className="size-3 text-ofira-violet" />
           {t('badge')}
         </motion.div>
 
-        {/* Title - word by word reveal + 3D tilt */}
+        {/* Title — two-line with color accent */}
         <motion.h1
           variants={itemVariants}
           style={{ rotateX: springRotateX, rotateY: springRotateY, transformStyle: 'preserve-3d' }}
-          className="mb-5 text-4xl font-bold leading-[1.08] tracking-tight text-ofira-text sm:text-5xl md:text-6xl lg:text-7xl"
+          className="mb-6 text-[clamp(2.75rem,6.8vw,5.5rem)] font-semibold leading-[1.02] tracking-[-0.04em] text-ofira-text"
         >
-          {t('title').split(' ').map((word: string, i: number) => (
-            <motion.span
-              key={i}
-              className="mr-[0.25em] inline-block last:mr-0"
-              initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ duration: 0.5, delay: 0.4 + i * 0.08 }}
-            >
-              {word}
-            </motion.span>
-          ))}
+          {t('titleLine1')}
+          <br />
+          <span className="text-teal-700">{t('titleAccent')}</span>{' '}
+          <span className="font-medium text-ofira-text-secondary">{t('titleFaded')}</span>
         </motion.h1>
 
         {/* Subtitle */}
         <motion.p
           variants={itemVariants}
-          className="mb-10 max-w-xl text-lg leading-relaxed text-ofira-text-secondary sm:text-xl"
+          className="mb-10 max-w-[560px] text-lg leading-relaxed text-ofira-text-secondary"
         >
           {t('subtitle')}
         </motion.p>
 
-        {/* CTA group */}
-        <motion.div variants={itemVariants} className="relative flex flex-col items-center gap-4">
+        {/* Two CTAs side by side */}
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-wrap items-center justify-center gap-3.5"
+        >
           <div className="relative">
             <GlowRing />
             <ShimmerButton href="/diagnosis">{t('cta')}</ShimmerButton>
           </div>
-          <span className="text-sm text-ofira-text-secondary">{t('ctaSub')}</span>
           <a
             href="/shop"
-            className="group mt-1 inline-flex items-center gap-2 rounded-full border-2 border-ofira-violet/25 bg-white px-6 py-2.5 text-sm font-semibold text-ofira-violet shadow-sm transition-all hover:border-ofira-violet/40 hover:bg-ofira-violet/5 hover:shadow-md"
+            className="inline-flex items-center gap-2.5 rounded-full border border-ofira-card-border bg-white px-6 py-[15px] text-[15px] font-semibold text-ofira-text shadow-sm transition-all hover:border-teal-300 hover:shadow-md"
           >
-            <ShoppingBag className="size-4" />
             {t('ctaShop')}
-            <span className="transition-transform group-hover:translate-x-0.5">→</span>
           </a>
         </motion.div>
 
-        {/* Social proof strip */}
+        {/* Social proof: avatars + stats */}
         <motion.div
           variants={itemVariants}
           className="mt-12 flex flex-col items-center gap-5 sm:flex-row sm:gap-8"
         >
-          {/* Avatars */}
           <div className="flex items-center gap-3">
             <AvatarStack />
           </div>
 
-          {/* Stats */}
           <div className="flex items-center gap-5">
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1">
@@ -362,30 +353,30 @@ export default function HeroV2() {
                 <TikTokIcon className="size-3.5 text-ofira-violet" />
               </div>
               <div className="text-left">
-                <p className="text-lg font-bold text-ofira-text leading-none">
+                <p className="text-lg font-bold leading-none text-ofira-text">
                   <AnimatedCounter target={93000} suffix="+" format="K" />
                 </p>
-                <p className="text-[10px] text-ofira-text-secondary font-medium">seguidores</p>
+                <p className="text-[10px] font-medium text-ofira-text-secondary">seguidores</p>
               </div>
             </div>
             <div className="h-8 w-px bg-ofira-surface2" />
             <div className="flex items-center gap-2">
-              <Play className="size-4 text-ofira-violet fill-ofira-violet" />
+              <Play className="size-4 fill-ofira-violet text-ofira-violet" />
               <div className="text-left">
-                <p className="text-lg font-bold text-ofira-text leading-none">
+                <p className="text-lg font-bold leading-none text-ofira-text">
                   <AnimatedCounter target={35_000_000} suffix="+" format="M" />
                 </p>
-                <p className="text-[10px] text-ofira-text-secondary font-medium">views</p>
+                <p className="text-[10px] font-medium text-ofira-text-secondary">views</p>
               </div>
             </div>
             <div className="h-8 w-px bg-ofira-surface2" />
             <div className="flex items-center gap-2">
               <Compass className="size-4 text-ofira-violet" />
               <div className="text-left">
-                <p className="text-lg font-bold text-ofira-text leading-none">
+                <p className="text-lg font-bold leading-none text-ofira-text">
                   <AnimatedCounter target={2800} suffix="+" format="K" />
                 </p>
-                <p className="text-[10px] text-ofira-text-secondary font-medium">diagnósticos</p>
+                <p className="text-[10px] font-medium text-ofira-text-secondary">diagnósticos</p>
               </div>
             </div>
           </div>

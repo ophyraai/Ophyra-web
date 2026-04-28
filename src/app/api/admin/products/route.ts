@@ -87,6 +87,9 @@ export async function POST(req: Request) {
     sort_order: data.sort_order,
     price_cents: data.price_cents ?? null,
     price: data.price_cents != null ? data.price_cents / 100 : null,
+    badge: data.badge ?? null,
+    rating: data.rating ?? null,
+    review_count: data.review_count ?? 0,
   };
 
   if (data.type === 'own') {

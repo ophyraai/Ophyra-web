@@ -29,6 +29,9 @@ const baseProductFields = {
   is_active: z.boolean().default(false),
   is_featured: z.boolean().default(false),
   sort_order: z.number().int().min(0).default(0),
+  badge: z.string().max(30).optional().nullable(),
+  rating: z.number().min(0).max(5).optional().nullable(),
+  review_count: z.number().int().min(0).default(0),
 };
 
 // ============================================
@@ -88,6 +91,9 @@ export const productUpdateSchema = z.object({
   is_active: baseProductFields.is_active.optional(),
   is_featured: baseProductFields.is_featured.optional(),
   sort_order: baseProductFields.sort_order.optional(),
+  badge: baseProductFields.badge,
+  rating: baseProductFields.rating,
+  review_count: baseProductFields.review_count.optional(),
   affiliate_url: z.string().url().max(2048).optional().nullable(),
   price_cents: z.number().int().positive().optional().nullable(),
   compare_at_price_cents: z.number().int().positive().optional().nullable(),

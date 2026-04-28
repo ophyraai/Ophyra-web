@@ -1,8 +1,11 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Navbar from '@/components/landing/Navbar';
-import { supabaseAdmin } from '@/lib/supabase/server';
+import { createSupabaseServer, supabaseAdmin } from '@/lib/supabase/server';
 import ProductDetailClient from './ProductDetailClient';
+import ReviewSection from '@/components/shop/ReviewSection';
+import ReviewForm from '@/components/shop/ReviewForm';
+import type { Review } from '@/types/marketplace';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -10,7 +13,7 @@ interface Props {
 
 // Columnas explícitas — NUNCA exponer supplier_*, stripe_*
 const PUBLIC_COLUMNS =
-  'id, type, name, slug, category, short_description, long_description, description, image_url, images, price, price_cents, compare_at_price_cents, currency, affiliate_url, is_active';
+  'id, type, name, slug, category, short_description, long_description, description, image_url, images, price, price_cents, compare_at_price_cents, currency, affiliate_url, is_active, rating, review_count';
 
 async function getProduct(slug: string) {
   const { data } = await supabaseAdmin
@@ -48,6 +51,64 @@ export default async function ProductDetailPage(props: Props) {
 
   if (!product) notFound();
 
+  // Fetch reviews: real first, then seed, max 20
+  const { data: reviews } = await supabaseAdmin
+    .from('reviews')
+    .select('*')
+    .eq('product_id', product.id)
+    .order('is_seed', { ascending: true })
+    .order('created_at', { ascending: false })
+    .limit(20);
+
+  const reviewList: Review[] = (reviews || []) as Review[];
+
+  // Check if current user can leave a review (purchased + not yet reviewed)
+  let canReview = false;
+  let userId: string | null = null;
+  let userName: string | undefined;
+  try {
+    const supabase = await createSupabaseServer();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      userId = user.id;
+      // Check if user bought this product
+      const { data: orderItems } = await supabaseAdmin
+        .from('order_items')
+        .select('order_id')
+        .eq('product_id', product.id);
+      if (orderItems && orderItems.length > 0) {
+        const orderIds = orderItems.map((oi) => oi.order_id);
+        const { data: orders } = await supabaseAdmin
+          .from('orders')
+          .select('id')
+          .in('id', orderIds)
+          .eq('user_id', user.id)
+          .in('status', ['paid', 'processing', 'shipped', 'delivered'])
+          .limit(1);
+        if (orders && orders.length > 0) {
+          // Check not already reviewed
+          const { data: existing } = await supabaseAdmin
+            .from('reviews')
+            .select('id')
+            .eq('user_id', user.id)
+            .eq('product_id', product.id)
+            .eq('is_seed', false)
+            .maybeSingle();
+          canReview = !existing;
+        }
+      }
+      // Get user name for form
+      const { data: profile } = await supabaseAdmin
+        .from('users')
+        .select('name')
+        .eq('auth_id', user.id)
+        .maybeSingle();
+      userName = profile?.name || user.email?.split('@')[0];
+    }
+  } catch {
+    // Not logged in — fine
+  }
+
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ophyra.com';
   const images =
     Array.isArray(product.images) && product.images.length > 0
@@ -83,6 +144,16 @@ export default async function ProductDetailPage(props: Props) {
     category: product.category,
   };
 
+  if (product.rating != null && product.review_count > 0) {
+    jsonLd.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: product.rating,
+      reviewCount: product.review_count,
+      bestRating: 5,
+      worstRating: 1,
+    };
+  }
+
   if (priceValue) {
     jsonLd.offers = {
       '@type': 'Offer',
@@ -104,7 +175,24 @@ export default async function ProductDetailPage(props: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="min-h-screen bg-ofira-bg pt-20">
-        <ProductDetailClient product={product} />
+        <ProductDetailClient
+          product={product}
+          rating={product.rating}
+          reviewCount={product.review_count}
+        />
+        <ReviewSection
+          reviews={reviewList}
+          rating={product.rating}
+          reviewCount={product.review_count}
+          productId={product.id}
+          canReview={canReview}
+          userId={userId}
+        />
+        {canReview && userId && (
+          <div className="mx-auto max-w-6xl px-4 pb-10 sm:px-6">
+            <ReviewForm productId={product.id} userName={userName} />
+          </div>
+        )}
       </div>
     </>
   );

@@ -1,16 +1,29 @@
 import { NextResponse } from 'next/server';
+import Stripe from 'stripe';
 import { stripe, STRIPE_TAX_ENABLED } from '@/lib/stripe';
-import { calculateShipping, SHIPPING_ZONES } from '@/lib/shipping';
+import { calculateShipping, SHIPPING_ZONES, COUNTRY_OPTIONS } from '@/lib/shipping';
 import { supabaseAdmin } from '@/lib/supabase/server';
 import { createSupabaseServer } from '@/lib/supabase/server';
 import { cartCheckoutSchema } from '@/lib/validation/product';
 import { validateCouponCode } from '@/lib/coupons/validate';
+import { checkoutLimiter } from '@/lib/security/rate-limit';
 import type { DraftItem } from '@/types/marketplace';
 import { z } from 'zod';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
 export async function POST(req: Request) {
+  // 0. Rate limiting
+  const limiter = checkoutLimiter();
+  if (limiter) {
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      req.headers.get('x-real-ip') || '127.0.0.1';
+    const { success } = await limiter.limit(ip);
+    if (!success) {
+      return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+    }
+  }
+
   // 1. Auth: el checkout requiere login (v1 sin guest checkout)
   const supabase = await createSupabaseServer();
   const {
@@ -40,6 +53,15 @@ export async function POST(req: Request) {
     );
   }
   const { items, locale, shipping_country, coupon_code } = parsed.data;
+
+  // 2.5 Validar que el país de envío es uno soportado
+  const validCountry = COUNTRY_OPTIONS.find((c) => c.code === shipping_country);
+  if (!validCountry) {
+    return NextResponse.json(
+      { error: `País de envío no soportado: ${shipping_country}` },
+      { status: 400 },
+    );
+  }
 
   // 3. Verificar productos: existen, activos, type=own, precio no cambió
   const productIds = items.map((i) => i.product_id);
@@ -201,7 +223,7 @@ export async function POST(req: Request) {
       shipping_address_collection: {
         // Restringimos al país elegido en /cart para evitar que el cliente
         // pague una zona (ej. ES) y luego entregue en otra (ej. US).
-        allowed_countries: [shipping_country as 'ES'],
+        allowed_countries: [shipping_country as Stripe.Checkout.SessionCreateParams.ShippingAddressCollection.AllowedCountry],
       },
       shipping_options: [
         {

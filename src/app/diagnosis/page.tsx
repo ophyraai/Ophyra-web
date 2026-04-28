@@ -267,11 +267,13 @@ function DiagnosisPageInner() {
       if (!submitRes.ok) throw new Error('Failed to submit diagnosis');
       const { id, scores } = await submitRes.json();
 
-      // 2. Trigger AI analysis (fire & forget — streams in background)
+      // 2. Trigger AI analysis (fire & forget)
+      // keepalive ensures the request survives page navigation
       fetch('/api/diagnosis/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ diagnosisId: id, answers, scores, locale: currentLocale, photoUrls }),
+        keepalive: true,
       }).catch(console.error);
 
       // 3. Navigate to results or comparison after animation

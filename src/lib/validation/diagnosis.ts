@@ -5,7 +5,7 @@ export const diagnosisSubmitSchema = z.object({
   name: z.string().max(100).optional().nullable(),
   locale: z.enum(['es', 'en']).default('es'),
   answers: z.record(z.string(), z.unknown()),
-  photoUrls: z.array(z.string().url()).max(3).optional().nullable(),
+  photoUrls: z.array(z.string().min(1)).max(3).optional().nullable(),
 });
 
 export const diagnosisAnalyzeSchema = z.object({
@@ -13,7 +13,7 @@ export const diagnosisAnalyzeSchema = z.object({
   answers: z.record(z.string(), z.unknown()),
   scores: z.record(z.string(), z.number()),
   locale: z.enum(['es', 'en']).optional(),
-  photoUrls: z.array(z.string().url()).max(3).optional().nullable(),
+  photoUrls: z.array(z.string().min(1)).max(3).optional().nullable(),
 });
 
 export const diagnosisUpdateEmailSchema = z.object({

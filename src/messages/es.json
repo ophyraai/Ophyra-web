@@ -95,12 +95,13 @@
       "viewAll": "Ver toda la tienda"
     },
     "heroV2": {
-      "badge": "Respaldado por +90K seguidores",
-      "title": "Tu diagnóstico de hábitos en 5 minutos",
-      "subtitle": "Descubre el estado real de tus hábitos. Análisis personalizado, plan de acción y seguimiento de progreso.",
-      "cta": "Empieza tu diagnóstico",
-      "ctaSecondary": "Ver demo",
-      "ctaShop": "O explora la tienda",
+      "badge": "Diagnostico IA - gratis",
+      "titleLine1": "Tus habitos,",
+      "titleAccent": "diagnosticados.",
+      "titleFaded": "Luego, mejorados.",
+      "subtitle": "5 minutos. Un score. Un plan de 7 dias. Y los productos que encajan contigo — nada mas.",
+      "cta": "Hacer mi diagnostico",
+      "ctaShop": "Explorar la tienda",
       "ctaSub": "Gratis — Sin registro"
     },
     "socialStats": {
@@ -142,6 +143,62 @@
       "step2Desc": "Analizamos tus respuestas y creamos un perfil único de tus hábitos y bienestar.",
       "step3Title": "Actúa",
       "step3Desc": "Recibe tu puntuación, áreas de mejora, plan de 30 días y tracking de hábitos."
+    },
+    "heroCards": {
+      "diagLabel": "Diagnostico IA - gratis",
+      "diagSub": "5 min - 12 preguntas",
+      "diagQuestion": "Como duermes habitualmente?",
+      "diagOpt1": "Mal, me despierto cansado",
+      "diagOpt2": "Regular, depende del dia",
+      "diagOpt3": "Bien, 7h casi siempre",
+      "diagOpt4": "Muy bien, duermo profundo",
+      "diagCta": "Empezar",
+      "diagNote": "Sin registro - 100% anonimo",
+      "shopLabel": "Tienda Ophyra",
+      "shopSub": "Solo lo que uso yo",
+      "shopShipping": "Envio 24-48h",
+      "shopTitle": "Productos curados, no catalogos infinitos.",
+      "shopCta": "Ver la tienda"
+    },
+    "faq": {
+      "eyebrow": "Preguntas frecuentes",
+      "title": "Las dudas de siempre.",
+      "q1": "¿Es realmente gratis el diagnóstico?",
+      "a1": "Sí, completamente gratis. Son 17 preguntas interactivas, sin registro obligatorio. Al terminar recibes un score, un análisis por áreas y un plan personalizado.",
+      "q2": "¿En qué se basa el análisis?",
+      "a2": "Analizamos tus respuestas en 6 áreas clave: sueño, nutrición, ejercicio, estrés, hidratación y productividad. El resultado te dice dónde estás y qué mejorar primero.",
+      "q3": "¿Quién está detrás de Ophyra?",
+      "a3": "Un creador de contenido sobre hábitos y bienestar con +93K seguidores y +35M de views. La tienda solo vende productos que él mismo usa y recomienda.",
+      "q4": "¿Puedo seguir mi progreso después?",
+      "a4": "Sí. Después del diagnóstico puedes acceder a un dashboard con seguimiento de hábitos, heatmap de actividad y recordatorios para mantener la constancia.",
+      "q5": "¿Por qué debería fiarme de estos productos?",
+      "a5": "Cada producto de la tienda lo uso yo personalmente. No hay catálogos infinitos ni acuerdos con marcas random. Si está en Ophyra, es porque funciona.",
+      "q6": "¿Qué relación tiene la tienda con el diagnóstico?",
+      "a6": "Son cosas independientes. El diagnóstico analiza tus hábitos gratis. La tienda tiene productos que yo uso y recomiendo. Puedes usar uno, otro o ambos."
+    },
+    "trust": {
+      "label1": "Devoluciones",
+      "value1": "30 dias sin preguntas",
+      "label2": "Envio",
+      "value2": "24-48h, gratis desde 40eur",
+      "label3": "Pagos",
+      "value3": "Stripe - 3D Secure",
+      "label4": "Diagnostico",
+      "value4": "Gratis, sin registro"
+    },
+    "shopSection": {
+      "eyebrow": "Tienda Ophyra",
+      "title": "Lo que uso.",
+      "titleFaded": "Y recomiendo.",
+      "subtitle": "Sin catalogos infinitos ni referidos random. Productos seleccionados uno a uno, categorizados por el area que te ayudan a mejorar.",
+      "viewAll": "Ver todos los productos",
+      "cat_all": "Todo",
+      "cat_sleep": "Sueno",
+      "cat_nutrition": "Nutricion",
+      "cat_stress": "Estres",
+      "cat_exercise": "Ejercicio",
+      "cat_hydration": "Hidratacion",
+      "cat_productivity": "Productividad"
     }
   },
   "diagnosis": {
@@ -159,7 +216,13 @@
     },
     "q3": {
       "title": "¿Cómo describirías tu nivel de energía durante el día?",
-      "levels": ["Agotado", "Bajo", "Normal", "Bueno", "Energético"]
+      "levels": [
+        "Agotado",
+        "Bajo",
+        "Normal",
+        "Bueno",
+        "Energético"
+      ]
     },
     "q4": {
       "title": "¿Cuántas horas de pantalla al día (fuera del trabajo)?",
@@ -184,7 +247,13 @@
     },
     "q7": {
       "title": "¿Cómo calificarías la calidad de tu sueño?",
-      "levels": ["Terrible", "Mala", "Regular", "Buena", "Increíble"]
+      "levels": [
+        "Terrible",
+        "Mala",
+        "Regular",
+        "Buena",
+        "Increíble"
+      ]
     },
     "q8": {
       "title": "¿Tienes una rutina matutina establecida?",
@@ -485,6 +554,30 @@
     "msgReturns": "50% de descuento en toda la tienda",
     "msgDiagnosis": "Diagnóstico personalizado gratuito",
     "close": "Cerrar anuncio"
+  },
+  "reviews": {
+    "title": "Reseñas de clientes",
+    "review": "reseña",
+    "reviewsPlural": "reseñas",
+    "verifiedPurchase": "Compra verificada",
+    "writeReview": "Escribir una reseña",
+    "showingOf": "Mostrando {shown} de {total}",
+    "noReviews": "Sin reseñas todavía. ¡Sé el primero en dejar la tuya!",
+    "canReviewCta": "Has comprado este producto. ¡Comparte tu experiencia!",
+    "formTitle": "Escribe tu reseña",
+    "ratingLabel": "Puntuación",
+    "nameLabel": "Tu nombre",
+    "nameOptional": "(opcional)",
+    "namePlaceholder": "María G.",
+    "bodyLabel": "Tu reseña",
+    "bodyPlaceholder": "¿Qué tal tu experiencia con este producto?",
+    "submit": "Enviar reseña",
+    "selectRating": "Selecciona una puntuación",
+    "minLength": "La reseña debe tener al menos 10 caracteres",
+    "successTitle": "¡Reseña enviada!",
+    "successMessage": "Gracias por compartir tu experiencia.",
+    "connectionError": "Error de conexión",
+    "seeReviews": "Ver {count} {label}"
   },
   "shipping": {
     "progress": {

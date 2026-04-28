@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Save, Loader2, Sparkles, Tag } from 'lucide-react';
+import { ArrowLeft, Save, Loader2, Sparkles, Tag, MessageSquarePlus } from 'lucide-react';
 import ImageUploader from './ImageUploader';
 import CategoryCombobox from './CategoryCombobox';
 import type { AdminProduct } from '@/types/marketplace';
@@ -66,6 +66,10 @@ interface FormState {
   supplier_sku: string;
   supplier_notes: string;
   internal_ref: string;
+  // display
+  badge: string;
+  rating: string;
+  review_count: string;
 }
 
 function slugify(input: string): string {
@@ -107,6 +111,9 @@ function emptyState(initial?: AdminProduct): FormState {
     supplier_sku: initial?.supplier_sku || '',
     supplier_notes: initial?.supplier_notes || '',
     internal_ref: initial?.internal_ref || '',
+    badge: (initial as any)?.badge || '',
+    rating: (initial as any)?.rating != null ? String((initial as any).rating) : '',
+    review_count: (initial as any)?.review_count ? String((initial as any).review_count) : '',
   };
 }
 
@@ -141,6 +148,9 @@ export default function ProductForm({ mode, initial }: Props) {
       is_active: form.is_active,
       is_featured: form.is_featured,
       sort_order: Number(form.sort_order) || 0,
+      badge: form.badge.trim() || null,
+      rating: form.rating ? parseFloat(form.rating) : null,
+      review_count: form.review_count ? parseInt(form.review_count, 10) : 0,
     };
 
     let payload: Record<string, unknown>;
@@ -469,6 +479,46 @@ export default function ProductForm({ mode, initial }: Props) {
         </Section>
       )}
 
+      {/* Apariencia en tienda */}
+      <Section title="Apariencia en tienda">
+        <Field label="Badge" hint="Texto del badge en la card: 'Top ventas', 'Nuevo', '-20%', etc. Vacío = sin badge.">
+          <input
+            type="text"
+            value={form.badge}
+            onChange={(e) => update('badge', e.target.value)}
+            className={inputCls}
+            placeholder="Top ventas"
+          />
+        </Field>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Rating" hint="De 0.0 a 5.0. Vacío = no mostrar estrellas.">
+            <input
+              type="number"
+              step="0.1"
+              min="0"
+              max="5"
+              value={form.rating}
+              onChange={(e) => update('rating', e.target.value)}
+              className={inputCls}
+              placeholder="4.8"
+            />
+          </Field>
+          <Field label="Nº de reseñas" hint="Se muestra junto al rating en la tienda.">
+            <input
+              type="number"
+              min="0"
+              value={form.review_count}
+              onChange={(e) => update('review_count', e.target.value)}
+              className={inputCls}
+              placeholder="128"
+            />
+          </Field>
+        </div>
+        {mode === 'edit' && initial?.id && (
+          <GenerateReviewsButton productId={initial.id} />
+        )}
+      </Section>
+
       {/* Visibilidad */}
       <Section title="Visibilidad">
         <Field label="Orden" hint="Los más bajos aparecen primero">
@@ -537,6 +587,56 @@ export default function ProductForm({ mode, initial }: Props) {
         </button>
       </div>
     </form>
+  );
+}
+
+function GenerateReviewsButton({ productId }: { productId: string }) {
+  const [generating, setGenerating] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
+
+  async function generate() {
+    setGenerating(true);
+    setResult(null);
+    try {
+      const res = await fetch('/api/admin/reviews/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product_id: productId, count: 20 }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setResult(`${data.generated} reseñas generadas`);
+      } else {
+        setResult(`Error: ${data.error}`);
+      }
+    } catch {
+      setResult('Error de conexión');
+    } finally {
+      setGenerating(false);
+    }
+  }
+
+  return (
+    <div className="flex items-center gap-3">
+      <button
+        type="button"
+        onClick={generate}
+        disabled={generating}
+        className="inline-flex items-center gap-2 rounded-lg border border-ofira-card-border bg-white px-4 py-2 text-sm font-medium text-ofira-text transition-colors hover:bg-ofira-surface1 disabled:opacity-60"
+      >
+        {generating ? (
+          <Loader2 className="size-4 animate-spin" />
+        ) : (
+          <MessageSquarePlus className="size-4" />
+        )}
+        Generar reseñas seed
+      </button>
+      {result && (
+        <span className={`text-sm font-medium ${result.startsWith('Error') ? 'text-rose-600' : 'text-emerald-600'}`}>
+          {result}
+        </span>
+      )}
+    </div>
   );
 }
 

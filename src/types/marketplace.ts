@@ -31,8 +31,24 @@ export interface Product {
   is_active: boolean;
   is_featured: boolean;
   sort_order: number;
+  badge: string | null;
+  rating: number | null;
+  review_count: number;
   created_at: string;
   updated_at: string;
+}
+
+export interface Review {
+  id: string;
+  product_id: string;
+  user_id: string | null;
+  author_name: string;
+  rating: number;
+  body: string;
+  is_seed: boolean;
+  is_verified_purchase: boolean;
+  locale: string;
+  created_at: string;
 }
 
 /**

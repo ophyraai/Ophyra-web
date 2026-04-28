@@ -95,13 +95,14 @@
       "viewAll": "Shop all products"
     },
     "heroV2": {
-      "badge": "Backed by +90K followers",
-      "title": "Your habit diagnosis in 5 minutes",
-      "subtitle": "Discover the real state of your habits. Personalized analysis, action plan, and progress tracking.",
-      "cta": "Start your diagnosis",
-      "ctaSecondary": "See demo",
-      "ctaShop": "Or explore the shop",
-      "ctaSub": "Free — No signup required"
+      "badge": "AI Diagnosis - free",
+      "titleLine1": "Your habits,",
+      "titleAccent": "diagnosed.",
+      "titleFaded": "Then, improved.",
+      "subtitle": "5 minutes. A score. A 7-day plan. And the products that fit you — nothing more.",
+      "cta": "Start my diagnosis",
+      "ctaShop": "Explore the shop",
+      "ctaSub": "Free — No signup"
     },
     "socialStats": {
       "followers": "Followers on social",
@@ -142,6 +143,62 @@
       "step2Desc": "We analyze your answers and create a unique profile of your habits and wellness.",
       "step3Title": "Take Action",
       "step3Desc": "Get your score, areas for improvement, 30-day plan, and habit tracking."
+    },
+    "heroCards": {
+      "diagLabel": "AI Diagnosis - free",
+      "diagSub": "5 min - 12 questions",
+      "diagQuestion": "How do you usually sleep?",
+      "diagOpt1": "Badly, I wake up tired",
+      "diagOpt2": "It depends on the day",
+      "diagOpt3": "Well, usually 7h",
+      "diagOpt4": "Very well, deep sleep",
+      "diagCta": "Start",
+      "diagNote": "No signup - 100% anonymous",
+      "shopLabel": "Ophyra Shop",
+      "shopSub": "Only what I use",
+      "shopShipping": "Ships 24-48h",
+      "shopTitle": "Curated products, not endless catalogs.",
+      "shopCta": "Browse the shop"
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Common questions.",
+      "q1": "Is the diagnosis really free?",
+      "a1": "Yes, completely free. 17 interactive questions, no mandatory signup. You get a score, an area-by-area analysis, and a personalized plan.",
+      "q2": "What is the analysis based on?",
+      "a2": "We analyze your answers across 6 key areas: sleep, nutrition, exercise, stress, hydration, and productivity. The result tells you where you stand and what to improve first.",
+      "q3": "Who is behind Ophyra?",
+      "a3": "A habits and wellness content creator with 93K+ followers and 35M+ views. The shop only sells products he personally uses and recommends.",
+      "q4": "Can I track my progress afterwards?",
+      "a4": "Yes. After the diagnosis you can access a dashboard with habit tracking, activity heatmap, and reminders to stay consistent.",
+      "q5": "Why should I trust these products?",
+      "a5": "Every product in the shop is something I personally use. No endless catalogs or random brand deals. If it's on Ophyra, it's because it works.",
+      "q6": "What's the relationship between the shop and the diagnosis?",
+      "a6": "They're independent. The diagnosis analyzes your habits for free. The shop has products I use and recommend. You can use one, the other, or both."
+    },
+    "trust": {
+      "label1": "Returns",
+      "value1": "30-day no questions",
+      "label2": "Shipping",
+      "value2": "24-48h, free from 40EUR",
+      "label3": "Payments",
+      "value3": "Stripe - 3D Secure",
+      "label4": "Diagnosis",
+      "value4": "Free, no signup"
+    },
+    "shopSection": {
+      "eyebrow": "Ophyra Shop",
+      "title": "What I use.",
+      "titleFaded": "And recommend.",
+      "subtitle": "No endless catalogs or random referrals. Products selected one by one, categorized by the area they help you improve.",
+      "viewAll": "View all products",
+      "cat_all": "All",
+      "cat_sleep": "Sleep",
+      "cat_nutrition": "Nutrition",
+      "cat_stress": "Stress",
+      "cat_exercise": "Exercise",
+      "cat_hydration": "Hydration",
+      "cat_productivity": "Productivity"
     }
   },
   "diagnosis": {
@@ -159,7 +216,13 @@
     },
     "q3": {
       "title": "How would you describe your energy level during the day?",
-      "levels": ["Exhausted", "Low", "Normal", "Good", "Energetic"]
+      "levels": [
+        "Exhausted",
+        "Low",
+        "Normal",
+        "Good",
+        "Energetic"
+      ]
     },
     "q4": {
       "title": "How many hours of screen time per day (outside work)?",
@@ -184,7 +247,13 @@
     },
     "q7": {
       "title": "How would you rate your sleep quality?",
-      "levels": ["Terrible", "Bad", "Average", "Good", "Amazing"]
+      "levels": [
+        "Terrible",
+        "Bad",
+        "Average",
+        "Good",
+        "Amazing"
+      ]
     },
     "q8": {
       "title": "Do you have an established morning routine?",
@@ -485,6 +554,30 @@
     "msgReturns": "50% off everything in store",
     "msgDiagnosis": "Free personalized diagnosis",
     "close": "Close announcement"
+  },
+  "reviews": {
+    "title": "Customer Reviews",
+    "review": "review",
+    "reviewsPlural": "reviews",
+    "verifiedPurchase": "Verified Purchase",
+    "writeReview": "Write a Review",
+    "showingOf": "Showing {shown} of {total}",
+    "noReviews": "No reviews yet. Be the first to share your experience!",
+    "canReviewCta": "You purchased this product. Share your experience!",
+    "formTitle": "Write your review",
+    "ratingLabel": "Rating",
+    "nameLabel": "Your name",
+    "nameOptional": "(optional)",
+    "namePlaceholder": "John D.",
+    "bodyLabel": "Your review",
+    "bodyPlaceholder": "How was your experience with this product?",
+    "submit": "Submit review",
+    "selectRating": "Please select a rating",
+    "minLength": "Review must be at least 10 characters",
+    "successTitle": "Review submitted!",
+    "successMessage": "Thank you for sharing your experience.",
+    "connectionError": "Connection error",
+    "seeReviews": "See {count} {label}"
   },
   "shipping": {
     "progress": {

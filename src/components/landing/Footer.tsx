@@ -1,7 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { Instagram } from 'lucide-react';
 import Link from 'next/link';
-import TrustBadges from '@/components/ecommerce/TrustBadges';
 
 function TikTokIcon({ className }: { className?: string }) {
   return (
@@ -24,8 +23,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-ofira-card-border bg-ofira-surface1 px-4 pb-12 pt-10">
-      <TrustBadges />
-      <div className="mt-10 flex flex-col items-center gap-6 text-center">
+      <div className="flex flex-col items-center gap-6 text-center">
         <div>
           <h3 className="text-lg font-bold">{t('brand')}</h3>
           <p className="mt-1 text-sm text-ofira-text-secondary">{t('tagline')}</p>

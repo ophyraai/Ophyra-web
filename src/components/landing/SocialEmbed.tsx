@@ -73,7 +73,7 @@ function ReelCard({ reel, index }: { reel: ReelConfig; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="relative aspect-[9/16] min-w-[260px] overflow-hidden rounded-2xl border border-ofira-card-border bg-ofira-surface1 snap-center"
+      className="card-hover relative aspect-[9/16] min-w-[260px] overflow-hidden rounded-2xl border border-ofira-card-border bg-ofira-surface1 snap-center"
     >
       <ViewsBadge views={reel.views} platform={reel.platform} />
       {!loaded && <SkeletonLoader />}

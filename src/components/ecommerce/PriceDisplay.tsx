@@ -63,12 +63,7 @@ export default function PriceDisplay({
   return (
     <div className={['flex flex-col gap-0.5', className].join(' ')}>
       <div className="flex flex-wrap items-baseline gap-2">
-        <span
-          className={[
-            sizing.price,
-            hasCompare ? 'text-rose-600' : 'text-ofira-text',
-          ].join(' ')}
-        >
+        <span className={[sizing.price, 'text-ofira-text'].join(' ')}>
           {priceText}
         </span>
         {hasCompare && (
@@ -76,7 +71,7 @@ export default function PriceDisplay({
             <span
               className={[
                 sizing.compare,
-                'text-ofira-text-secondary/70 line-through',
+                'text-ofira-text-secondary/60 line-through',
               ].join(' ')}
             >
               {compareText}
@@ -84,7 +79,7 @@ export default function PriceDisplay({
             <span
               className={[
                 sizing.badge,
-                'inline-flex items-center rounded-full bg-rose-600 font-bold uppercase tracking-wide text-white',
+                'inline-flex items-center rounded-full bg-emerald-50 font-bold text-emerald-600',
               ].join(' ')}
             >
               −{percentOff}%
@@ -96,7 +91,7 @@ export default function PriceDisplay({
         <span
           className={[
             sizing.savings,
-            'font-medium text-rose-600',
+            'font-medium text-ofira-text-secondary',
           ].join(' ')}
         >
           Ahorras {savingsText}

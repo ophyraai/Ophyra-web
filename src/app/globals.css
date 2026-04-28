@@ -107,6 +107,7 @@
     @apply bg-background text-foreground;
     font-family: var(--font-body);
     padding-top: var(--announcement-height);
+    position: relative;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
@@ -132,15 +133,22 @@
   border: 1px solid rgba(13,148,136,0.15);
   border-radius: 1rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 8px 32px rgba(13,148,136,0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.card-elevated:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 40px rgba(13,148,136,0.10), 0 2px 4px rgba(10,30,26,0.04);
+  border-color: rgba(13,148,136,0.22);
 }
 
-/* Card hover lift */
+/* Card hover lift — teal shadow + border glow */
 .card-hover {
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 .card-hover:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(13,148,136,0.14), 0 4px 10px rgba(0,0,0,0.06);
+  box-shadow: 0 10px 40px rgba(13,148,136,0.10), 0 2px 4px rgba(10,30,26,0.04);
+  border-color: rgba(13,148,136,0.22);
 }
 
 /* Violet glow utility */

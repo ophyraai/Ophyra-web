@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { streamText } from 'ai';
+import { generateText } from 'ai';
 import { anthropic } from '@ai-sdk/anthropic';
 import { deepseek } from '@ai-sdk/deepseek';
 import { supabaseAdmin } from '@/lib/supabase/server';
@@ -38,7 +38,9 @@ export async function POST(req: Request) {
 
     contentParts.push({ type: 'text', text: JSON.stringify({ answers, scores }) });
 
-    const result = streamText({
+    // Use generateText instead of streamText because the client does
+    // fire-and-forget — nobody consumes the stream, so onFinish never fires.
+    const { text } = await generateText({
       model: hasPhotos ? anthropic('claude-sonnet-4-20250514') : deepseek('deepseek-chat'),
       system: getSystemPrompt(locale || 'es'),
       messages: [
@@ -47,32 +49,31 @@ export async function POST(req: Request) {
           content: contentParts,
         },
       ],
-      onFinish: async ({ text }) => {
-        try {
-          const parsed = JSON.parse(text);
-          await supabaseAdmin
-            .from('diagnoses')
-            .update({
-              ai_analysis: text,
-              ai_summary: parsed.summary,
-            })
-            .eq('id', diagnosisId);
-        } catch (parseErr) {
-          console.error('Failed to parse AI response or update DB:', parseErr);
-          await supabaseAdmin
-            .from('diagnoses')
-            .update({ ai_analysis: text })
-            .eq('id', diagnosisId);
-        }
-      },
     });
 
-    return result.toTextStreamResponse();
+    try {
+      const aiData = JSON.parse(text);
+      await supabaseAdmin
+        .from('diagnoses')
+        .update({
+          ai_analysis: text,
+          ai_summary: aiData.summary,
+        })
+        .eq('id', diagnosisId);
+    } catch {
+      console.error('Failed to parse AI response, saving raw text');
+      await supabaseAdmin
+        .from('diagnoses')
+        .update({ ai_analysis: text })
+        .eq('id', diagnosisId);
+    }
+
+    return NextResponse.json({ ok: true });
   } catch (err) {
     console.error('Analyze diagnosis error:', err);
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

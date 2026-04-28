@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 
 const STORAGE_KEY = 'ophyra:announcement-dismissed';
 const DISMISS_TTL_MS = 7 * 24 * 60 * 60 * 1000;
@@ -12,19 +11,19 @@ const ROTATE_MS = 4500;
 const HEIGHT_PX = 36;
 
 export default function AnnouncementBar() {
-  const t = useTranslations('announcement');
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const [index, setIndex] = useState(0);
+  const [messages, setMessages] = useState<string[]>([]);
 
-  // No mostrar en rutas admin (tiene su propio nav a top-0)
   const isAdmin = pathname.startsWith('/admin');
 
-  const messages = [t('msgShipping'), t('msgReturns'), t('msgDiagnosis')];
-
+  // Fetch messages from DB
   useEffect(() => {
     setMounted(true);
+
+    // Check if dismissed recently
     let shouldShow = true;
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -37,14 +36,30 @@ export default function AnnouncementBar() {
     } catch {
       /* ignore */
     }
-    setVisible(shouldShow);
+
+    if (!shouldShow) {
+      setVisible(false);
+      return;
+    }
+
+    fetch('/api/settings/announcement')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.enabled && data.messages?.length > 0) {
+          setMessages(data.messages);
+          setVisible(true);
+        }
+      })
+      .catch(() => {
+        // Fallback silently
+      });
   }, []);
 
-  // Set CSS var on <html> so Navbar + body padding can react.
+  // Set CSS var for navbar offset
   useEffect(() => {
     if (!mounted) return;
     const root = document.documentElement;
-    const show = visible && !isAdmin;
+    const show = visible && !isAdmin && messages.length > 0;
     root.style.setProperty(
       '--announcement-height',
       show ? `${HEIGHT_PX}px` : '0px',
@@ -52,7 +67,7 @@ export default function AnnouncementBar() {
     return () => {
       root.style.setProperty('--announcement-height', '0px');
     };
-  }, [mounted, visible, isAdmin]);
+  }, [mounted, visible, isAdmin, messages.length]);
 
   // Rotate messages
   useEffect(() => {
@@ -72,7 +87,7 @@ export default function AnnouncementBar() {
     setVisible(false);
   }
 
-  if (!mounted || !visible || isAdmin) return null;
+  if (!mounted || !visible || isAdmin || messages.length === 0) return null;
 
   return (
     <div
@@ -97,7 +112,7 @@ export default function AnnouncementBar() {
       <button
         type="button"
         onClick={dismiss}
-        aria-label={t('close')}
+        aria-label="Cerrar anuncio"
         className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1.5 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
       >
         <X className="size-3.5" />

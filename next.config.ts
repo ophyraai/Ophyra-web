@@ -10,9 +10,9 @@ const cspDirectives = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "img-src 'self' data: blob: https://zqzysnzacwaivlxoiiab.supabase.co https://img.clerk.com https://i.pravatar.cc",
+  "img-src 'self' data: blob: https://zqzysnzacwaivlxoiiab.supabase.co https://i.pravatar.cc",
   "font-src 'self' https://fonts.gstatic.com",
-  "connect-src 'self' https://zqzysnzacwaivlxoiiab.supabase.co https://*.supabase.co https://api.stripe.com https://*.clerk.accounts.dev",
+  "connect-src 'self' https://zqzysnzacwaivlxoiiab.supabase.co https://*.supabase.co https://api.stripe.com",
   "frame-src https://js.stripe.com https://hooks.stripe.com https://challenges.cloudflare.com https://www.instagram.com https://www.tiktok.com",
   "object-src 'none'",
   "base-uri 'self'",
@@ -37,7 +37,6 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "img.clerk.com" },
       { protocol: "https", hostname: "i.pravatar.cc" },
       {
         protocol: "https",

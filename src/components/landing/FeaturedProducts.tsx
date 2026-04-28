@@ -19,13 +19,16 @@ interface FeaturedProduct {
   currency: string | null;
   affiliate_url: string | null;
   category: string;
+  badge: string | null;
+  rating: number | null;
+  review_count: number;
 }
 
 async function getFeatured(): Promise<FeaturedProduct[]> {
   const { data, error } = await supabaseAdmin
     .from('products')
     .select(
-      'id, type, slug, name, description, short_description, image_url, images, price, price_cents, compare_at_price_cents, currency, affiliate_url, category',
+      'id, type, slug, name, description, short_description, image_url, images, price, price_cents, compare_at_price_cents, currency, affiliate_url, category, badge, rating, review_count',
     )
     .eq('is_active', true)
     .eq('is_featured', true)
@@ -72,10 +75,11 @@ export default async function FeaturedProducts() {
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {products.map((p) => (
+          {products.map((p, i) => (
             <ProductCard
               key={p.id}
               id={p.id}
+              priority={i === 0}
               type={p.type}
               slug={p.slug}
               name={p.name}
@@ -89,6 +93,9 @@ export default async function FeaturedProducts() {
               currency={p.currency || 'eur'}
               affiliateUrl={p.affiliate_url}
               category={p.category}
+              badge={p.badge}
+              rating={p.rating}
+              review_count={p.review_count}
             />
           ))}
         </div>

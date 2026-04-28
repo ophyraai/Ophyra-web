@@ -201,7 +201,7 @@ export default function CartPage() {
                     key={item.product_id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex gap-4 rounded-2xl border border-ofira-card-border bg-white p-4"
+                    className="card-hover flex gap-4 rounded-2xl border border-ofira-card-border bg-white p-4"
                   >
                     {/* Imagen */}
                     <Link

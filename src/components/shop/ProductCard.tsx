@@ -2,12 +2,10 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { ExternalLink, Package, ShoppingCart, Sparkles, Check } from 'lucide-react';
+import { ExternalLink, Package, Sparkles, ShoppingCart, Check, Star } from 'lucide-react';
 import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import AffiliateBadge from './AffiliateBadge';
-import ShippingDisclaimer from './ShippingDisclaimer';
 import PriceDisplay from '@/components/ecommerce/PriceDisplay';
 
 interface ProductCardProps {
@@ -25,6 +23,10 @@ interface ProductCardProps {
   currency?: string;
   affiliateUrl: string | null;
   category: string;
+  badge?: string | null;
+  rating?: number | null;
+  review_count?: number;
+  priority?: boolean;
 }
 
 const categoryColors: Record<string, string> = {
@@ -60,6 +62,10 @@ export default function ProductCard({
   currency = 'eur',
   affiliateUrl,
   category,
+  badge,
+  rating,
+  review_count,
+  priority,
 }: ProductCardProps) {
   const { add } = useCart();
   const [justAdded, setJustAdded] = useState(false);
@@ -110,29 +116,54 @@ export default function ProductCard({
               alt={name}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover transition-transform group-hover:scale-105"
+              className="object-cover"
+              {...(priority ? { priority: true } : {})}
             />
           ) : (
             <Package className="size-12 text-ofira-text-secondary/30" />
           )}
-          {/* Badge marca propia/afiliado en esquina */}
-          <div className="absolute left-3 top-3">
-            {type === 'own' ? (
-              <span className="inline-flex items-center gap-1 rounded-full bg-ofira-violet px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-md">
-                <Sparkles className="size-3" />
-                Marca Ophyra
+          {/* Badge configurable (admin) */}
+          {badge && (
+            <div className="absolute left-3 top-3 z-10">
+              <span className="inline-flex items-center rounded-full bg-[#0b1614] px-2.5 py-1 font-mono text-[11px] font-bold tracking-wide text-white shadow-md">
+                {badge}
               </span>
-            ) : (
-              <AffiliateBadge variant="compact" />
-            )}
-          </div>
-          {/* Badge de oferta */}
+            </div>
+          )}
+          {/* Fallback: marca propia o afiliado si no hay badge */}
+          {!badge && (
+            <div className="absolute left-3 top-3">
+              {type === 'own' ? (
+                <span className="inline-flex items-center gap-1 rounded-full bg-ofira-violet px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-md">
+                  <Sparkles className="size-3" />
+                  Ophyra
+                </span>
+              ) : (
+                <AffiliateBadge variant="compact" />
+              )}
+            </div>
+          )}
+          {/* Badge de oferta (esquina derecha) */}
           {hasOffer && (
             <div className="absolute right-3 top-3">
-              <span className="inline-flex items-center rounded-full bg-rose-600 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-md">
+              <span className="inline-flex items-center rounded-full bg-emerald-500 px-2.5 py-1 text-[11px] font-bold text-white shadow-md">
                 −{offerPercent}%
               </span>
             </div>
+          )}
+          {/* Botón add-to-cart */}
+          {type === 'own' && price_cents != null && (
+            <button
+              type="button"
+              onClick={handleAddToCart}
+              className={`absolute bottom-3 right-3 z-10 grid size-10 place-items-center rounded-full border shadow-lg transition-all duration-200 ${
+                justAdded
+                  ? 'border-emerald-400 bg-emerald-500 text-white'
+                  : 'border-white/80 bg-white text-ofira-text hover:bg-ofira-surface1'
+              }`}
+            >
+              {justAdded ? <Check className="size-[18px]" /> : <ShoppingCart className="size-[18px]" />}
+            </button>
           )}
         </div>
 
@@ -144,17 +175,28 @@ export default function ProductCard({
           >
             {category}
           </span>
-          <h3 className="mb-1 font-semibold text-ofira-text">{name}</h3>
+          <h3 className="mb-1 text-[15px] font-semibold leading-snug text-ofira-text">{name}</h3>
+
+          {/* Rating */}
+          {rating != null && (
+            <div className="mb-2 flex items-center gap-1.5 text-xs text-ofira-text-secondary">
+              <span className="inline-flex gap-0.5 text-amber-400">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="size-3 fill-current" />
+                ))}
+              </span>
+              <span className="tabular-nums font-medium">
+                {rating}{review_count ? ` · ${review_count} reseñas` : ''}
+              </span>
+            </div>
+          )}
+
           {desc && (
             <p className="mb-3 text-sm text-ofira-text-secondary line-clamp-2">{desc}</p>
           )}
 
-          {/* Aviso compacto de envío para own */}
-          {type === 'own' && (
-            <ShippingDisclaimer variant="compact" className="mb-3" />
-          )}
-
-          <div className="mt-auto flex items-center justify-between">
+          {/* Price row */}
+          <div className="mt-auto flex items-baseline gap-2">
             {price_cents != null ? (
               <PriceDisplay
                 priceCents={price_cents}
@@ -174,10 +216,8 @@ export default function ProductCard({
   );
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-ofira-card-border bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-shadow hover:shadow-[0_4px_20px_rgba(13,148,136,0.08)]"
+    <div
+      className="card-hover group flex flex-col overflow-hidden rounded-2xl border border-ofira-card-border bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
     >
       {detailHref ? (
         <Link href={detailHref} className="block">
@@ -187,28 +227,9 @@ export default function ProductCard({
         <div>{cardInner}</div>
       )}
 
-      {/* CTA fuera del Link para que el botón no propague */}
-      <div className="border-t border-ofira-card-border bg-white p-3">
-        {type === 'own' ? (
-          <button
-            type="button"
-            onClick={handleAddToCart}
-            disabled={price_cents == null}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ofira-violet px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-ofira-violet/90 disabled:opacity-50"
-          >
-            {justAdded ? (
-              <>
-                <Check className="size-4" />
-                Añadido
-              </>
-            ) : (
-              <>
-                <ShoppingCart className="size-4" />
-                Añadir al carrito
-              </>
-            )}
-          </button>
-        ) : affiliateUrl ? (
+      {/* CTA para afiliados */}
+      {type === 'affiliate' && affiliateUrl && (
+        <div className="border-t border-ofira-card-border bg-white p-3">
           <a
             href={affiliateUrl}
             target="_blank"
@@ -218,8 +239,8 @@ export default function ProductCard({
             Ver en tienda
             <ExternalLink className="size-3.5" />
           </a>
-        ) : null}
-      </div>
-    </motion.div>
+        </div>
+      )}
+    </div>
   );
 }

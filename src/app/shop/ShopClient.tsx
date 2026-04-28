@@ -22,6 +22,9 @@ interface Product {
   currency: string | null;
   affiliate_url: string | null;
   category: string;
+  badge: string | null;
+  rating: number | null;
+  review_count: number;
 }
 
 type TypeFilter = 'all' | 'own' | 'affiliate';
@@ -98,6 +101,9 @@ export default function ShopClient({ products }: { products: Product[] }) {
                 currency={p.currency || 'eur'}
                 affiliateUrl={p.affiliate_url}
                 category={p.category}
+                badge={p.badge}
+                rating={p.rating}
+                review_count={p.review_count}
               />
             ))}
           </div>

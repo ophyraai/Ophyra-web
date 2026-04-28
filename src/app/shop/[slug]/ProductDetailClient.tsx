@@ -13,9 +13,11 @@ import {
   Package,
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useTranslations } from 'next-intl';
 import AffiliateBadge from '@/components/shop/AffiliateBadge';
 import ShippingDisclaimer from '@/components/shop/ShippingDisclaimer';
 import PriceDisplay from '@/components/ecommerce/PriceDisplay';
+import StarRating from '@/components/shop/StarRating';
 
 interface Product {
   id: string;
@@ -35,6 +37,12 @@ interface Product {
   affiliate_url: string | null;
 }
 
+interface ProductDetailProps {
+  product: Product;
+  rating?: number | null;
+  reviewCount?: number;
+}
+
 function formatMoney(cents: number | null, fallback: number | null, currency: string) {
   const value = cents != null ? cents / 100 : fallback;
   if (value == null) return null;
@@ -44,7 +52,8 @@ function formatMoney(cents: number | null, fallback: number | null, currency: st
   }).format(value);
 }
 
-export default function ProductDetailClient({ product }: { product: Product }) {
+export default function ProductDetailClient({ product, rating, reviewCount }: ProductDetailProps) {
+  const t = useTranslations('reviews');
   const { add } = useCart();
   const isOwn = product.type === 'own';
   const gallery: string[] =
@@ -162,6 +171,21 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           </span>
 
           <h1 className="text-3xl font-bold text-ofira-text">{product.name}</h1>
+
+          {rating != null && (
+            <a
+              href="#reviews"
+              className="mt-2 inline-flex items-center gap-2 text-sm text-ofira-text-secondary hover:text-ofira-violet"
+            >
+              <StarRating rating={rating} size="sm" />
+              <span className="font-medium">
+                {rating.toFixed(1)} · {t('seeReviews', {
+                  count: reviewCount || 0,
+                  label: (reviewCount || 0) === 1 ? t('review') : t('reviewsPlural'),
+                })}
+              </span>
+            </a>
+          )}
 
           {product.short_description && (
             <p className="mt-2 text-base text-ofira-text-secondary">

@@ -14,19 +14,16 @@ export default function AnalysisPendingState() {
   const [attempts, setAttempts] = useState(0);
 
   useEffect(() => {
-    // Polling: cada 5s pedimos un refresh del RSC. Si en el server
-    // ai_analysis ya existe, el re-render monta las secciones normales y
-    // este componente desmonta (limpiando el intervalo).
+    let count = 0;
     const interval = setInterval(() => {
-      setAttempts((n) => {
-        const next = n + 1;
-        if (next >= MAX_POLL_ATTEMPTS) {
-          clearInterval(interval);
-          return next;
-        }
-        router.refresh();
-        return next;
-      });
+      count += 1;
+      if (count >= MAX_POLL_ATTEMPTS) {
+        clearInterval(interval);
+        setAttempts(count);
+        return;
+      }
+      setAttempts(count);
+      router.refresh();
     }, POLL_INTERVAL_MS);
 
     return () => clearInterval(interval);
