@@ -23,7 +23,8 @@ export async function GET(req: Request) {
     .single();
 
   if (!sub) {
-    return NextResponse.json({ error: 'No active subscription found' }, { status: 404 });
+    // Generic redirect to avoid email enumeration
+    return NextResponse.redirect(`${BASE_URL}/dashboard`);
   }
 
   // Determine price: discounted if renewal offer hasn't expired

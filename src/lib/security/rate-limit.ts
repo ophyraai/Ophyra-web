@@ -73,8 +73,11 @@ export async function checkRateLimit(
       },
     );
   } catch (err) {
-    // If Redis is down, fail open (allow the request)
+    // If Redis is down, fail closed (block the request)
     console.error('Rate limit check failed:', err);
-    return null;
+    return NextResponse.json(
+      { error: 'Service temporarily unavailable' },
+      { status: 503 },
+    );
   }
 }

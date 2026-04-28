@@ -23,6 +23,18 @@ export async function POST(req: Request) {
     }
     const { diagnosisId, answers, scores, locale, photoUrls } = parsed.data;
 
+    // Verify diagnosis exists (ownership is loose since anonymous users can trigger this)
+    const { data: diagnosis } = await supabaseAdmin
+      .from('diagnoses')
+      .select('id')
+      .eq('id', diagnosisId)
+      .is('ai_analysis', null)
+      .single();
+
+    if (!diagnosis) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
+
     const hasPhotos = Array.isArray(photoUrls) && photoUrls.length > 0;
 
     // Build message content: multimodal if photos exist, text-only otherwise

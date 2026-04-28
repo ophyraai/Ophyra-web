@@ -33,9 +33,9 @@ export async function POST(req: Request) {
           { status: 400 },
         );
       }
-      if (!file.type.startsWith('image/')) {
+      if (!file.type.startsWith('image/') || file.type === 'image/svg+xml') {
         return NextResponse.json(
-          { error: `File "${file.name}" is not an image` },
+          { error: `File "${file.name}" is not a valid image` },
           { status: 400 },
         );
       }
