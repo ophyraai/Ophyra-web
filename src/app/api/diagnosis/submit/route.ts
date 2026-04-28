@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase/server';
 import { calculateScores } from '@/lib/ai/scoring';
 import { diagnosisSubmitSchema } from '@/lib/validation/diagnosis';
 import { checkRateLimit, diagnosisLimiter, getClientIp } from '@/lib/security/rate-limit';
+import { upsertProfile } from '@/lib/customer-profiles';
 
 export async function POST(req: Request) {
   const rl = await checkRateLimit(diagnosisLimiter, getClientIp(req));
@@ -41,6 +42,11 @@ export async function POST(req: Request) {
         { error: 'Failed to save diagnosis' },
         { status: 500 }
       );
+    }
+
+    // Sync to customer profiles (only if real email)
+    if (!email.endsWith('@anonymous.ophyra')) {
+      upsertProfile(email, { first_diagnosis_at: new Date().toISOString(), source: 'diagnosis' }).catch(() => {});
     }
 
     return NextResponse.json({

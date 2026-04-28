@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/server';
 import { checkRateLimit, generalLimiter, getClientIp } from '@/lib/security/rate-limit';
+import { upsertProfile } from '@/lib/customer-profiles';
 import { z } from 'zod';
 
 const schema = z.object({
@@ -37,6 +38,9 @@ export async function POST(req: Request) {
     console.error('Newsletter subscribe error:', error);
     return NextResponse.json({ error: 'Error al suscribir' }, { status: 500 });
   }
+
+  // Sync to unified customer profile
+  await upsertProfile(email, { newsletter_subscribed: true, source: 'welcome_popup' });
 
   return NextResponse.json({ ok: true });
 }

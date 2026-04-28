@@ -7,6 +7,7 @@ import { createSupabaseServer } from '@/lib/supabase/server';
 import { cartCheckoutSchema } from '@/lib/validation/product';
 import { validateCouponCode } from '@/lib/coupons/validate';
 import { checkoutLimiter } from '@/lib/security/rate-limit';
+import { upsertProfile } from '@/lib/customer-profiles';
 import type { DraftItem } from '@/types/marketplace';
 import { z } from 'zod';
 
@@ -47,7 +48,7 @@ export async function POST(req: Request) {
   }
   const { items, locale, shipping_country, coupon_code } = parsed.data;
 
-  // Determine buyer email: logged-in user takes priority, otherwise guest email from body
+  // Determine buyer email: logged-in user ALWAYS uses their email (security)
   const buyerEmail = user?.email || parsed.data.email;
   if (!buyerEmail) {
     return NextResponse.json(
@@ -207,6 +208,9 @@ export async function POST(req: Request) {
       { status: 500 },
     );
   }
+
+  // 4.9 Sync to customer profiles
+  upsertProfile(buyerEmail, { first_purchase_at: new Date().toISOString(), source: 'checkout' }).catch(() => {});
 
   // 5. Crear Stripe Checkout Session
   try {

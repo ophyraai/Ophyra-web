@@ -61,10 +61,9 @@ export async function GET(request: NextRequest) {
 
   if (authenticated) {
     await sendWelcomeIfNew(supabase, origin);
-    // Backfill cualquier diagnóstico anónimo previo con este email.
-    // Importante: debe ir ANTES del redirect inteligente para que los
-    // diagnósticos recién reasignados cuenten al decidir el destino.
+    // Backfill cualquier diagnóstico/order anónimo previo con este email.
     await backfillAnonymousDiagnoses(supabase);
+    await backfillAnonymousOrders(supabase);
     const finalNext = await resolveRedirect(supabase, next);
     return NextResponse.redirect(`${origin}${finalNext}`);
   }
@@ -90,6 +89,29 @@ async function backfillAnonymousDiagnoses(
     }
   } catch (err) {
     console.error('[auth-callback] backfill unexpected error:', err);
+  }
+}
+
+async function backfillAnonymousOrders(
+  supabase: ReturnType<typeof createServerClient>,
+) {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user?.email) return;
+
+    await supabaseAdmin
+      .from('orders')
+      .update({ user_id: user.id })
+      .eq('email', user.email)
+      .is('user_id', null);
+
+    await supabaseAdmin
+      .from('order_drafts')
+      .update({ user_id: user.id })
+      .eq('email', user.email)
+      .is('user_id', null);
+  } catch (err) {
+    console.error('[auth-callback] backfill orders error:', err);
   }
 }
 

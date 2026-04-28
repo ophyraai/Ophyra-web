@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import { supabaseAdmin } from '@/lib/supabase/server';
 import { sendEmail } from '@/lib/emails/send';
+import { upsertProfile } from '@/lib/customer-profiles';
 import WelcomeEmail, { getWelcomeSubject } from '@/lib/emails/templates/welcome';
 import OrderConfirmationEmail, {
   getOrderConfirmationSubject,
@@ -177,6 +178,12 @@ export async function POST(req: Request) {
           note: `Pedido creado desde draft ${draft.id}`,
           created_by: 'system',
         });
+
+        // 6.5 Update customer profile (orders + LTV)
+        upsertProfile(draft.email, {
+          total_orders_increment: 1,
+          lifetime_value_increment_cents: draft.total_cents,
+        }).catch(() => {});
 
         // 7. Enviar email de confirmación
         try {
