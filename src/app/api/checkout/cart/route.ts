@@ -24,18 +24,11 @@ export async function POST(req: Request) {
     }
   }
 
-  // 1. Auth: el checkout requiere login (v1 sin guest checkout)
+  // 1. Auth: try to get user, but allow guest checkout with email
   const supabase = await createSupabaseServer();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json(
-      { error: 'Debes iniciar sesión para pagar.' },
-      { status: 401 },
-    );
-  }
 
   // 2. Parse + validar body con Zod
   let body: unknown;
@@ -53,6 +46,15 @@ export async function POST(req: Request) {
     );
   }
   const { items, locale, shipping_country, coupon_code } = parsed.data;
+
+  // Determine buyer email: logged-in user takes priority, otherwise guest email from body
+  const buyerEmail = user?.email || parsed.data.email;
+  if (!buyerEmail) {
+    return NextResponse.json(
+      { error: 'Se requiere un email para el pedido' },
+      { status: 400 },
+    );
+  }
 
   // 2.5 Validar que el país de envío es uno soportado
   const validCountry = COUNTRY_OPTIONS.find((c) => c.code === shipping_country);
@@ -183,8 +185,8 @@ export async function POST(req: Request) {
   const { data: draft, error: draftError } = await supabaseAdmin
     .from('order_drafts')
     .insert({
-      user_id: user.id,
-      email: user.email!,
+      user_id: user?.id || null,
+      email: buyerEmail,
       locale,
       items: draftItems,
       subtotal_cents: subtotalCents,
@@ -254,8 +256,8 @@ export async function POST(req: Request) {
       custom_text: {
         submit: { message: shippingText },
       },
-      customer_email: user.email!,
-      client_reference_id: user.id,
+      customer_email: buyerEmail,
+      ...(user && { client_reference_id: user.id }),
       success_url: `${APP_URL}/dashboard/account/orders?checkout=success`,
       cancel_url: `${APP_URL}/cart`,
       metadata: {

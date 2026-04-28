@@ -133,6 +133,8 @@ export const cartCheckoutSchema = z.object({
   locale: z.enum(['es', 'en']).default('es'),
   // ISO-3166-1 alpha-2 — se usa para calcular la zona de envío.
   shipping_country: z.string().length(2).toUpperCase(),
+  // Email para guest checkout (si no hay sesión)
+  email: z.string().email().max(254).optional(),
   // Código de cupón opcional — validado server-side antes de pasar a Stripe
   coupon_code: z
     .string()

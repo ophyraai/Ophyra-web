@@ -10,7 +10,6 @@ import {
   Plus,
   Minus,
   ArrowLeft,
-  Lock,
   Package,
 } from 'lucide-react';
 import Navbar from '@/components/landing/Navbar';
@@ -49,6 +48,8 @@ export default function CartPage() {
     removeCoupon,
   } = useCart();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const [userEmail, setUserEmail] = useState('');
+  const [guestEmail, setGuestEmail] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [shippingCountry, setShippingCountry] = useState('ES');
@@ -56,6 +57,7 @@ export default function CartPage() {
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       setIsLoggedIn(!!data.user);
+      if (data.user?.email) setUserEmail(data.user.email);
     });
     // Recordamos el país entre sesiones (una pequeña mejora UX)
     try {
@@ -97,8 +99,9 @@ export default function CartPage() {
   const total_cents = Math.max(0, subtotal_cents - discount_cents) + shipping_cents;
 
   async function handleCheckout() {
-    if (!isLoggedIn) {
-      window.location.href = '/auth/login?next=/cart';
+    const email = isLoggedIn ? userEmail : guestEmail;
+    if (!email || !email.includes('@')) {
+      setCheckoutError('Introduce un email válido para continuar');
       return;
     }
     setSubmitting(true);
@@ -116,6 +119,7 @@ export default function CartPage() {
           })),
           locale: 'es',
           shipping_country: shippingCountry,
+          email,
           ...(appliedCoupon && { coupon_code: appliedCoupon.code }),
         }),
       });
@@ -406,20 +410,29 @@ export default function CartPage() {
                     </span>
                   </div>
 
+                  {/* Guest email input */}
+                  {!isLoggedIn && (
+                    <div className="mt-4">
+                      <label className="mb-1.5 block text-xs font-medium text-ofira-text-secondary">
+                        Email para el pedido
+                      </label>
+                      <input
+                        type="email"
+                        value={guestEmail}
+                        onChange={(e) => setGuestEmail(e.target.value)}
+                        placeholder="tu@email.com"
+                        className="w-full rounded-lg border border-ofira-card-border bg-white px-3 py-2.5 text-sm text-ofira-text placeholder:text-ofira-text-secondary/50 focus:border-ofira-violet focus:outline-none focus:ring-2 focus:ring-ofira-violet/20"
+                      />
+                    </div>
+                  )}
+
                   <button
                     type="button"
                     onClick={handleCheckout}
                     disabled={submitting}
-                    className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-ofira-violet px-5 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-ofira-violet/90 disabled:opacity-60"
+                    className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-ofira-violet px-5 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-ofira-violet/90 disabled:opacity-60"
                   >
-                    {isLoggedIn === false ? (
-                      <>
-                        <Lock className="size-4" />
-                        Iniciar sesión para pagar
-                      </>
-                    ) : (
-                      'Continuar al pago'
-                    )}
+                    Continuar al pago
                   </button>
 
                   {checkoutError && (
